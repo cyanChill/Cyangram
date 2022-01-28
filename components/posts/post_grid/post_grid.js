@@ -1,0 +1,3 @@
+/* 
+  This is the grid of posts displayed on a profile page
+*/
