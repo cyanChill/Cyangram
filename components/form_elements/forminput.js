@@ -14,6 +14,7 @@ const FormInput = (props) => {
       <textarea
         className={`${classes.textarea} ${additClasses}`}
         rows={rowCnt}
+        {...rest}
       />
     );
   }
