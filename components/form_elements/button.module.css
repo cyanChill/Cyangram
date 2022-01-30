@@ -1,0 +1,51 @@
+.btn {
+  --primary: #0095f6;
+  --accent: white;
+  --hover: #0078c9;
+
+  padding: 0.5rem 1rem;
+
+  border-radius: 0.5rem;
+  border: 1px solid var(--primary);
+
+  background-color: var(--primary);
+  color: var(--accent);
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: var(--hover);
+}
+
+.btn.outline:hover {
+  cursor: pointer;
+  background-color: var(--hover);
+  color: var(--accent);
+}
+
+.pill {
+  border-radius: 1rem;
+}
+
+.outline {
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.primary {
+  --primary: #0095f6;
+  --accent: white;
+  --hover: #0078c9;
+}
+
+.error {
+  --primary: #f5554d;
+  --accent: white;
+  --hover: #df362e;
+}
+
+.success {
+  --primary: #6ace5e;
+  --accent: white;
+  --hover: #46c738;
+}
