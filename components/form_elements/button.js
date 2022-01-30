@@ -1,14 +1,25 @@
 import classes from "./button.module.css";
 
 const Button = (props) => {
-  const outline = props.outline ? classes.outline : null;
-  const variant = props.variant ? classes[props.variant] : null;
-  const pill = props.pill ? classes.pill : null;
-  const btnClasses = `${classes.btn} ${variant} ${props.className} ${outline} ${pill}`;
-  const btnStyles = props.style;
+  const {
+    outline,
+    variant,
+    pill,
+    className: additClasses,
+    style: additStyles,
+    disabled,
+  } = props;
+  const btnClasses = `${classes.btn} ${
+    variant && classes[variant]
+  } ${additClasses} ${outline && classes.outline} ${pill && classes.pill}`;
 
   return (
-    <button onClick={props.onClick} className={btnClasses} style={btnStyles}>
+    <button
+      onClick={props.onClick}
+      className={btnClasses}
+      style={additStyles}
+      disabled={disabled ? true : false}
+    >
       {props.children}
     </button>
   );

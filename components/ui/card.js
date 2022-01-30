@@ -1,12 +1,18 @@
 import classes from "./card.module.css";
 
 const Card = (props) => {
-  const rounded = props.rounded ? classes.rounded : null;
-  const cardClasses = `${classes.card} ${props.className} ${rounded}`;
-  const cardStyles = props.style;
+  const {
+    rounded,
+    className: additClasses,
+    shadow,
+    style: additStyles,
+  } = props;
+  const cardClasses = `${classes.card} ${additClasses} ${
+    rounded && classes.rounded
+  } ${shadow && classes.shadow}`;
 
   return (
-    <div className={cardClasses} style={cardStyles}>
+    <div className={cardClasses} style={additStyles}>
       {props.children}
     </div>
   );

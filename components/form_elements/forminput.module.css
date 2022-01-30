@@ -1,0 +1,21 @@
+.input {
+  padding: 0.5rem 0.75rem;
+
+  border-radius: 0.5rem;
+  border: 1px solid var(--off-white-800);
+  outline: 0;
+
+  font-size: 1rem;
+
+  background-color: var(--off-white-500);
+}
+
+.textarea {
+}
+
+.input:focus,
+.input:active,
+.textarea:focus,
+.textarea:active {
+  border: 1px solid var(--off-white-900);
+}
