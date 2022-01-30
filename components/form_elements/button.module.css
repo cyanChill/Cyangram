@@ -25,6 +25,23 @@
   color: var(--accent);
 }
 
+.btn:disabled {
+  cursor: default;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.65)
+    )
+    var(--primary);
+  border: 1px solid
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.65)
+    )
+    var(--primary);
+}
+
 .pill {
   border-radius: 1rem;
 }
@@ -36,18 +53,15 @@
 
 .primary {
   --primary: #0095f6;
-  --accent: white;
   --hover: #0078c9;
 }
 
 .error {
   --primary: #f5554d;
-  --accent: white;
   --hover: #df362e;
 }
 
 .success {
   --primary: #6ace5e;
-  --accent: white;
   --hover: #46c738;
 }
