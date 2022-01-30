@@ -3,12 +3,14 @@
     - The feed (WHEN LOGGED IN)
     - The login page (WHEN NOT LOGGED IN)
 */
-import Login from "../components/login/login";
+import Login from "../components/authentication/login";
 
-export default function Home() {
+const HomePage = () => {
   return (
     <>
       <Login />
     </>
   );
-}
+};
+
+export default HomePage;

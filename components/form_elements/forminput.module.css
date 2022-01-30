@@ -6,7 +6,7 @@
   border: 1px solid var(--off-white-800);
   outline: 0;
 
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
 
   background-color: var(--off-white-500);
 }

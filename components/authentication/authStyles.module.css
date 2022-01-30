@@ -1,4 +1,4 @@
-.login {
+.wrapper {
   width: 100vw;
 
   display: flex;
@@ -9,7 +9,7 @@
   padding: 1rem;
 }
 
-.login-actions {
+.main-content-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -20,14 +20,16 @@
   justify-content: center;
 }
 
-.login form {
+.wrapper form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.signup p {
+.redirect p {
   margin: 0;
+
+  font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .link {
@@ -36,8 +38,16 @@
   color: #0095f6;
 }
 
+.catch-phrase {
+  margin: 0;
+
+  font-weight: 600;
+
+  color: var(--grey-600);
+}
+
 @media (min-width: 568px) {
-  .login {
-    max-width: 30rem;
+  .wrapper {
+    max-width: 25rem;
   }
 }
