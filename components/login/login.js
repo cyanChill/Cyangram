@@ -63,7 +63,7 @@ const Login = () => {
           <FormInput
             type="password"
             placeholder="Password"
-            minlength="6"
+            minLength="6"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
