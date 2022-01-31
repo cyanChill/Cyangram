@@ -1,5 +1,12 @@
+.wrapper {
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+
 .input,
 .textarea {
+  width: 100%;
+
   padding: 0.5rem 0.75rem;
 
   border-radius: 0.5rem;
@@ -20,4 +27,15 @@
 .textarea:focus,
 .textarea:active {
   border: 1px solid var(--off-white-900);
+}
+
+.error {
+  margin: 0;
+  padding: 0;
+
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.3;
+
+  color: red;
 }

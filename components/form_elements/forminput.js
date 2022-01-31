@@ -7,28 +7,42 @@ const FormInput = React.forwardRef((props, ref) => {
     type: inputType,
     className: additClasses,
     rows: numRows,
+    errMsg,
+    hasErr,
     ...rest
   } = props;
+
+  let errorMessage;
+
+  if (errMsg) {
+    errorMessage = <p className={classes.error}>{errMsg}</p>;
+  }
 
   if (inputType === "textarea") {
     const rowCnt = numRows && !isNaN(numRows) && +numRows > 0 ? +numRows : 3;
     return (
-      <textarea
-        ref={ref}
-        className={`${classes.textarea} ${additClasses}`}
-        rows={rowCnt}
-        {...rest}
-      />
+      <div className={classes.wrapper}>
+        <textarea
+          ref={ref}
+          className={`${classes.textarea} ${additClasses}`}
+          rows={rowCnt}
+          {...rest}
+        />
+        {hasErr && errorMessage}
+      </div>
     );
   }
 
   return (
-    <input
-      ref={ref}
-      type={inputType}
-      className={`${classes.input} ${additClasses}`}
-      {...rest}
-    />
+    <div className={classes.wrapper}>
+      <input
+        ref={ref}
+        type={inputType}
+        className={`${classes.input} ${additClasses}`}
+        {...rest}
+      />
+      {hasErr && errorMessage}
+    </div>
   );
 });
 
