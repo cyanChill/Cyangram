@@ -6,7 +6,7 @@ import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
 import Card from "../ui/card";
 
-import { isEmail } from "../../helpers/validate";
+import { isEmail } from "../../lib/validate";
 import classes from "./authStyles.module.css";
 
 const SignUp = () => {
@@ -28,9 +28,18 @@ const SignUp = () => {
 
     /* 
       Some validation
+      - Indicate whether a username or email has been previously used
     */
 
-    console.log(email, username, password);
+    fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, username, password }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   return (
