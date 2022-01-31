@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
@@ -23,10 +22,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  following: {
-    type: Array,
-    default: [{ type: ObjectId, ref: "User" }],
-  },
+  following: [mongoose.Schema.Types.ObjectId],
   /* 
     Some other stuff including profile image (url or file id)
   */

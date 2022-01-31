@@ -14,32 +14,89 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
+  const [errors, setErrors] = useState({
+    email: false,
+    extraEmailMsg: null,
+    username: false,
+    extraUsernameMsg: null,
+    password: false,
+  });
 
   useEffect(() => {
-    if (isEmail(email) && username && password.length > 5) {
+    if (isEmail(email) && !!username.trim() && password.trim().length > 5) {
       setCanSubmit(true);
     } else {
       setCanSubmit(false);
     }
   }, [email, username, password]);
 
-  const loginHandler = (e) => {
+  const isUnused = async (e) => {
+    const type = e.target.name;
+
+    const identifier = type === "email" ? email.trim() : username.trim();
+    const res = await fetch(`/api/users/${identifier}`);
+
+    if (res.ok && type === "email") {
+      setErrors((prev) => ({
+        ...prev,
+        email: true,
+        extraEmailMsg: "This email has already been used.",
+      }));
+    } else if (res.ok && type === "username") {
+      setErrors((prev) => ({
+        ...prev,
+        username: true,
+        extraUsernameMsg: "This username has already been used.",
+      }));
+    } else if (res.status === 404) {
+      return;
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        email: false,
+        extraEmailMsg: null,
+        username: false,
+        extraUsernameMsg: null,
+      }));
+    }
+  };
+
+  const checkPassword = () => {
+    setErrors((prev) => ({
+      ...prev,
+      password: !(password.trim().length >= 6),
+    }));
+  };
+
+  const signupHandler = async (e) => {
     e.preventDefault();
 
-    /* 
-      Some validation
-      - Indicate whether a username or email has been previously used
-    */
+    // Basic checks if user somehow messes with the page to submit (bypassing validation)
+    if (!isEmail(email) || !username.trim() || password.trim().length < 6) {
+      /* 
+        Display an error (modal perhaps)
+      */
+      return;
+    }
 
-    fetch("/api/auth/signup", {
+    const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, username, password }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+      body: JSON.stringify({
+        email,
+        username: username.trim(),
+        password: password.trim(),
+      }),
+    });
+    const data = res.json();
+
+    if (res.ok) {
+      /* Login as the user & redirect to the home page */
+    } else {
+      /* Display an error (modal perhaps) [ie: please reverify your inputs] */
+    }
   };
 
   return (
@@ -60,28 +117,40 @@ const SignUp = () => {
           Sign up to see photos and videos from your friends.
         </p>
 
-        <form onSubmit={loginHandler}>
+        <form onSubmit={signupHandler}>
           <FormInput
             type="email"
+            name="email"
             placeholder="Email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onBlur={isUnused}
+            errMsg={errors.extraEmailMsg || "Please enter a valid email."}
+            hasErr={errors.email}
           />
           <FormInput
             type="text"
+            name="username"
             placeholder="Username"
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onBlur={isUnused}
+            errMsg={errors.extraUsernameMsg || "Please enter a valid username."}
+            hasErr={errors.username}
           />
           <FormInput
             type="password"
+            name="password"
             placeholder="Password"
             minLength="6"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onBlur={checkPassword}
+            errMsg="Please enter a password (min 6 characters)."
+            hasErr={errors.password}
           />
           <Button
             type="submit"
