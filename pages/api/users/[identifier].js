@@ -2,29 +2,45 @@ import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 
 const handler = async (req, res) => {
-  if (req.method === "GET") {
-    const { identifier } = req.query;
+  const method = req.method;
 
-    if (!identifier.trim()) {
-      return;
-    }
+  switch (method) {
+    case "GET":
+      const { identifier } = req.query;
 
-    await dbConnect();
+      if (!identifier.trim()) {
+        res.status(400).json({ message: "Invalid Request" });
+        return;
+      }
 
-    // See if username exists
-    const existingUser = await User.find({
-      $or: [{ email: identifier }, { username: identifier }],
-    });
+      await dbConnect();
 
-    if (existingUser.length === 0) {
-      res.status(404).json({ message: "User does not exist." });
-      return;
-    }
+      // See if username exists
+      const existingUser = await User.findOne(
+        {
+          $or: [{ email: identifier }, { username: identifier }],
+        },
+        "-email"
+      );
 
-    res.status(200).json({
-      message: "Successfully found user.",
-      user: existingUser,
-    });
+      if (!existingUser) {
+        res.status(404).json({ message: "User does not exist." });
+        return;
+      }
+
+      /* 
+        Depending whether the user is a follower or not, allow them to see
+        who they're following or not (if private)
+      */
+
+      res.status(200).json({
+        message: "Successfully found user.",
+        user: existingUser,
+      });
+      break;
+    default:
+      res.status(400).json({ message: "Invalid Request" });
+      break;
   }
 };
 
