@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 import Button from "../form_elements/button";
@@ -8,14 +10,9 @@ import Card from "../ui/card";
 
 import classes from "./authStyles.module.css";
 
-/* 
-  Component to purely handle logins
-    - Have some custom logic to make sure that the login button is disabled if the username & password fiels are empty ✅
-    
-    - Min password length of 6
-*/
-
 const Login = () => {
+  const router = useRouter();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
@@ -28,14 +25,25 @@ const Login = () => {
     }
   }, [username, password]);
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
 
-    /* 
-      Some validation
-    */
+    /*  Do some validation? */
 
-    console.log(username, password);
+    const result = await signIn("credentials", {
+      redirect: false,
+      username: username,
+      password: password,
+    });
+
+    if (!result.error) {
+      // Successfully logged in & redirect
+      console.log("No error");
+      router.replace("/");
+      return;
+    }
+
+    console.log("Failed to log in");
   };
 
   return (

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 import Button from "../form_elements/button";
@@ -10,6 +12,8 @@ import { isEmail } from "../../lib/validate";
 import classes from "./authStyles.module.css";
 
 const SignUp = () => {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -79,6 +83,9 @@ const SignUp = () => {
       return;
     }
 
+    const formattedUser = username.trim();
+    const formattedPass = password.trim();
+
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
@@ -86,14 +93,23 @@ const SignUp = () => {
       },
       body: JSON.stringify({
         email,
-        username: username.trim(),
-        password: password.trim(),
+        username: formattedUser,
+        password: formattedPass,
       }),
     });
-    const data = res.json();
 
     if (res.ok) {
-      /* Login as the user & redirect to the home page */
+      const result = await signIn("credentials", {
+        redirect: false,
+        username: formattedUser,
+        password: formattedPass,
+      });
+
+      if (!result.error) {
+        // Successfully logged in & redirect
+        router.replace("/");
+        return;
+      }
     } else {
       /* Display an error (modal perhaps) [ie: please reverify your inputs] */
     }
