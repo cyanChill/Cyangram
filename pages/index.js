@@ -1,6 +1,6 @@
 import { getSession, signOut } from "next-auth/react";
 
-const HomePage = () => {
+const HomePage = (props) => {
   return (
     <>
       <div>
