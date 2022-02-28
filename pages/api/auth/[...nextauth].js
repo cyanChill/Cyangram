@@ -34,11 +34,25 @@ export default NextAuth({
 
         if (!isValid) throw new Error("Could not log you in!");
 
-        // Returns an object indicating that authorization succeeded
+        /* 
+          Any data passed here will be accessed in the 'user' property of
+          the 'session' object
+        */
         return {
-          message: "Successfully logged in.",
+          username: user.username,
         };
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) token.user = user;
+      return token;
+    },
+    session: async ({ session, token, user }) => {
+      session.user = token.user;
+      return session;
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 });
