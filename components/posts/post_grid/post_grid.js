@@ -1,3 +1,18 @@
-/* 
-  This is the grid of posts displayed on a profile page
-*/
+import NoPost from "../no_posts/nopost";
+import classes from "./post_grid.module.css";
+import PostPreview from "./post_preview";
+
+const PostGrid = ({ posts }) => {
+  if (posts.length == 0) {
+    return <NoPost />;
+  }
+  return (
+    <div className={classes.container}>
+      {posts.map((post) => (
+        <PostPreview key={post.postId} postInfo={post} />
+      ))}
+    </div>
+  );
+};
+
+export default PostGrid;
