@@ -59,3 +59,8 @@
   --primary: #6ace5e;
   --hover: #46c738;
 }
+
+.transparent {
+  --primary: var(--grey-600);
+  --hover: var(--off-white-900);
+}
