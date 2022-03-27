@@ -31,6 +31,11 @@ const handler = async (req, res) => {
       /* 
         Depending whether the user is a follower or not, allow them to see
         who they're following or not (if private)
+        
+        Basically, return data on:
+          - Followers
+          - Following
+          - Posts
       */
 
       res.status(200).json({

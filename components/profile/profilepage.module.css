@@ -1,0 +1,94 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.5rem;
+
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.profile header .name {
+  width: 100%;
+}
+
+/* Contains profile img & posts, following, followers stats*/
+.profile section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.25rem;
+}
+
+.profile section img {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile section div {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* For the posts, following, followers stats*/
+.profile section div p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: clamp(0.85rem, 5vw, 1.15rem);
+}
+
+.profile section div p .num {
+  font-weight: 500;
+}
+
+.link {
+  cursor: pointer;
+}
+
+/* User's Real Name */
+.name {
+  padding: 0.25rem;
+  margin: 0;
+
+  font-weight: 500;
+}
+
+/* User's bio */
+.bio {
+  padding: 0.5rem 0.25rem;
+  margin: 0;
+
+  font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+  line-height: 1.2;
+}
+
+/* Actions Section */
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.25rem;
+}
+
+.actions button {
+  width: 100%;
+}
