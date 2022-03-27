@@ -1,5 +1,5 @@
 import { getSession, signOut } from "next-auth/react";
-import HomePost from "../components/posts/homepost";
+import PostExcerpt from "../components/posts/post_excerpt/post_excerpt";
 
 const DUMMY_POST = {
   postId: "p1",
@@ -24,7 +24,7 @@ const HomePage = (props) => {
       <div>
         <h1>This is the home feed</h1>
         <button onClick={signOut}>Sign Out</button>
-        <HomePost post={DUMMY_POST} />
+        <PostExcerpt post={DUMMY_POST} />
       </div>
     </>
   );
