@@ -1,0 +1,17 @@
+.pgwrap {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.pgwrap h1 {
+  font-size: 1.5rem;
+}
+
+.link {
+  color: #0b0080;
+  cursor: pointer;
+}
