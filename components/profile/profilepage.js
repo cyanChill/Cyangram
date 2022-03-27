@@ -8,6 +8,7 @@ import classes from "./profilepage.module.css";
 
 const UserProfilePage = ({ userData, ownProfile }) => {
   const router = useRouter();
+  console.log(router);
 
   const { user, followerCnt, followingCnt, posts } = userData;
 
@@ -34,11 +35,17 @@ const UserProfilePage = ({ userData, ownProfile }) => {
             <span className={classes.num}>{posts.length}</span>
             <span className={classes.label}>Posts</span>
           </p>
-          <p onClick={() => router.push("/followers")} className={classes.link}>
+          <p
+            onClick={() => router.push(`${router.asPath}/followers`)}
+            className={classes.link}
+          >
             <span className={classes.num}>{followerCnt}</span>
             <span className={classes.label}>Followers</span>
           </p>
-          <p onClick={() => router.push("/following")} className={classes.link}>
+          <p
+            onClick={() => router.push(`${router.asPath}/following`)}
+            className={classes.link}
+          >
             <span className={classes.num}>{followingCnt}</span>
             <span className={classes.label}>Following</span>
           </p>
