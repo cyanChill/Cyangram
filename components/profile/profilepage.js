@@ -8,7 +8,6 @@ import classes from "./profilepage.module.css";
 
 const UserProfilePage = ({ userData, ownProfile }) => {
   const router = useRouter();
-  console.log(router);
 
   const { user, followerCnt, followingCnt, posts } = userData;
 

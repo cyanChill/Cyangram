@@ -1,5 +1,7 @@
 :root {
-  --shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  --shadow-clr-200: rgba(0, 0, 0, 0.15);
+  --shadow-clr-900: rgba(0, 0, 0, 0.75);
+  --shadow: 0px 0px 5px 0px var(--shadow-clr-900);
 
   --off-white-500: #fafafa;
   --off-white-800: #dbdbdb;
