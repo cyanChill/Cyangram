@@ -1,0 +1,70 @@
+/* Sizing Post Image to Screen */
+.postImg {
+  width: 100%;
+  object-fit: contain;
+}
+
+/* Post Description */
+.postDescription {
+  margin: 0;
+  padding: 0.25rem;
+
+  font-size: 0.95rem;
+  color: var(--grey-600);
+}
+
+.postDescription a {
+  padding-right: 0.25rem;
+}
+
+.postDescription span {
+  font-weight: 500;
+  color: black;
+}
+
+/* Containing Containing all the comments */
+.commentContainer {
+  max-height: 50vh;
+
+  overflow: auto;
+}
+
+/* Like Count */
+.likeCount {
+  margin: 0;
+  padding: 0 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Posted Since */
+.postedSince {
+  margin: 0;
+  padding: 0 0.25rem;
+  font-size: 0.95rem;
+  color: var(--grey-600);
+}
+
+/* Comments Field */
+.commentField {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.25rem;
+}
+
+.commentField input {
+  width: 100%;
+
+  font-size: 0.95rem;
+  border: none;
+  outline: none;
+}
+
+.commentField span {
+  padding-left: 0.25rem;
+  font-weight: 500;
+  color: blue;
+}

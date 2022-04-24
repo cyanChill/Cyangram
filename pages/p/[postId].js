@@ -1,8 +1,11 @@
 /* 
   Page to display the post, its comments, etc
 */
-const PostPage = () => {
-  return <div>Post Page</div>;
+
+import PostPage from "../../components/posts/post";
+
+const UserPostPage = () => {
+  return <PostPage />;
 };
 
-export default PostPage;
+export default UserPostPage;

@@ -2,9 +2,8 @@
   This is the post we see on the feed
 */
 import Link from "next/link";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { FaRegComment } from "react-icons/fa";
-import { FiSend } from "react-icons/fi";
+import Username from "../../misc/links/usernameLink";
+import PostActions from "../actions/post_actions";
 
 import classes from "./post_excerpt.module.css";
 
@@ -22,20 +21,14 @@ const PostExcerpt = ({ post }) => {
         <Link href={`/${uploader.username}`}>{uploader.username}</Link>
       </header>
 
-      <div className={classes.postImgs}>
-        <img src={postImg} />
-      </div>
+      <img src={postImg} className={classes.postImg} />
 
-      <div className={classes.actions}>
-        <AiFillHeart />
-        <FaRegComment />
-        <FiSend />
-      </div>
+      <PostActions postId={postId} />
 
       <span className={classes.likes}>{likeCnt} Likes</span>
 
       <div className={classes.description}>
-        <span>{uploader.username}</span>
+        <Username username={uploader.username} />
         <span>{description}</span>
       </div>
     </div>

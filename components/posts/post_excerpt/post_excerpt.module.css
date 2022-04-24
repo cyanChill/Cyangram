@@ -28,20 +28,8 @@
   border-radius: 50%;
 }
 
-.postImgs {
-  display: flex;
-  align-items: center;
-
-  max-height: 100vw;
-
-  width: 100vw;
-  max-width: 100vw;
-}
-
-.postImgs img {
-  height: inherit;
-  width: inherit;
-
+.postImg {
+  width: 100%;
   object-fit: contain;
 }
 
@@ -53,10 +41,6 @@
   padding: 0.25rem;
 
   border-top: 1px solid black;
-}
-
-.actions * {
-  font-size: 1.5rem;
 }
 
 .likes {

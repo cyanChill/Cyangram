@@ -1,0 +1,24 @@
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.25rem;
+
+  font-size: 1.5rem;
+}
+
+.mainActions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mainActions div {
+  display: flex;
+  align-items: center;
+}
+
+.settings {
+}
