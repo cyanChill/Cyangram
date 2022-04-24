@@ -1,0 +1,67 @@
+/* For (Singular) User Component */
+.userContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.25rem;
+}
+
+/* Contains Information about User */
+.infoContainer {
+  width: calc(100vw - 7rem);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.img {
+  height: 2.5rem;
+  width: 2.5rem;
+
+  padding: 0.25rem;
+
+  border-radius: 50%;
+}
+
+/* User Info (Name & Username) */
+.userInfo {
+  width: 90%;
+  font-size: 0.95rem;
+}
+
+.userInfo a {
+  display: inline-block;
+  vertical-align: bottom;
+
+  max-width: calc(100% - 0.75rem) !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font-weight: 500;
+}
+
+.userInfo p {
+  padding: 0;
+  margin: 0;
+
+  font-size: 0.9rem;
+  color: var(--grey-600);
+
+  max-width: calc(100% - 0.75rem);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Actions */
+.actions {
+  width: 4.25rem;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid black;
+}
