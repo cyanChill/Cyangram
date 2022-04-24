@@ -7,7 +7,7 @@ import {
 } from "react-icons/ai";
 import { IoSearchOutline, IoSearchSharp } from "react-icons/io5";
 import { HiUserCircle, HiOutlineUserCircle } from "react-icons/hi";
-import NavLink from "../misc/navlink";
+import NavLink from "../misc/links/navlink";
 
 import classes from "./main-navigation.module.css";
 

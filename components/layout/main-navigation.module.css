@@ -1,10 +1,12 @@
 .navbar {
   width: 100vw;
 
-  position: absolute;
+  position: fixed;
   bottom: 0;
 
   border-top: 1px solid black;
+  background-color: white; /* Make dynamic for light/dark mode */
+  z-index: 100;
 }
 
 .navbar ul {
