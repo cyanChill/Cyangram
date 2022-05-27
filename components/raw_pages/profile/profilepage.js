@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { MdOutlineArrowBack } from "react-icons/md";
+import { IoSettingsSharp } from "react-icons/io5";
 
-import PostGrid from "../../components/posts/post_grid/post_grid";
-import Button from "../../components/form_elements/button";
+import PostGrid from "../../posts/post_grid/post_grid";
+import Button from "../../form_elements/button";
 import classes from "./profilepage.module.css";
 
 const UserProfilePage = ({ userData, ownProfile }) => {
@@ -15,10 +16,19 @@ const UserProfilePage = ({ userData, ownProfile }) => {
     <div className={classes.profile}>
       {/* Header bar */}
       <header>
-        {/* If this is the user's profile, don't show the back button*/}
-        {!ownProfile && <MdOutlineArrowBack onClick={() => router.back()} />}
+        <div>
+          {/* If this is the user's profile, don't show the back button*/}
+          {!ownProfile && <MdOutlineArrowBack onClick={() => router.back()} />}
 
-        <span className={classes.name}>{user.username}</span>
+          <span className={classes.name}>{user.username}</span>
+        </div>
+
+        {ownProfile && (
+          <IoSettingsSharp
+            className={classes.setting}
+            onClick={() => router.push(`/accounts/settings`)}
+          />
+        )}
       </header>
 
       {/* Profile Picture + User Stats */}
