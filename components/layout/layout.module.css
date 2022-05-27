@@ -1,3 +1,10 @@
+.layout {
+  max-width: var(--max-app-width);
+}
+
 .children {
+  width: 100vw;
+  max-width: var(--max-app-width);
+
   padding-bottom: var(--nav-height);
 }
