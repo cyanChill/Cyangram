@@ -20,5 +20,11 @@
   align-items: center;
 }
 
+.mainActions:hover,
+.settings:hover,
+.extra:hover {
+  cursor: pointer;
+}
+
 .settings {
 }

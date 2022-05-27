@@ -46,7 +46,7 @@ const PostActions = ({ postId, isOwner, settings, liked }) => {
   const extras = settings ? (
     <OwnerSettings />
   ) : (
-    <AiOutlineShareAlt onClick={sendToClipboard} />
+    <AiOutlineShareAlt className={classes.extra} onClick={sendToClipboard} />
   );
 
   return (
