@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
-import Card from "../ui/card";
+import Card from "../ui/card/card";
 
 import classes from "./authStyles.module.css";
 

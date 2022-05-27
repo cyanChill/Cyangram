@@ -6,8 +6,8 @@
 */
 import { getSession } from "next-auth/react";
 
-import ErrorPage from "../../components/misc/errorpage";
-import UserProfilePage from "../../components/profile/profilepage";
+import ErrorPage from "../../components/raw_pages/error/errorpage";
+import UserProfilePage from "../../components/raw_pages/profile/profilepage";
 
 const ProfilePage = ({ errorCode, userData, ownProfile }) => {
   if (errorCode) {
