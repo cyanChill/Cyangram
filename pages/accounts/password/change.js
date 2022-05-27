@@ -1,3 +1,0 @@
-/* 
-  Password Changing Page
-*/
