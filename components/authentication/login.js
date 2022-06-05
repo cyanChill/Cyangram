@@ -47,53 +47,56 @@ const Login = () => {
   };
 
   return (
-    <div className={classes.wrapper}>
-      <Card className={classes["main-content-wrapper"]}>
-        <div className={classes.logo}>
-          <Image
-            className={classes.logo}
-            src="/images/assets/instagram-logo.png"
-            alt="Instagram logo"
-            width="210"
-            height="75"
-            responsive="true"
-          />
-        </div>
+    <div className={classes.containerWrap}>
+      <div className={classes.wrapper}>
+        <Card className={classes["main-content-wrapper"]}>
+          <div className={classes.logo}>
+            <Image
+              className={classes.logo}
+              src="/images/assets/instagram-logo.png"
+              alt="Instagram logo"
+              width="210"
+              height="75"
+              responsive="true"
+            />
+          </div>
 
-        <form onSubmit={loginHandler}>
-          <FormInput
-            type="text"
-            placeholder="Username or Email"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <FormInput
-            type="password"
-            placeholder="Password"
-            minLength="6"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type="submit"
-            disabled={!canSubmit}
-            style={{ margin: "1rem 0" }}
-          >
-            Log in
-          </Button>
-        </form>
-      </Card>
+          <form onSubmit={loginHandler}>
+            <FormInput
+              type="text"
+              placeholder="Username"
+              minLength="3"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <FormInput
+              type="password"
+              placeholder="Password"
+              minLength="6"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button
+              type="submit"
+              disabled={!canSubmit}
+              style={{ margin: "1rem 0" }}
+            >
+              Log in
+            </Button>
+          </form>
+        </Card>
 
-      <Card className={classes.redirect}>
-        <p className="center">
-          Don&apos;t have an account?{" "}
-          <Link href="/accounts/emailsignup">
-            <a className={classes.link}>Sign up</a>
-          </Link>
-        </p>
-      </Card>
+        <Card className={classes.redirect}>
+          <p className="center">
+            Don&apos;t have an account?{" "}
+            <Link href="/accounts/signup">
+              <a className={classes.link}>Sign up</a>
+            </Link>
+          </p>
+        </Card>
+      </div>
     </div>
   );
 };
