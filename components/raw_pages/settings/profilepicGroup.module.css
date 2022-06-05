@@ -1,0 +1,33 @@
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Containers Profile Picture */
+.imgContainer {
+  width: 50%;
+  max-width: 10rem;
+}
+
+.imgContainer img {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Contains the Set/Remove Buttons */
+.profileActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 568px) {
+  .profileContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,10 @@
+.wrapper {
+  padding: 0.5rem;
+}
+
+.alignRight {
+  display: flex;
+  flex-direction: row-reverse;
+
+  padding: 0.25rem 0;
+}

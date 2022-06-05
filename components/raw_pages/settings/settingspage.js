@@ -1,27 +1,35 @@
 /* 
-  - Private Profile Option
-  - Delete Account
-*/
-
-/* 
-  Edit Profile Page
+  Group 1:
     - Change Profile Picture
     - Change Name
-    - Change UserName
+    - Change Username
     - Change Bio
-    - Change Email
+
+  Group 2:
+    - Change Password
+
+  Group 3:
+    - Delete Account
 */
 
-/* 
-  Password Changing Page
-*/
+import GeneralGroup from "./generalGroup";
+import PasswordGroup from "./passwordGroup";
+import DeleteGroup from "./deleteGroup";
 
 import classes from "./settingspage.module.css";
+import ProfilePicGroup from "./profilepicGroup";
 
-const UserSettingsPage = () => {
+const UserSettingsPage = ({ userData }) => {
   return (
-    <div>
-      <h1>Test</h1>
+    <div className={classes.wrapper}>
+      <h1>Settings</h1>
+      <ProfilePicGroup userData={userData} />
+      <hr />
+      <GeneralGroup userData={userData} />
+      <hr />
+      <PasswordGroup />
+      <hr />
+      <DeleteGroup />
     </div>
   );
 };
