@@ -1,11 +1,11 @@
 import { useSession } from "next-auth/react";
+import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import {
-  AiFillHome,
-  AiOutlineHome,
-  AiFillHeart,
-  AiOutlineHeart,
-} from "react-icons/ai";
-import { IoSearchOutline, IoSearchSharp } from "react-icons/io5";
+  IoSearchOutline,
+  IoSearchSharp,
+  IoCreateOutline,
+  IoCreate,
+} from "react-icons/io5";
 import { HiUserCircle, HiOutlineUserCircle } from "react-icons/hi";
 import NavLink from "../misc/links/navlink";
 
@@ -32,8 +32,8 @@ const MainNavigation = (props) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/follow-requests" activeEl={<AiFillHeart />}>
-            <AiOutlineHeart />
+          <NavLink to="/create" activeEl={<IoCreate />}>
+            <IoCreateOutline />
           </NavLink>
         </li>
         <li>
