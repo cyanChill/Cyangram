@@ -16,12 +16,7 @@ export default NextAuth({
         await dbConnect();
 
         const user = await User.findOne(
-          {
-            $or: [
-              { email: credentials.username },
-              { username: credentials.username },
-            ],
-          },
+          { username: credentials.username },
           "+password"
         );
 
@@ -39,6 +34,8 @@ export default NextAuth({
           the 'session' object
         */
         return {
+          dbId: user._id,
+          name: user.name,
           username: user.username,
         };
       },
@@ -49,8 +46,27 @@ export default NextAuth({
       if (user) token.user = user;
       return token;
     },
-    session: async ({ session, token, user }) => {
+    session: async ({ session, token }) => {
       session.user = token.user;
+
+      /*
+        If user is logged in, refresh session [in case we change] the values
+        of name or username in our settings page
+      */
+      if (token?.user?.dbId) {
+        const user = await User.findOne({ _id: token.user.dbId });
+        session.user = {
+          ...session.user,
+          name: user.name,
+          username: user.username,
+        };
+        token.user = {
+          ...token.user,
+          name: user.name,
+          username: user.username,
+        };
+      }
+
       return session;
     },
   },
