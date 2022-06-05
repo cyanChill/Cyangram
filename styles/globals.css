@@ -1,4 +1,7 @@
 :root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --mobile-break-point: 568px;
   --max-app-width: 45rem;
   --nav-height: 4rem;
 
@@ -32,8 +35,7 @@ body {
   padding: 0;
   margin: 0;
 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
+  font-family: var(--font-family);
   background-color: var(--off-white-500);
 }
 
