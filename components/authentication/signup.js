@@ -26,15 +26,17 @@ const SignUp = () => {
   useEffect(() => {
     // 30 >= username length >= 3 & password length >= 6
     if (
-      username.trim() > 2 &&
-      username.trim() < 31 &&
-      password.trim().length > 5
+      username.trim().length > 2 &&
+      username.trim().length < 31 &&
+      password.trim().length > 5 &&
+      !errors.username &&
+      !errors.password
     ) {
       setCanSubmit(true);
     } else {
       setCanSubmit(false);
     }
-  }, [username, password]);
+  }, [username, password, errors]);
 
   const isUnused = async (e) => {
     const type = e.target.name;
@@ -51,8 +53,6 @@ const SignUp = () => {
         username: true,
         extraUsernameMsg: "This username has already been used.",
       }));
-    } else if (res.status === 404) {
-      return;
     } else {
       setErrors((prev) => ({
         ...prev,
@@ -74,7 +74,7 @@ const SignUp = () => {
     let trimUser = username.trim();
 
     // Basic checks if user somehow messes with the page to submit (bypassing validation)
-    if (usernameFriendly(trimUser) || password.trim().length < 6) {
+    if (!usernameFriendly(trimUser) || password.trim().length < 6) {
       /* 
         Display an error (modal perhaps)
       */
@@ -107,6 +107,8 @@ const SignUp = () => {
       }
     } else {
       /* Display an error (modal perhaps) [ie: please reverify your inputs] */
+      const data = await res.json();
+      console.log(data.errMsg);
     }
   };
 

@@ -9,63 +9,53 @@ import Validator, {
 import { hashPassword } from "../../../lib/hash";
 
 const handler = async (req, res) => {
-  const method = req.method;
+  if (req.method !== "POST") return;
 
-  switch (method) {
-    case "POST":
-      const { username, password } = req.body;
+  const { username, password } = req.body;
 
-      // Validate username & password structures
-      const validUsernameStruc = Validator(username, [
-        required,
-        usernameFriendly,
-      ]);
-      const validPassword = Validator(password, [required, minLength(6)]);
+  // Validate username & password structures
+  const validUsernameStruc = Validator(username, [required, usernameFriendly]);
+  const validPassword = Validator(password, [required, minLength(6)]);
 
-      if (!validUsernameStruc || !validPassword) {
-        res.status(422).json({ message: "Invalid inputs." });
-        return;
-      }
-
-      await dbConnect();
-
-      // Validate username to see if they already exist (will never throw an error)
-      const existingUser = await User.findOne({ username: username });
-      if (existingUser) {
-        res.status(409).json({ message: "Username already exists." });
-        return;
-      }
-
-      // Add user to the database
-      const hashedPassword = await hashPassword(password);
-      let newUser;
-
-      try {
-        newUser = await User.create({
-          username,
-          name: username,
-          password: hashedPassword,
-          profilePic: {
-            url: `${process.env.DEFAULT_PROFILEPIC_URL}`,
-            identifier: "default_profile_picture",
-          },
-        });
-      } catch (err) {
-        /* Possible errors include MongoDB storage is full */
-        res.status(500).json({ message: "Internal Server Error." });
-        return;
-      }
-
-      res.status(201).json({
-        message: "Successfully signed up user.",
-        user: { username, name: username, id: newUser._id.toString() },
-      });
-      break;
-
-    default:
-      res.status(400).json({ message: "Invalid Request" });
-      break;
+  if (!validUsernameStruc || !validPassword) {
+    res.status(422).json({ message: "Invalid inputs." });
+    return;
   }
+
+  await dbConnect();
+
+  // Validate username to see if they already exist (will never throw an error)
+  const existingUser = await User.findOne({ username: username });
+  if (existingUser) {
+    res.status(409).json({ message: "Username already exists." });
+    return;
+  }
+
+  // Add user to the database
+  const hashedPassword = await hashPassword(password);
+  let newUser;
+
+  try {
+    newUser = await User.create({
+      username: username,
+      name: username,
+      password: hashedPassword,
+      bio: "",
+      profilePic: {
+        url: `${process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_URL}`,
+        identifier: "default_profile_picture",
+      },
+    });
+  } catch (err) {
+    /* Possible errors include MongoDB storage is full */
+    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
+    return;
+  }
+
+  res.status(201).json({
+    message: "Successfully signed up user.",
+    user: { username, name: username, id: newUser._id.toString() },
+  });
 };
 
 export default handler;
