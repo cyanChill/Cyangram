@@ -11,20 +11,20 @@ const PostPreview = ({ postInfo }) => {
   return (
     <div
       className={classes.post}
-      onClick={() => router.push(`p/${postInfo.postId}`)}
+      onClick={() => router.push(`p/${postInfo._id}`)}
     >
       <div className={classes.overlay}>
         <div>
           <AiFillHeart />
-          <span>{postInfo.likeCnt}</span>
+          <span>{postInfo.likes}</span>
         </div>
         <div>
           <FaComment className={classes.iconflip} />
-          <span>{postInfo.commentCnt}</span>
+          <span>{postInfo.comments}</span>
         </div>
       </div>
       <Image
-        src={postInfo.coverImg}
+        src={postInfo.image.url}
         alt=""
         height={500}
         width={500}
