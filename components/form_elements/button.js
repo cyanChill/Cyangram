@@ -5,13 +5,16 @@ const Button = (props) => {
     outline,
     variant,
     pill,
+    sizeFit,
     className: additClasses,
     style: additStyles,
     disabled,
   } = props;
   const btnClasses = `${classes.btn} ${
     variant && classes[variant]
-  } ${additClasses} ${outline && classes.outline} ${pill && classes.pill}`;
+  } ${additClasses} ${outline && classes.outline} ${pill && classes.pill} ${
+    sizeFit && classes.sizeFit
+  }`;
 
   return (
     <button

@@ -20,6 +20,11 @@
 
 .textarea {
   resize: vertical;
+  font-family: var(--font-family);
+}
+
+.noResize {
+  resize: none;
 }
 
 .input:focus,

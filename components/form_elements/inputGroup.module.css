@@ -1,0 +1,28 @@
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  padding: 0.25rem 0;
+}
+
+.inputGroup.ignoreAlign {
+  align-items: flex-start;
+}
+
+@media (min-width: 568px) {
+  .inputGroup {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .inputGroup label {
+    width: 17.5rem;
+  }
+
+  .inputGroup div {
+    width: calc(100% - 17.5rem);
+    padding: 0;
+  }
+}

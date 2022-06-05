@@ -7,6 +7,7 @@ const FormInput = React.forwardRef((props, ref) => {
     type: inputType,
     className: additClasses,
     rows: numRows,
+    noResize,
     errMsg,
     hasErr,
     ...rest
@@ -24,7 +25,9 @@ const FormInput = React.forwardRef((props, ref) => {
       <div className={classes.wrapper}>
         <textarea
           ref={ref}
-          className={`${classes.textarea} ${additClasses}`}
+          className={`${classes.textarea} ${additClasses} ${
+            noResize && classes.noResize
+          }`}
           rows={rowCnt}
           {...rest}
         />

@@ -45,6 +45,10 @@
   color: var(--primary);
 }
 
+.sizeFit {
+  width: max-content;
+}
+
 .primary {
   --primary: #0095f6;
   --hover: #0078c9;
