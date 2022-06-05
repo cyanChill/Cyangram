@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0.5rem;
+}
+
+/* Button + Where the Uploaded Image Preview is Displayed */
+.selectImg {
+  width: 80vw;
+  height: 80vw;
+
+  background-position: center;
+  background-size: cover;
+  align-self: center;
+
+  border: none;
+  text-align: center;
+}
+
+.selectImg:hover {
+  cursor: pointer;
+  background-color: #e7e7e7;
+}
+
+/* Hide the actual form input for files */
+.selectImgInput {
+  display: none;
+}
+
+.iconSize {
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* Assorted Form Classes */
+.descriptionGroup {
+  padding: 1rem 0.25rem;
+}
+
+.label {
+  font-weight: 500;
+}
+
+.alignRight {
+  display: flex;
+  flex-direction: row-reverse;
+
+  padding: 0.25rem 0;
+}
+
+@media (min-width: 568px) {
+  .selectImg {
+    max-width: 20rem;
+    max-height: 20rem;
+  }
+}
