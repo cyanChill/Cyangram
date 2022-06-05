@@ -2,7 +2,6 @@ import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 
 import Validator, {
-  isEmail,
   required,
   usernameFriendly,
   minLength,
@@ -14,30 +13,26 @@ const handler = async (req, res) => {
 
   switch (method) {
     case "POST":
-      const { email, username, password } = req.body;
+      const { username, password } = req.body;
 
-      // Validate email, username, password structures
-      const validEmailStruc = Validator(email, [isEmail, required]);
+      // Validate username & password structures
       const validUsernameStruc = Validator(username, [
         required,
         usernameFriendly,
       ]);
       const validPassword = Validator(password, [required, minLength(6)]);
 
-      if (!validEmailStruc || !validUsernameStruc || !validPassword) {
+      if (!validUsernameStruc || !validPassword) {
         res.status(422).json({ message: "Invalid inputs." });
         return;
       }
 
       await dbConnect();
 
-      // Validate email & username to see if they already exist (will never throw an error)
-      const existingUser = await User.findOne({
-        $or: [{ email: email }, { username: username }],
-      });
-
+      // Validate username to see if they already exist (will never throw an error)
+      const existingUser = await User.findOne({ username: username });
       if (existingUser) {
-        res.status(409).json({ message: "Username or email already exists." });
+        res.status(409).json({ message: "Username already exists." });
         return;
       }
 
@@ -48,8 +43,12 @@ const handler = async (req, res) => {
       try {
         newUser = await User.create({
           username,
-          email,
+          name: username,
           password: hashedPassword,
+          profilePic: {
+            url: `${process.env.DEFAULT_PROFILEPIC_URL}`,
+            identifier: "default_profile_picture",
+          },
         });
       } catch (err) {
         /* Possible errors include MongoDB storage is full */
@@ -59,7 +58,7 @@ const handler = async (req, res) => {
 
       res.status(201).json({
         message: "Successfully signed up user.",
-        user: { username, email, id: newUser._id.toString() },
+        user: { username, name: username, id: newUser._id.toString() },
       });
       break;
 
