@@ -5,27 +5,27 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a username."],
     unique: true,
-    minlength: [1, "Usernames can't be less than 1 character."],
+    minlength: [3, "Usernames can't be less than 3 character."],
     maxlength: [30, "Usernames can't be more than 30 characters."],
   },
-  email: {
+  name: {
     type: String,
-    required: [true, "Please provide an email."],
-    unique: true,
+    minlength: [3, "Usernames can't be less than 3 character."],
+    maxlength: [30, "Usernames can't be more than 30 characters."],
   },
   password: {
     type: String,
     required: [true, "Please provide a hashed password."],
     select: false,
   },
-  privateProfile: {
-    type: Boolean,
-    default: false,
+  bio: String,
+  profilePic: {
+    url: { type: String, required: [true, "Please provide a img url."] },
+    identifier: {
+      type: String,
+      required: [true, "Please provide an img identifier in Firebase."],
+    },
   },
-  following: [mongoose.Schema.Types.ObjectId],
-  /* 
-    Some other stuff including profile image (url or file id)
-  */
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
