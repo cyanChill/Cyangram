@@ -18,7 +18,12 @@ const UserProfilePage = ({ userData, ownProfile }) => {
       <header>
         <div>
           {/* If this is the user's profile, don't show the back button*/}
-          {!ownProfile && <MdOutlineArrowBack onClick={() => router.back()} />}
+          {!ownProfile && (
+            <MdOutlineArrowBack
+              className={classes.hoverCursor}
+              onClick={() => router.back()}
+            />
+          )}
 
           <span className={classes.name}>{user.username}</span>
         </div>
@@ -34,7 +39,7 @@ const UserProfilePage = ({ userData, ownProfile }) => {
       {/* Profile Picture + User Stats */}
       <section>
         <Image
-          src={user.image}
+          src={user.profilePic.url}
           alt={`${user.name}'s Profile Picture`}
           width={80}
           height={80}
@@ -64,12 +69,12 @@ const UserProfilePage = ({ userData, ownProfile }) => {
       <p className={classes.bio}>{user.bio}</p>
 
       {/* Action Buttons */}
-      <div className={classes.actions}>
-        <Button>Follow</Button>
-        <Button variant="transparent" outline>
-          Message
-        </Button>
-      </div>
+      {/* TODO: Add condition to show the corect button if we're following/not following */}
+      {!ownProfile && (
+        <div className={classes.actions}>
+          <Button>Follow</Button>
+        </div>
+      )}
 
       {/* Posts */}
       <PostGrid posts={userData.posts} />

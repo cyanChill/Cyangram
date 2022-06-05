@@ -26,20 +26,24 @@ export const getServerSideProps = async (context) => {
   const res = await fetch(`${process.env.NEXTAUTH_URL}api/users/${username}`);
   const errorCode = res.ok ? false : res.status;
 
+  if (errorCode) {
+    return { props: { errorCode } };
+  }
+
   // Process the data fetched
   const data = await res.json();
   console.log(data);
 
-  // Dummy profile data:
+  // Dummy profile data (should add dates to the posts):
   const userData = {
+    /* Can Access: */
     user: {
       name: "Test User",
       username: "TestUser",
-      image: "https://randomuser.me/api/portraits/women/19.jpg",
+      profilePic: "https://randomuser.me/api/portraits/women/19.jpg",
       bio: "This is a test bio for the user. This is a test bio for the user. This is a test bio for the user. This is a test bio for the user.",
     },
-    followerCnt: 1337,
-    followingCnt: 69,
+    /* Semi Avaliable (Likes & Comments aren't "live") */
     posts: [
       {
         postId: "p1",
@@ -56,11 +60,17 @@ export const getServerSideProps = async (context) => {
         commentCnt: 39,
       },
     ],
+    /* Can't Access Currently */
+    followerCnt: 1337,
+    followingCnt: 69,
   };
+
+  // Replacing the fields with data fetched from our api
+  userData.user = data.user;
+  userData.posts = data.posts;
 
   return {
     props: {
-      errorCode,
       userData,
       ownProfile: session.user.username === username,
     },
