@@ -5,130 +5,84 @@
   Post Page (With Comments and Such):
     - Can probably reuse the "post_excerpt.js" component as the basis (as it has the likes & description stuff)
 */
-const DUMMY_POST = {
-  postId: "p1",
-  uploader: {
-    username: "michaelPhelps",
-    profilePic: "https://randomuser.me/api/portraits/women/19.jpg",
-  },
-  postImg:
-    "https://d279m997dpfwgl.cloudfront.net/wp/2020/05/pencil-standardized-test.jpg",
-  /*
-  postImgs: [
-    "https://d279m997dpfwgl.cloudfront.net/wp/2020/05/pencil-standardized-test.jpg",
-  ],
-  */
-  description: "This is a test post",
-  likeCnt: 100,
-  postDate: 1619583459,
-};
+import { useState } from "react";
+import Image from "next/image";
 
-const DUMMY_COMMENTS = [
-  {
-    commentId: "c1",
-    poster: {
-      id: "u1",
-      username: "TestUser1sdfgggggggggggggggggggggggggggggggggg",
-      image: "https://randomuser.me/api/portraits/men/19.jpg",
-    },
-    content: "This is a test comment for this post from Test User 1",
-    commentDate: 1650050000, // April 15, 2022
-  },
-  {
-    commentId: "c2",
-    poster: {
-      id: "u2",
-      username: "JohnDoe",
-      image: "https://randomuser.me/api/portraits/men/44.jpg",
-    },
-    content: "Hello, this is John Doe",
-    commentDate: 1636583459, // November 10, 2021
-  },
-  {
-    commentId: "c3",
-    poster: {
-      id: "u3",
-      username: "JaneAdams",
-      image: "https://randomuser.me/api/portraits/women/19.jpg",
-    },
-    content: "Hi there, this is Jane!",
-    commentDate: 1622853459, // June 4, 2021
-  },
-  {
-    commentId: "c4",
-    poster: {
-      id: "u3",
-      username: "BobDylan",
-      image: "https://randomuser.me/api/portraits/men/60.jpg",
-    },
-    content: "Hi there, this is Jane!",
-    commentDate: 1622853459, // June 4, 2021
-  },
-  {
-    commentId: "c5",
-    poster: {
-      id: "u3",
-      username: "WilliamWallace",
-      image: "https://randomuser.me/api/portraits/men/91.jpg",
-    },
-    content: "Hi there, this is Jane!",
-    commentDate: 1622853459, // June 4, 2021
-  },
-  {
-    commentId: "c6",
-    poster: {
-      id: "u3",
-      username: "JohnSmith",
-      image: "https://randomuser.me/api/portraits/men/10.jpg",
-    },
-    content: "Hi there, this is Jane!",
-    commentDate: 1622853459, // June 4, 2021
-  },
-];
-
+import { timeSince } from "../../lib/time";
 import Comment from "./comment/comment";
 import PostActions from "./actions/post_actions";
 import Username from "../misc/links/usernameLink";
-
-import { timeSince } from "../../lib/time";
-
-import classes from "./post.module.css";
 import BackHeader from "../ui/backheader/backHeader";
 
-const PostPage = () => {
-  const postedSince = timeSince(DUMMY_POST.postDate);
+import classes from "./post.module.css";
+
+/* 
+  TODO:
+    - Style the commenting field
+    - Have functioning commenting
+*/
+
+const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
+  const username = postData.posterInfo.username;
+  const postedSince = timeSince(postData.date);
+
+  const [numLikes, setNumLikes] = useState(postData.likes.length);
+
+  const focusCommentField = () => {
+    document.getElementById("commentField").focus();
+  };
+
+  const handleLikes = (action) => {
+    if (action === "ADD") {
+      setNumLikes((prev) => prev + 1);
+    } else if (action === "SUB") {
+      setNumLikes((prev) => prev - 1);
+    }
+  };
 
   return (
     <div>
       {/* Where we put the back button & name of poster */}
-      <BackHeader
-        text={DUMMY_POST.uploader.username}
-        linkPath={`/${DUMMY_POST.uploader.username}`}
-      />
+      <BackHeader text={username} linkPath={`/${username}`} />
 
       {/* Images (Gallary Component?) */}
-      <img src={DUMMY_POST.postImg} className={classes.postImg} />
+      <Image
+        src={postData.image.url}
+        alt={`Post by ${username}`}
+        className={classes.postImg}
+        width="500"
+        height="500"
+        layout="responsive"
+        priority
+      />
 
       {/* Post Description */}
-      {DUMMY_POST.description.trim() && (
+      {!!postData.description.trim() && (
         <p className={classes.postDescription}>
-          <Username username={DUMMY_POST.uploader.username} />
-          {DUMMY_POST.description}
+          <Username username={username} />
+          {postData.description}
         </p>
       )}
       <hr />
 
       {/* Div with scrollable containing comments */}
       <div className={classes.commentContainer}>
-        {DUMMY_COMMENTS.map((comment) => (
-          <Comment key={comment.commentId} comment={comment} />
+        {postData.comments.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
         ))}
       </div>
 
       {/* Like button, "comment, share" buttons, settings drop down */}
-      <PostActions postId={DUMMY_POST.postId} settings />
+      <PostActions
+        postId={postData._id}
+        settings
+        handleComment={focusCommentField}
+        handleLike={handleLikes}
+        liked={hasLiked}
+        viewerId={viewerId}
+      />
       {/* Like Count - display list of people who liked in different window*/}
-      <p className={classes.likeCount}>{DUMMY_POST.likeCnt} Likes</p>
+      <p className={classes.likeCount}>{numLikes} Likes</p>
 
       {/* Since since posted */}
       <p className={classes.postedSince}>{postedSince}</p>
@@ -137,7 +91,7 @@ const PostPage = () => {
 
       {/* Comment field */}
       <div className={classes.commentField}>
-        <input type="text" placeholder="Add a comment..." />
+        <input id="commentField" type="text" placeholder="Add a comment..." />
 
         {/* Disable the following if the textfield is empty */}
         <span>Post</span>
@@ -147,5 +101,3 @@ const PostPage = () => {
 };
 
 export default PostPage;
-
-export const getServerSideProps = async (context) => {};
