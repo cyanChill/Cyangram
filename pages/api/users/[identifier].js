@@ -36,7 +36,9 @@ const handler = async (req, res) => {
       */
 
       /* Fetching Posts */
-      const userPosts = await Post.find({ posterId: existingUser._id });
+      const userPosts = await Post.find({ posterId: existingUser._id }).sort({
+        date: "-1",
+      });
 
       /* Fetch info such as comments & likes counts for each posts*/
       const informizePosts = async (post) => {
@@ -56,9 +58,7 @@ const handler = async (req, res) => {
       };
 
       /* Sorts posts from date of creation (newests to oldest) */
-      const promises = userPosts
-        .sort((a, b) => b.date - a.date)
-        .map((post) => informizePosts(post));
+      const promises = userPosts.map((post) => informizePosts(post));
 
       return Promise.all(promises)
         .then((postsData) => {
