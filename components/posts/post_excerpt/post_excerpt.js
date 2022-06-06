@@ -23,7 +23,7 @@ const PostExcerpt = ({ post }) => {
 
       <img src={postImg} className={classes.postImg} />
 
-      <PostActions postId={postId} />
+      <PostActions postId={postId} redirectPost />
 
       <span className={classes.likes}>{likeCnt} Likes</span>
 
