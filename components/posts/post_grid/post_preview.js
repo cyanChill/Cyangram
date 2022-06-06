@@ -29,6 +29,7 @@ const PostPreview = ({ postInfo }) => {
         height={500}
         width={500}
         layout="responsive"
+        priority
       />
     </div>
   );

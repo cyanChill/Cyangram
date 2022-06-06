@@ -9,7 +9,7 @@ const PostGrid = ({ posts }) => {
   return (
     <div className={classes.container}>
       {posts.map((post) => (
-        <PostPreview key={post.postId} postInfo={post} />
+        <PostPreview key={post._id} postInfo={post} />
       ))}
     </div>
   );

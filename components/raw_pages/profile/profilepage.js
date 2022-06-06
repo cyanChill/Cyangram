@@ -43,6 +43,7 @@ const UserProfilePage = ({ userData, ownProfile }) => {
           alt={`${user.name}'s Profile Picture`}
           width={80}
           height={80}
+          priority
         />
         <div>
           <p>

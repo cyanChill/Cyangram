@@ -42,7 +42,7 @@ const NewPostPage = ({ userId }) => {
     const imgUploadRes = await uploadBytes(imgRef, imageUpload);
     const downloadURL = await getDownloadURL(imgUploadRes.ref);
 
-    const res = await fetch("/api/post/create", {
+    const res = await fetch("/api/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
