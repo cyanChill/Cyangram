@@ -46,16 +46,15 @@ const handler = async (req, res) => {
         identifier: "default_profile_picture",
       },
     });
+
+    res.status(201).json({
+      message: "Successfully signed up user.",
+      user: { username, name: username, id: newUser._id.toString() },
+    });
   } catch (err) {
     /* Possible errors include MongoDB storage is full */
     res.status(500).json({ message: "Internal Server Error.", errMsg: err });
-    return;
   }
-
-  res.status(201).json({
-    message: "Successfully signed up user.",
-    user: { username, name: username, id: newUser._id.toString() },
-  });
 };
 
 export default handler;

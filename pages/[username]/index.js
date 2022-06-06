@@ -32,7 +32,6 @@ export const getServerSideProps = async (context) => {
 
   // Process the data fetched
   const data = await res.json();
-  console.log(data);
 
   // Dummy profile data (should add dates to the posts):
   const userData = {
@@ -43,7 +42,6 @@ export const getServerSideProps = async (context) => {
       profilePic: "https://randomuser.me/api/portraits/women/19.jpg",
       bio: "This is a test bio for the user. This is a test bio for the user. This is a test bio for the user. This is a test bio for the user.",
     },
-    /* Semi Avaliable (Likes & Comments aren't "live") */
     posts: [
       {
         postId: "p1",

@@ -5,7 +5,7 @@ const LikeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Please provide a postId."],
   },
-  liker: {
+  likerId: {
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Please provide a liker userId."],
   },

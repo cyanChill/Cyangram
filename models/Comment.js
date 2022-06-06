@@ -9,10 +9,8 @@ const CommentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Please provide a commenterId."],
   },
-  content: {
-    type: String,
-    required: [true, "Please provide a comment."],
-  },
+  content: { type: String, required: [true, "Please provide a comment."] },
+  date: { type: Number, required: [true, "Please provide a date (in ms)."] },
 });
 
 export default mongoose.models.Comment ||
