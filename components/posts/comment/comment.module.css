@@ -18,13 +18,16 @@
   align-items: center;
 }
 
-.profileImg {
+.profileImgContainer {
   height: 2rem;
   width: 2rem;
 
   padding: 0.25rem;
+}
 
+.rounded {
   border-radius: 50%;
+  overflow: hidden;
 }
 
 .content {
@@ -32,6 +35,10 @@
 
   font-size: 0.95rem;
   margin: 0;
+}
+
+.commentText {
+  color: var(--grey-800);
 }
 
 .posterName {

@@ -18,12 +18,6 @@ import FormInput from "../form_elements/forminput";
 
 import classes from "./post.module.css";
 
-/* 
-  TODO:
-    - Style the commenting field
-    - Have functioning commenting
-*/
-
 const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
   const postId = postData._id;
   const username = postData.posterInfo.username;
@@ -98,10 +92,20 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
 
       {/* Post Description */}
       {!!postData.description.trim() && (
-        <p className={classes.postDescription}>
-          <Username username={username} />
-          {postData.description}
-        </p>
+        <div className={classes.postDescription}>
+          <div className={classes.profilePicContainer}>
+            <Image
+              src={postData.posterInfo.profilePic.url}
+              alt={`${postData.posterInfo.username} profile pic`}
+              height="500"
+              width="500"
+              layout="responsive"
+              className={classes.rounded}
+            />
+          </div>
+          <Username username={username} className={classes.usernameLink} />
+          <p>{postData.description}</p>
+        </div>
       )}
 
       {/* Div with scrollable containing comments */}

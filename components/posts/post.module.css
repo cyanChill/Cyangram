@@ -5,23 +5,43 @@
 }
 
 /* Post Description */
+
 .postDescription {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
   margin: 0;
-  padding: 0.25rem;
+  padding: 0.5rem 0.25rem;
 
   font-size: 0.95rem;
-  color: var(--grey-600);
+  color: var(--grey-800);
 
   border-bottom: 1px solid var(--grey-600);
 }
 
-.postDescription a {
+.postDescription .usernameLink {
   padding-right: 0.25rem;
-}
-
-.postDescription span {
   font-weight: 500;
   color: black;
+}
+
+.postDescription p {
+  margin: 0;
+}
+
+/* Profile Picture Stuff */
+.profilePicContainer {
+  height: 2rem;
+  width: 2rem;
+
+  padding: 0.25rem;
+}
+
+.rounded {
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 /* Containing Containing all the comments */

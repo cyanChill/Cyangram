@@ -32,20 +32,20 @@ const Comment = ({ comment }) => {
   return (
     <div className={classes.comment}>
       <div className={classes.commentContent}>
-        <div className={classes.profileImg}>
+        <div className={classes.profileImgContainer}>
           <Image
             src={profilePic.url}
             alt={`${username}'s Profile Picture`}
             width="500"
             height="500"
             layout="responsive"
-            priority
+            className={classes.rounded}
           />
         </div>
 
         <p className={classes.content}>
           <Username className={classes.posterName} username={username} />{" "}
-          <span>{content}</span>
+          <span className={classes.commentText}>{content}</span>
         </p>
       </div>
 
