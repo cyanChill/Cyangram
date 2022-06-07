@@ -75,9 +75,6 @@ const handler = async (req, res) => {
             errMsg: err,
           });
         });
-    default:
-      res.status(400).json({ message: "Invalid Request" });
-      return;
   }
 };
 

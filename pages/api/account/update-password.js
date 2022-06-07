@@ -49,13 +49,10 @@ const handler = async (req, res) => {
       { username: username },
       { $set: { password: newHashedPassword } }
     );
+    res.status(200).json({ message: "Password Updated Successfully." });
   } catch (err) {
-    /* Possible errors include MongoDB storage is full */
-    res.status(500).json({ message: "Internal Server Error." });
-    return;
+    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
   }
-
-  res.status(200).json({ message: "Password Updated Successfully." });
 };
 
 export default handler;

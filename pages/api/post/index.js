@@ -36,8 +36,7 @@ const handler = async (req, res) => {
     await Post.create(postEntry);
     res.status(200).json({ message: "Post Created Successfully." });
   } catch (err) {
-    /* Possible errors include MongoDB storage is full */
-    res.status(500).json({ message: "Internal Server Error." });
+    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
   }
 };
 

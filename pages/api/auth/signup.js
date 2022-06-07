@@ -52,7 +52,6 @@ const handler = async (req, res) => {
       user: { username, name: username, id: newUser._id.toString() },
     });
   } catch (err) {
-    /* Possible errors include MongoDB storage is full */
     res.status(500).json({ message: "Internal Server Error.", errMsg: err });
   }
 };

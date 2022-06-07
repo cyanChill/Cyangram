@@ -63,15 +63,12 @@ const handler = async (req, res) => {
       { _id: user._id },
       { $set: { name: newName, username: newUsername, bio: newBio } }
     );
+    res
+      .status(200)
+      .json({ message: "General Profile Settings Updated Successfully." });
   } catch (err) {
-    // Possible errors include MongoDB storage is full
-    res.status(500).json({ message: "Internal Server Error." });
-    return;
+    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
   }
-
-  res
-    .status(200)
-    .json({ message: "General Profile Settings Updated Successfully." });
 };
 
 export default handler;

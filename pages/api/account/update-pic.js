@@ -45,13 +45,10 @@ const handler = async (req, res) => {
       { _id: user._id },
       { $set: { profilePic: newProfilePicObj } }
     );
+    res.status(200).json({ message: "Profile Picture Successfully Updated." });
   } catch (err) {
-    /* Possible errors include MongoDB storage is full */
-    res.status(500).json({ message: "Internal Server Error." });
-    return;
+    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
   }
-
-  res.status(200).json({ message: "Profile Picture Successfully Updated." });
 };
 
 export default handler;

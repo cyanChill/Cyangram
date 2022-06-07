@@ -36,10 +36,8 @@ const handler = async (req, res) => {
           likerId: likerId,
           postId: postId,
         });
-
         res.status(200).json({ message: "Successfully Liked Post" });
       } catch (err) {
-        /* Possible errors include MongoDB storage is full */
         res
           .status(500)
           .json({ message: "Internal Server Error.", errMsg: err });
@@ -53,7 +51,6 @@ const handler = async (req, res) => {
         });
         res.status(200).json({ message: "Successfully Unliked Post" });
       } catch (err) {
-        /* Possible errors include MongoDB storage is full */
         res
           .status(500)
           .json({ message: "Internal Server Error.", errMsg: err });

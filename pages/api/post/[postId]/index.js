@@ -51,14 +51,16 @@ const handler = async (req, res) => {
 
       return Promise.all(promises)
         .then((commentsData) => {
+          const finalizedPostData = {
+            ...postInfo._doc,
+            posterInfo,
+            likes: postLikes,
+            comments: commentsData,
+          };
+
           res.status(200).json({
             message: "Successfully obtained post data.",
-            post: {
-              ...postInfo._doc,
-              posterInfo,
-              likes: postLikes,
-              comments: commentsData,
-            },
+            post: finalizedPostData,
           });
         })
         .catch((err) => {
