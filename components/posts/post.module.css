@@ -11,6 +11,8 @@
 
   font-size: 0.95rem;
   color: var(--grey-600);
+
+  border-bottom: 1px solid var(--grey-600);
 }
 
 .postDescription a {
@@ -45,26 +47,39 @@
   color: var(--grey-600);
 }
 
+/* Statistics Field */
+.statistics {
+  padding: 0.25rem;
+}
+
 /* Comments Field */
 .commentField {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 0.25rem;
 
-  padding: 0.25rem;
+  padding: 0.35rem;
+
+  border-top: 1px solid var(--grey-300);
 }
 
 .commentField input {
   width: 100%;
 
-  font-size: 0.95rem;
+  font-size: 1rem;
   border: none;
   outline: none;
+  color: var(--grey-700);
 }
 
-.commentField span {
-  padding-left: 0.25rem;
-  font-weight: 500;
-  color: blue;
+.commentField .postBtn {
+  font-weight: 550;
+  text-align: center;
+  color: var(--blue-400);
+}
+
+.commentField .postBtn:disabled {
+  opacity: 0.5;
 }

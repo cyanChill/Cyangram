@@ -13,6 +13,8 @@ import Comment from "./comment/comment";
 import PostActions from "./actions/post_actions";
 import Username from "../misc/links/usernameLink";
 import BackHeader from "../ui/backheader/backHeader";
+import Button from "../form_elements/button";
+import FormInput from "../form_elements/forminput";
 
 import classes from "./post.module.css";
 
@@ -23,10 +25,14 @@ import classes from "./post.module.css";
 */
 
 const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
+  const postId = postData._id;
   const username = postData.posterInfo.username;
   const postedSince = timeSince(postData.date);
 
+  const [commentField, setCommentField] = useState("");
+
   const [numLikes, setNumLikes] = useState(postData.likes.length);
+  const [comments, setComments] = useState(postData.comments);
 
   const focusCommentField = () => {
     document.getElementById("commentField").focus();
@@ -40,21 +46,55 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
     }
   };
 
+  const handleCommentSubmit = async () => {
+    if (commentField.trim().length === 0) {
+      console.log("Cannot submit empty comment.");
+      return;
+    }
+
+    /* TODO: Safeguard the contents we're submitting (check it's not malicious/need censoring) */
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/comment`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          commenterId: viewerId,
+          comment: commentField.trim(),
+        }),
+      }
+    );
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log(`An error has occurred: ${data.nessage}`);
+      return;
+    }
+
+    console.log("Successfully added comment to post");
+    setComments((prev) => [...prev, data.comment]);
+    setCommentField("");
+  };
+
   return (
     <div>
       {/* Where we put the back button & name of poster */}
       <BackHeader text={username} linkPath={`/${username}`} />
 
-      {/* Images (Gallary Component?) */}
-      <Image
-        src={postData.image.url}
-        alt={`Post by ${username}`}
-        className={classes.postImg}
-        width="500"
-        height="500"
-        layout="responsive"
-        priority
-      />
+      <div>
+        <Image
+          src={postData.image.url}
+          alt={`Post by ${username}`}
+          className={classes.postImg}
+          width="500"
+          height="500"
+          layout="responsive"
+          priority
+        />
+      </div>
 
       {/* Post Description */}
       {!!postData.description.trim() && (
@@ -63,38 +103,51 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
           {postData.description}
         </p>
       )}
-      <hr />
 
       {/* Div with scrollable containing comments */}
       <div className={classes.commentContainer}>
-        {postData.comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+        {comments.map((comment) => (
+          <Comment key={comment._id} comment={comment} />
         ))}
       </div>
 
       {/* Like button, "comment, share" buttons, settings drop down */}
       <PostActions
-        postId={postData._id}
+        postId={postId}
         settings
-        handleComment={focusCommentField}
-        handleLike={handleLikes}
-        liked={hasLiked}
+        likeBtnAction={handleLikes}
+        commentBtnAction={focusCommentField}
+        hasLiked={hasLiked}
         viewerId={viewerId}
       />
-      {/* Like Count - display list of people who liked in different window*/}
-      <p className={classes.likeCount}>{numLikes} Likes</p>
 
-      {/* Since since posted */}
-      <p className={classes.postedSince}>{postedSince}</p>
-
-      <hr />
+      <div className={classes.statistics}>
+        <p className={classes.likeCount}>{numLikes} Likes</p>
+        <p className={classes.postedSince}>{postedSince}</p>
+      </div>
 
       {/* Comment field */}
       <div className={classes.commentField}>
-        <input id="commentField" type="text" placeholder="Add a comment..." />
+        <FormInput
+          id="commentField"
+          name="commentField"
+          type="text"
+          placeholder="Add a comment..."
+          required
+          value={commentField}
+          onChange={(e) => setCommentField(e.target.value)}
+          noExternalPadding
+        />
 
         {/* Disable the following if the textfield is empty */}
-        <span>Post</span>
+        <Button
+          variant="clear"
+          className={classes.postBtn}
+          disabled={!commentField}
+          onClick={handleCommentSubmit}
+        >
+          Post
+        </Button>
       </div>
     </div>
   );

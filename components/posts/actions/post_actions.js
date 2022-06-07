@@ -12,13 +12,13 @@ const PostActions = ({
   isOwner,
   settings,
   redirectPost,
-  liked,
-  handleComment,
-  handleLike,
+  likeBtnAction,
+  commentBtnAction,
+  hasLiked,
   viewerId,
 }) => {
   const router = useRouter();
-  const [isLiked, setIsLiked] = useState(liked);
+  const [isLiked, setIsLiked] = useState(hasLiked);
 
   const updateLike = async () => {
     let method = "POST";
@@ -49,7 +49,7 @@ const PostActions = ({
     /* 
       Add animation for when we change like icons
     */
-    handleLike(method === "POST" ? "ADD" : "SUB");
+    likeBtnAction(method === "POST" ? "ADD" : "SUB");
     // After updating server-side, we update client-side
     setIsLiked((prevLike) => !prevLike);
   };
@@ -80,7 +80,7 @@ const PostActions = ({
         <div onClick={updateLike}>
           {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
         </div>
-        <FaRegComment onClick={redirectPost ? gotoPost : handleComment} />
+        <FaRegComment onClick={redirectPost ? gotoPost : commentBtnAction} />
       </div>
 
       {extras}

@@ -17,24 +17,28 @@ import classes from "./comment.module.css";
 
 const Comment = ({ comment }) => {
   const {
-    ownComment,
-    poster: { username, image },
+    commenterInfo: { username, profilePic },
     content,
-    commentDate, // In Epoch Time
+    date, // In Epoch Time
+    ownComment,
   } = comment;
 
-  if (!comment) {
+  if (!comment || !content) {
     return null;
   }
 
-  const postSince = timeSince(commentDate);
+  const postSince = timeSince(date);
 
   return (
     <div className={classes.comment}>
       <div className={classes.commentContent}>
-        <img
-          src={image}
+        <Image
+          src={profilePic.url}
           alt={`${username}'s Profile Picture`}
+          width="500"
+          height="500"
+          layout="responsive"
+          priority
           className={classes.profileImg}
         />
 
