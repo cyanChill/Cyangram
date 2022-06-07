@@ -34,7 +34,7 @@ const handler = async (req, res) => {
       const informizeComments = async (comment) => {
         let commenterInfo;
         try {
-          commenterInfo = await User.find({ _id: comment.commenterId });
+          commenterInfo = await User.findById(comment.commenterId);
         } catch (err) {
           return Promise.reject(err);
         }
