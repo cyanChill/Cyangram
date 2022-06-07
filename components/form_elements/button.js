@@ -10,11 +10,9 @@ const Button = (props) => {
     style: additStyles,
     disabled,
   } = props;
-  const btnClasses = `${classes.btn} ${
-    variant && classes[variant]
-  } ${additClasses} ${outline && classes.outline} ${pill && classes.pill} ${
-    sizeFit && classes.sizeFit
-  }`;
+  const btnClasses = `${classes.btn} ${variant && classes[variant]}  ${
+    outline && classes.outline
+  } ${pill && classes.pill} ${sizeFit && classes.sizeFit} ${additClasses}`;
 
   return (
     <button

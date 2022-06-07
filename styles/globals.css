@@ -11,11 +11,15 @@
 
   --off-white-500: #fafafa;
   --off-white-505: #f9f9f9;
+  --off-white-600: #eeeeee;
   --off-white-800: #dbdbdb;
   --off-white-900: #bebebe;
 
   --grey-300: #c9c9ca;
   --grey-600: #8e8e92;
+  --grey-700: #757575;
+
+  --blue-400: #1ea1f7;
 }
 
 *,

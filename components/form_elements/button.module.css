@@ -68,3 +68,8 @@
   --primary: var(--grey-600);
   --hover: var(--off-white-900);
 }
+
+.clear {
+  --primary: transparent;
+  --hover: var(--off-white-600);
+}
