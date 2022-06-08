@@ -44,3 +44,7 @@
   align-items: center;
   gap: 0.25rem;
 }
+
+.logoutBtn {
+  color: var(--red-500);
+}

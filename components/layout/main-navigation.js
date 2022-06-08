@@ -101,7 +101,10 @@ const MainNavigation = (props) => {
 
             {/* Option to Logout */}
             <DropDownItem>
-              <div className={classes.alignCenter} onClick={signOut}>
+              <div
+                className={`${classes.alignCenter} ${classes.logoutBtn}`}
+                onClick={signOut}
+              >
                 <IoLogOutOutline /> <span>Logout</span>
               </div>
             </DropDownItem>
