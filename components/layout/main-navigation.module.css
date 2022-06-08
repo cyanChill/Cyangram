@@ -23,3 +23,24 @@
 .navbar li {
   font-size: 1.5rem;
 }
+
+/* For Special Button w/ Dropdown */
+.ddBtn {
+  cursor: pointer;
+}
+
+.ddBtn ul {
+  padding: 0;
+}
+
+.ddBtn li {
+  font-size: 1.15rem;
+  padding: 0.25rem 1rem;
+}
+
+.alignCenter {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
