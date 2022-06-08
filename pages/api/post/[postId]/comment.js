@@ -7,6 +7,7 @@ import Comment from "../../../../models/Comment";
 
 const handler = async (req, res) => {
   const method = req.method;
+  const { postId } = req.query;
 
   if (method !== "POST" && method !== "DELETE") {
     return;
@@ -15,19 +16,17 @@ const handler = async (req, res) => {
   const session = await getSession({ req: req });
   const commenterId = session.user.dbId;
 
-  const { postId } = req.query;
-
   await dbConnect();
 
   const postExists = await Post.findById(postId);
   if (!postExists) {
-    res.status(404).json({ message: "Post Not Found" });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
   const userExists = await User.findById(commenterId);
   if (!userExists) {
-    res.status(404).json({ message: "User Not Found" });
+    res.status(404).json({ message: "User not found" });
     return;
   }
 
@@ -47,7 +46,7 @@ const handler = async (req, res) => {
         const commenterInfo = await User.findById(commenterId);
 
         res.status(200).json({
-          message: "Successfully Commented on Post",
+          message: "Successfully commented on post",
           comment: { ...result._doc, commenterInfo },
         });
       } catch (err) {
@@ -63,20 +62,20 @@ const handler = async (req, res) => {
       const commentInfo = await Comment.findById(commentId);
 
       if (!commentInfo) {
-        res.status(404).json({ message: "Comment Not Found" });
+        res.status(404).json({ message: "Comment not found" });
         return;
       }
 
-      if (commentInfo.commenterId !== commenterId) {
+      if (commentInfo.commenterId != commenterId) {
         res
           .status(401)
-          .json({ message: "You Cannot Delete A Comment You Have not Made." });
+          .json({ message: "You cannot delete a comment you have not made." });
         return;
       }
 
       try {
         await Comment.findByIdAndDelete(commentId);
-        res.status(200).json({ message: "Successfully Deleted Comment" });
+        res.status(200).json({ message: "Successfully deleted comment" });
       } catch (err) {
         res
           .status(500)

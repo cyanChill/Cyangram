@@ -66,5 +66,21 @@
   color: var(--grey-600);
 }
 
-.settings {
+/* Dropdown Styles */
+.ddContainer {
+  position: relative;
+  z-index: 20;
+}
+
+.ddTrigger {
+  vertical-align: bottom;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  color: var(--red-500);
 }
