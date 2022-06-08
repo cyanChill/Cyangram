@@ -37,6 +37,7 @@
 
 /* Profile Picture Stuff */
 .profilePicContainer {
+  align-self: flex-start;
   height: 2rem;
   width: 2rem;
 

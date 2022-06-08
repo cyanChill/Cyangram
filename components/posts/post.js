@@ -111,8 +111,10 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
               className={classes.rounded}
             />
           </div>
-          <Username username={username} className={classes.usernameLink} />
-          <p>{postData.description}</p>
+          <p>
+            <Username username={username} className={classes.usernameLink} />
+            <span>{postData.description}</span>
+          </p>
         </div>
       )}
 
