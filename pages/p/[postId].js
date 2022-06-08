@@ -38,11 +38,10 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       postData: data.post,
-      ownPost: session.user.dbId === data.posterId,
+      ownPost: session.user.dbId === data.post.posterId,
       hasLiked: !!data.post.likes.find(
         (likeInfo) => likeInfo.likerId === session.user.dbId
       ),
-      viewerId: session.user.dbId,
     },
   };
 };

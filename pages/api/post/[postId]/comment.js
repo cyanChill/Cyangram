@@ -1,3 +1,5 @@
+import { getSession } from "next-auth/react";
+
 import dbConnect from "../../../../lib/dbConnect";
 import User from "../../../../models/User";
 import Post from "../../../../models/Post";
@@ -5,8 +7,15 @@ import Comment from "../../../../models/Comment";
 
 const handler = async (req, res) => {
   const method = req.method;
+
+  if (method !== "POST" && method !== "DELETE") {
+    return;
+  }
+
+  const session = await getSession({ req: req });
+  const commenterId = session.user.dbId;
+
   const { postId } = req.query;
-  const commenterId = req.body.commenterId;
 
   await dbConnect();
 

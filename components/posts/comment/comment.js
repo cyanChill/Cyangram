@@ -8,6 +8,7 @@
   OR this can be the singular comment and we just iterate in the "post.js"
   file
 */
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import Username from "../../misc/links/usernameLink";
@@ -19,15 +20,19 @@ const Comment = ({ comment }) => {
   const {
     commenterInfo: { username, profilePic },
     content,
-    date, // In Epoch Time
     ownComment,
   } = comment;
+
+  const [postSince, setPostSince] = useState("");
+
+  useEffect(() => {
+    const date = comment.date;
+    setPostSince(timeSince(date));
+  }, []);
 
   if (!comment || !content) {
     return null;
   }
-
-  const postSince = timeSince(date);
 
   return (
     <div className={classes.comment}>

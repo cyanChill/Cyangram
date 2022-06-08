@@ -5,7 +5,7 @@
   Post Page (With Comments and Such):
     - Can probably reuse the "post_excerpt.js" component as the basis (as it has the likes & description stuff)
 */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import { timeSince } from "../../lib/time";
@@ -18,15 +18,20 @@ import FormInput from "../form_elements/forminput";
 
 import classes from "./post.module.css";
 
-const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
+const PostPage = ({ postData, ownPost, hasLiked }) => {
   const postId = postData._id;
   const username = postData.posterInfo.username;
-  const postedSince = timeSince(postData.date);
 
   const [commentField, setCommentField] = useState("");
 
   const [numLikes, setNumLikes] = useState(postData.likes.length);
   const [comments, setComments] = useState(postData.comments);
+  const [postedSince, setPostedSince] = useState("");
+
+  useEffect(() => {
+    const date = postData.date;
+    setPostedSince(timeSince(date));
+  }, []);
 
   const focusCommentField = () => {
     document.getElementById("commentField").focus();
@@ -56,7 +61,6 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          commenterId: viewerId,
           comment: commentField.trim(),
         }),
       }
@@ -121,8 +125,8 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
         settings
         likeBtnAction={handleLikes}
         commentBtnAction={focusCommentField}
+        isOwner={ownPost}
         hasLiked={hasLiked}
-        viewerId={viewerId}
       />
 
       <div className={classes.statistics}>
@@ -158,3 +162,5 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
 };
 
 export default PostPage;
+
+
