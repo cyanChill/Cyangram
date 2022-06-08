@@ -18,7 +18,7 @@ import FormInput from "../form_elements/forminput";
 
 import classes from "./post.module.css";
 
-const PostPage = ({ postData, ownPost, hasLiked }) => {
+const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
   const postId = postData._id;
   const username = postData.posterInfo.username;
 
@@ -35,6 +35,10 @@ const PostPage = ({ postData, ownPost, hasLiked }) => {
 
   const focusCommentField = () => {
     document.getElementById("commentField").focus();
+  };
+
+  const removeComment = (id) => {
+    setComments(comments.filter((comment) => comment._id !== id));
   };
 
   const handleLikes = (action) => {
@@ -115,7 +119,13 @@ const PostPage = ({ postData, ownPost, hasLiked }) => {
       {/* Div with scrollable containing comments */}
       <div className={classes.commentContainer}>
         {comments.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
+          <Comment
+            key={comment._id}
+            postId={postId}
+            comment={comment}
+            viewerId={viewerId}
+            handleRemove={removeComment}
+          />
         ))}
       </div>
 
@@ -162,5 +172,3 @@ const PostPage = ({ postData, ownPost, hasLiked }) => {
 };
 
 export default PostPage;
-
-

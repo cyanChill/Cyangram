@@ -74,7 +74,6 @@ const handler = async (req, res) => {
         });
     case "DELETE":
       const session = await getSession({ req: req });
-
       if (!session) {
         res.status(401).json({ message: "User is not authenticated" });
         return;

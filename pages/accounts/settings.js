@@ -14,11 +14,8 @@ export default SettingsPage;
 // Fetches username, name, and bio of user for settings page
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
-
   if (!session) {
-    return {
-      redirect: { destination: "/accounts/login" },
-    };
+    return { redirect: { destination: "/accounts/login" } };
   }
 
   // Fetch from server user profile data

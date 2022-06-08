@@ -7,14 +7,14 @@ import Like from "../../../../models/Like";
 
 const handler = async (req, res) => {
   const method = req.method;
+  const { postId } = req.query;
 
   if (method !== "POST" && method !== "DELETE") {
     return;
   }
+
   const session = await getSession({ req: req });
   const likerId = session.user.dbId;
-
-  const { postId } = req.query;
 
   await dbConnect();
 

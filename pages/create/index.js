@@ -11,11 +11,8 @@ export default CreatePostPage;
 // Returns UserId
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
-
   if (!session) {
-    return {
-      redirect: { destination: "/accounts/login" },
-    };
+    return { redirect: { destination: "/accounts/login" } };
   }
 
   return { props: { userId: session.user.dbId } };

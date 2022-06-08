@@ -23,6 +23,10 @@ export default UserPostPage;
 
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
+  if (!session) {
+    return { redirect: { destination: "/accounts/login" } };
+  }
+
   const { postId } = context.params;
   // Fetch from server user profile data
   const res = await fetch(`${process.env.NEXTAUTH_URL}api/post/${postId}`);
@@ -42,6 +46,7 @@ export const getServerSideProps = async (context) => {
       hasLiked: !!data.post.likes.find(
         (likeInfo) => likeInfo.likerId === session.user.dbId
       ),
+      viewerId: session.user.dbId,
     },
   };
 };

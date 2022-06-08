@@ -51,8 +51,6 @@
 /* Containing Containing all the comments */
 .commentContainer {
   max-height: 50vh;
-
-  overflow: auto;
 }
 
 /* Like Count */

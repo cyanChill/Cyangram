@@ -31,10 +31,7 @@ const PostActions = ({
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/like`,
-      {
-        method: method,
-        headers: { "Content-Type": "application/json" },
-      }
+      { method: method }
     );
 
     if (!res.ok) {
@@ -108,7 +105,7 @@ const OwnerSettings = ({ postId, isOwner }) => {
 
   return (
     <div onClick={() => setddDisplayStatus((prev) => !prev)}>
-      <BiDotsHorizontalRounded id="settingsBtn" className={classes.ddTrigger} />
+      <BiDotsHorizontalRounded className={classes.ddTrigger} />
       <DropDownMenu
         arrowPosition="right"
         openFromDirection="bottom"
