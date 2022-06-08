@@ -1,0 +1,12 @@
+.ddItem {
+  list-style: none;
+  padding: 0.25rem 1rem;
+}
+
+.active {
+  background-color: var(--grey-100);
+}
+
+.ddItem:hover {
+  cursor: pointer;
+}

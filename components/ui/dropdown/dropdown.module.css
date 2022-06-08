@@ -1,0 +1,60 @@
+.ddWrapper {
+  display: none;
+  position: relative;
+  z-index: 10;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ddWrapper.visible {
+  display: flex;
+  justify-content: center;
+}
+
+.ddMenu {
+  display: flex;
+  flex-direction: column;
+
+  width: max-content;
+  position: absolute;
+  z-index: inherit;
+
+  padding: 0;
+  margin: 0;
+
+  font-size: 1.2rem;
+  border-radius: 0.15rem;
+  background: var(--off-white-505);
+  box-shadow: 1px 1px 0.65rem var(--shadow-clr-500);
+}
+
+.arrow {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  position: absolute;
+  z-index: 11;
+
+  background: var(--off-white-505);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* Where the arrow appears in the dropdown */
+.ddMenu.arrowLeft {
+  transform: translateX(35%);
+}
+
+.ddMenu.arrowRight {
+  transform: translateX(-35%);
+}
+
+/* Direction dropdown Opens */
+.openTop .arrow {
+  transform: translateY(-300%) rotate(45deg);
+}
+
+.openTop .ddMenu {
+  bottom: 2.53rem;
+}
