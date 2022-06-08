@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -12,6 +13,8 @@ import Button from "../../form_elements/button";
 import classes from "./newpostpage.module.css";
 
 const NewPostPage = ({ userId }) => {
+  const router = useRouter();
+
   const [imageUpload, setImageUpload] = useState(null);
   const [description, setDescription] = useState("");
 
@@ -53,6 +56,8 @@ const NewPostPage = ({ userId }) => {
       }),
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
       await deleteImg(userId, imgIdentifier);
       console.log("Failed to create post");
@@ -60,15 +65,7 @@ const NewPostPage = ({ userId }) => {
     }
 
     console.log("Successfully created post");
-    /*
-      Some sort of success alert. Then, either:
-        - Stay on this page (and clear all fields)
-        - Redirect to homepage
-    */
-    setImageUpload(null);
-    setDescription("");
-    document.getElementById("postImg").style.removeProperty("background-image");
-    document.getElementById("add-icon").style.removeProperty("display");
+    router.replace(`/p/${data.postId}`);
   };
 
   return (
