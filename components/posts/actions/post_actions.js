@@ -1,9 +1,13 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-
-import { AiFillHeart, AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlineDelete } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
+
+import { deleteImg } from "../../../lib/firebaseHelpers";
+import DropDownMenu from "../../ui/dropdown/dropdown";
+import DropDownItem from "../../ui/dropdown/dropdownitem";
+import SharePostBtn from "./sharepostbtn";
 
 import classes from "./post_actions.module.css";
 
@@ -15,7 +19,6 @@ const PostActions = ({
   likeBtnAction,
   commentBtnAction,
   hasLiked,
-  viewerId,
 }) => {
   const router = useRouter();
   const [isLiked, setIsLiked] = useState(hasLiked);
@@ -30,10 +33,7 @@ const PostActions = ({
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/like`,
       {
         method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ likerId: viewerId }),
+        headers: { "Content-Type": "application/json" },
       }
     );
 
@@ -60,18 +60,10 @@ const PostActions = ({
     }
   };
 
-  const sendToClipboard = () => {
-    navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/p/${postId}`
-    );
-    /* Display mini alert saying we've copied link to clipboard */
-    console.log("Copied post link to clipboard");
-  };
-
   const extras = settings ? (
-    <OwnerSettings />
+    <OwnerSettings postId={postId} isOwner={isOwner} />
   ) : (
-    <AiOutlineShareAlt className={classes.extra} onClick={sendToClipboard} />
+    <SharePostBtn postId={postId} />
   );
 
   return (
@@ -90,10 +82,51 @@ const PostActions = ({
 
 export default PostActions;
 
-const OwnerSettings = () => {
-  /* 
-    "..." component which reveals dropdown with extra settings
-    (ie: delete post)
-  */
-  return <div className={classes.settings}>...</div>;
+/* TODO: Add modal for deletion confirmation */
+const OwnerSettings = ({ postId, isOwner }) => {
+  const router = useRouter();
+
+  const [ddDisplayStatus, setddDisplayStatus] = useState(false);
+
+  const handlePostDelete = async () => {
+    const res = await fetch(`/api/post/${postId}`, {
+      method: "DELETE",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log("Failed to delete post");
+      console.log(data.errMsg);
+    } else {
+      deleteImg(data.postOwnerId, data.postImgId);
+      console.log("Deleted Post");
+      /* TODO: Add alert saying post was deleted */
+      router.replace("/");
+    }
+  };
+
+  return (
+    <div onClick={() => setddDisplayStatus((prev) => !prev)}>
+      <BiDotsHorizontalRounded id="settingsBtn" className={classes.ddTrigger} />
+      <DropDownMenu
+        arrowPosition="right"
+        openFromDirection="bottom"
+        display={ddDisplayStatus}
+      >
+        <DropDownItem>
+          <SharePostBtn postId={postId}>Share</SharePostBtn>
+        </DropDownItem>
+        {isOwner && (
+          <DropDownItem
+            className={classes.deleteBtn}
+            onClick={handlePostDelete}
+          >
+            <AiOutlineDelete />
+            <span>Delete Post</span>
+          </DropDownItem>
+        )}
+      </DropDownMenu>
+    </div>
+  );
 };

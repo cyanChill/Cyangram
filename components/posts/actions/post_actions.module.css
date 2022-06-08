@@ -21,10 +21,22 @@
 }
 
 .mainActions:hover,
-.settings:hover,
-.extra:hover {
+.settings:hover {
   cursor: pointer;
 }
 
 .settings {
+}
+
+/* Dropdown Button Styling */
+.ddTrigger {
+  cursor: pointer;
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  color: var(--red-500);
 }

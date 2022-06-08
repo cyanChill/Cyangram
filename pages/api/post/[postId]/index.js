@@ -3,6 +3,8 @@
   edit description]
 */
 
+import { getSession } from "next-auth/react";
+
 import dbConnect from "../../../../lib/dbConnect";
 import User from "../../../../models/User";
 import Post from "../../../../models/Post";
@@ -71,7 +73,35 @@ const handler = async (req, res) => {
           });
         });
     case "DELETE":
-      return;
+      const session = await getSession({ req: req });
+
+      if (!session) {
+        res.status(401).json({ message: "User is not authenticated" });
+        return;
+      }
+
+      if (session.user.dbId != postInfo.posterId) {
+        res.status(401).json({ message: "User does not own post." });
+        return;
+      }
+
+      /* Deleting post comments & likes */
+      await Like.deleteMany({ postId: postId });
+      await Comment.deleteMany({ postId: postId });
+
+      try {
+        await Post.findByIdAndDelete(postId);
+        res.status(200).json({
+          message: "Successfully deleted post.",
+          postOwnerId: session.user.dbId,
+          postImgId: postInfo.image.identifier,
+        });
+      } catch (err) {
+        res.status(500).json({
+          message: "A problem has occurred while deleting post",
+          errMsg: err,
+        });
+      }
   }
 };
 
