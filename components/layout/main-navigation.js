@@ -26,11 +26,11 @@ const MainNavigation = (props) => {
   /* Close dropdown if we click off the dropdown menu*/
   useEffect(() => {
     window.addEventListener("click", (e) => {
-      if (e.target.matches(".ddBtn")) return;
+      if (e.target.id === "navDDBtn") return;
 
       let node = e.target;
       while (!!node && node.tagName !== "HTML") {
-        if (node.matches(".ddBtn")) return;
+        if (node.id === "navDDBtn") return;
         node = node.parentNode;
       }
       setddDisplayStatus(false);
@@ -65,7 +65,8 @@ const MainNavigation = (props) => {
         </li>
 
         <li
-          className={`ddBtn ${classes.ddBtn}`}
+          id="navDDBtn"
+          className={`${classes.ddBtn}`}
           onClick={() => setddDisplayStatus((prev) => !prev)}
         >
           {router.asPath === `/${session.user.username}` ? (
