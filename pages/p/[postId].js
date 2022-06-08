@@ -1,6 +1,4 @@
-/* 
-  Page to display the post, its comments, etc
-*/
+/*  Page to display the post, its comments, etc */
 import { getSession } from "next-auth/react";
 
 import PostPage from "../../components/posts/post";

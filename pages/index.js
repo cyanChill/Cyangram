@@ -1,4 +1,4 @@
-import { getSession, signOut } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import PostExcerpt from "../components/posts/post_excerpt/post_excerpt";
 
 const DUMMY_POST = {
@@ -23,7 +23,6 @@ const HomePage = (props) => {
     <>
       <div>
         <h1>This is the home feed</h1>
-        <button onClick={signOut}>Sign Out</button>
         <PostExcerpt post={DUMMY_POST} />
       </div>
     </>

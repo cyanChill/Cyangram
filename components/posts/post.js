@@ -74,7 +74,7 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
   };
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       {/* Where we put the back button & name of poster */}
       <BackHeader text={username} linkPath={`/${username}`} />
 

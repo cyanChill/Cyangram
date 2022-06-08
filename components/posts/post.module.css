@@ -1,3 +1,7 @@
+.wrapper {
+  padding: 0.5rem;
+}
+
 /* Sizing Post Image to Screen */
 .postImg {
   width: 100%;

@@ -21,6 +21,11 @@ export default ProfilePage;
 
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
+
+  if (!session) {
+    return { redirect: { destination: "/accounts/login" } };
+  }
+
   const { username } = context.params;
   // Fetch from server user profile data
   const res = await fetch(`${process.env.NEXTAUTH_URL}api/users/${username}`);
