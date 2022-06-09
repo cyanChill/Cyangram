@@ -6,13 +6,7 @@
 }
 
 .imgContainer {
-  align-self: flex-start;
-  height: 100%;
-  width: 100%;
-  max-height: 2rem;
-  max-width: 2rem;
-
-  padding: 0.25rem;
+  display: none;
 }
 
 .rounded {
@@ -31,4 +25,17 @@
 
 .textContent {
   color: var(--grey-800);
+}
+
+@media (min-width: 568px) {
+  .imgContainer {
+    display: block;
+    align-self: flex-start;
+    height: 100%;
+    width: 100%;
+    max-height: 2rem;
+    max-width: 2rem;
+
+    padding: 0.25rem;
+  }
 }
