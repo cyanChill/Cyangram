@@ -4,6 +4,7 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineDelete } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 
+import global from "../../../global";
 import { deleteImg } from "../../../lib/firebaseHelpers";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
@@ -35,11 +36,12 @@ const PostActions = ({
     );
 
     if (!res.ok) {
-      console.log(
-        `Something went wrong with ${
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: `Something went wrong with ${
           method === "POST" ? "liking" : "unliking"
-        } the post`
-      );
+        } the post.`,
+      });
       return;
     }
 
@@ -93,12 +95,16 @@ const OwnerSettings = ({ postId, isOwner }) => {
     const data = await res.json();
 
     if (!res.ok) {
-      console.log("Failed to delete post");
-      console.log(data.errMsg);
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: `Failed to delete post (${data.errMsg})`,
+      });
     } else {
       deleteImg(data.postOwnerId, data.postImgId);
-      console.log("Deleted Post");
-      /* TODO: Add alert saying post was deleted */
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.success,
+        content: "Deleted post.",
+      });
       router.replace("/");
     }
   };

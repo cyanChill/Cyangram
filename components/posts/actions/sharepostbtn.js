@@ -1,5 +1,6 @@
 import { AiOutlineShareAlt } from "react-icons/ai";
 
+import global from "../../../global";
 import classes from "./sharepostbtn.module.css";
 
 const SharePostBtn = ({ postId, children }) => {
@@ -7,8 +8,10 @@ const SharePostBtn = ({ postId, children }) => {
     navigator.clipboard.writeText(
       `${process.env.NEXT_PUBLIC_BASE_URL}/p/${postId}`
     );
-    /* Display mini alert saying we've copied link to clipboard or some animation */
-    console.log("Copied post link to clipboard");
+    global.alerts.actions.addAlert({
+      type: global.alerts.types.default,
+      content: "Copied post link to clipboard.",
+    });
   };
 
   return (

@@ -21,7 +21,6 @@
 /* Dropdown Styles */
 .ddContainer {
   position: relative;
-  z-index: 20;
 }
 
 .ddTrigger {

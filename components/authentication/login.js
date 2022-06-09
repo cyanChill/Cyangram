@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 
+import global from "../../global";
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
 import Card from "../ui/card/card";
@@ -38,12 +39,14 @@ const Login = () => {
 
     if (!result.error) {
       // Successfully logged in & redirect
-      console.log("No error");
       router.replace("/");
       return;
     }
 
-    console.log("Failed to log in");
+    global.alerts.actions.addAlert({
+      type: global.alerts.types.error,
+      content: "Failed to log in.",
+    });
   };
 
   return (

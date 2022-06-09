@@ -8,6 +8,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+import global from "../../global";
 import { timeSince } from "../../lib/time";
 import Comment from "./comment/comment";
 import PostActions from "./actions/post_actions";
@@ -51,7 +52,10 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
 
   const handleCommentSubmit = async () => {
     if (commentField.trim().length === 0) {
-      console.log("Cannot submit empty comment.");
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Cannot submit empty comment.",
+      });
       return;
     }
 
@@ -72,11 +76,17 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
     const data = await res.json();
 
     if (!res.ok) {
-      console.log(`An error has occurred: ${data.nessage}`);
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "An error has occurred when submitting your comment.",
+      });
       return;
     }
 
-    console.log("Successfully added comment to post");
+    global.alerts.actions.addAlert({
+      type: global.alerts.types.success,
+      content: "Successfully added comment to post.",
+    });
     setComments((prev) => [...prev, data.comment]);
     setCommentField("");
   };

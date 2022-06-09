@@ -12,6 +12,7 @@ import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
+import global from "../../../global";
 import CommentBody from "./commentBody";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
@@ -36,15 +37,17 @@ const Comment = ({ postId, comment, viewerId, handleRemove }) => {
       body: JSON.stringify({ commentId: commentId }),
     });
 
-    const data = await res.json();
-
     if (!res.ok) {
-      console.log("Failed to delete comment");
-      console.log(data.errMsg);
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Failed to delete comment.",
+      });
     } else {
       handleRemove(commentId);
-      console.log("Deleted comment");
-      /* TODO: Add alert saying comment was deleted */
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.success,
+        content: "Successfully deleted comment.",
+      });
     }
   };
 

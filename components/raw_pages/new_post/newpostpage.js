@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AiOutlinePlus } from "react-icons/ai";
 
+import global from "../../../global";
 import { storage } from "../../../firebase.config";
 import { deleteImg } from "../../../lib/firebaseHelpers";
 import FormInput from "../../form_elements/forminput";
@@ -60,11 +61,17 @@ const NewPostPage = ({ userId }) => {
 
     if (!res.ok) {
       await deleteImg(userId, imgIdentifier);
-      console.log("Failed to create post");
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Failed to create post.",
+      });
       return;
     }
 
-    console.log("Successfully created post");
+    global.alerts.actions.addAlert({
+      type: global.alerts.types.success,
+      content: "Successfully created post.",
+    });
     router.replace(`/p/${data.postId}`);
   };
 

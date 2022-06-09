@@ -1,16 +1,9 @@
-import { useSession } from "next-auth/react";
 import { GrFormClose } from "react-icons/gr";
 
 import global from "../../global";
 import classes from "./alerts.module.css";
 
 const Alerts = () => {
-  const { status } = useSession();
-
-  if (status !== "authenticated") {
-    return null;
-  }
-
   return (
     <div className={classes.alertsWrapper}>
       {global.alerts.state.map((alert) => (
@@ -19,7 +12,11 @@ const Alerts = () => {
           className={`${classes.alert} ${classes[alert.type]}`}
         >
           <div>
-            <span className={classes.alertType}>{alert.type}:</span>{" "}
+            {alert.type !== global.alerts.types.default && (
+              <>
+                <span className={classes.alertType}>{alert.type}:</span>{" "}
+              </>
+            )}
             {alert.content}
           </div>
           <div className={classes.exitIconContainer}>

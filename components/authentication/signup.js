@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 
+import global from "../../global";
 import { usernameFriendly } from "../../lib/validate";
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
@@ -75,10 +76,10 @@ const SignUp = () => {
 
     // Basic checks if user somehow messes with the page to submit (bypassing validation)
     if (!usernameFriendly(trimUser) || password.trim().length < 6) {
-      /* 
-        Display an error (modal perhaps)
-      */
-      console.log("Invalid inputs");
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Invalid inputs.",
+      });
       return;
     }
 
@@ -106,9 +107,10 @@ const SignUp = () => {
         return;
       }
     } else {
-      /* Display an error (modal perhaps) [ie: please reverify your inputs] */
-      const data = await res.json();
-      console.log(data.errMsg);
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Please re-verify your inputs.",
+      });
     }
   };
 

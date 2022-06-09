@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Image from "next/image";
 
+import global from "../../../global";
 import { storage } from "../../../firebase.config";
 import { deleteImg } from "../../../lib/firebaseHelpers";
 import Button from "../../form_elements/button";
@@ -37,7 +38,10 @@ const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
 
       if (!res.ok) {
         await deleteImg(userId, imgIdentifier);
-        console.log("Failed to update profile picture");
+        global.alerts.actions.addAlert({
+          type: global.alerts.types.error,
+          content: "Failed to update profile picture.",
+        });
         return;
       }
 
@@ -50,7 +54,10 @@ const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
         identifier: imgIdentifier,
       });
 
-      console.log("Successfully updated profile picture");
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Successfully updated profile picture.",
+      });
       /* Some sort of success alert. */
       setImageUpload(null);
     };
@@ -71,7 +78,10 @@ const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
 
     if (!res.ok) {
       await deleteImg(userId, imgIdentifier);
-      console.log("Failed to remove profile picture");
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Failed to remove profile picture.",
+      });
       return;
     }
 
@@ -84,8 +94,10 @@ const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
       identifier: "default_profile_picture",
     });
 
-    console.log("Successfully removed profile picture");
-    /* Some sort of success alert. */
+    global.alerts.actions.addAlert({
+      type: global.alerts.types.success,
+      content: "Successfully removed profile picture.",
+    });
   };
 
   return (

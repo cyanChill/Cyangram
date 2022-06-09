@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import global from "../../../global";
 import Button from "../../form_elements/button";
 import Label from "../../form_elements/label";
 import FormInput from "../../form_elements/forminput";
@@ -67,14 +68,18 @@ const GeneralGroup = ({ userData }) => {
     const data = await res.json();
 
     if (res.ok) {
-      /* TODO: Add Success modal/alert */
-      console.log(`Success!: ${data.message}`);
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.success,
+        content: data.message,
+      });
 
       setError({ name: false, username: false });
       setPrevData({ name: name, username: username, bio: bio });
     } else {
-      console.log(`An Error Has Occurred: ${data.message}`);
-      /* TODO: Add error modal/alert */
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: `An Error Has Occurred: ${data.message}`,
+      });
     }
   };
 
