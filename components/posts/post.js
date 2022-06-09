@@ -11,11 +11,10 @@ import Image from "next/image";
 import { timeSince } from "../../lib/time";
 import Comment from "./comment/comment";
 import PostActions from "./actions/post_actions";
-import Username from "../misc/links/usernameLink";
 import BackHeader from "../ui/backheader/backHeader";
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
-import TextBreaker from "../ui/textbreaker/textbreaker";
+import CommentBody from "./comment/commentBody";
 
 import classes from "./post.module.css";
 
@@ -101,21 +100,13 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
 
       {/* Post Description */}
       {!!postData.description.trim() && (
-        <div className={classes.postDescription}>
-          <div className={classes.profilePicContainer}>
-            <Image
-              src={postData.posterInfo.profilePic.url}
-              alt={`${postData.posterInfo.username} profile pic`}
-              height="500"
-              width="500"
-              layout="responsive"
-              className={classes.rounded}
-            />
-          </div>
-          <TextBreaker>
-            <Username username={username} className={classes.usernameLink} />
-            <span>{postData.description}</span>
-          </TextBreaker>
+        <div className={classes.descriptionWrapper}>
+          <CommentBody
+            picUrl={postData.posterInfo.profilePic.url}
+            picAlt={`${postData.posterInfo.username} profile picture`}
+            username={postData.posterInfo.username}
+            textContent={postData.description}
+          />
         </div>
       )}
 

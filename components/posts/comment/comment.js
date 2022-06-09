@@ -9,12 +9,10 @@
   file
 */
 import { useState } from "react";
-import Image from "next/image";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
-import Username from "../../misc/links/usernameLink";
-import TextBreaker from "../../ui/textbreaker/textbreaker";
+import CommentBody from "./commentBody";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 
@@ -52,23 +50,12 @@ const Comment = ({ postId, comment, viewerId, handleRemove }) => {
 
   return (
     <div className={classes.comment}>
-      <div className={classes.commentContent}>
-        <div className={classes.profileImgContainer}>
-          <Image
-            src={profilePic.url}
-            alt={`${username}'s Profile Picture`}
-            width="500"
-            height="500"
-            layout="responsive"
-            className={classes.rounded}
-          />
-        </div>
-
-        <TextBreaker className={classes.content}>
-          <Username className={classes.posterName} username={username} />{" "}
-          <span className={classes.commentText}>{content}</span>
-        </TextBreaker>
-      </div>
+      <CommentBody
+        picUrl={profilePic.url}
+        picAlt={`${username}'s profile picture`}
+        username={username}
+        textContent={content}
+      />
 
       <div className={classes.commentSettings}>
         {/* Dropdown menu for delete option if we made this comment */}
