@@ -15,6 +15,7 @@ import Username from "../misc/links/usernameLink";
 import BackHeader from "../ui/backheader/backHeader";
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
+import TextBreaker from "../ui/textbreaker/textbreaker";
 
 import classes from "./post.module.css";
 
@@ -111,10 +112,10 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
               className={classes.rounded}
             />
           </div>
-          <p>
+          <TextBreaker>
             <Username username={username} className={classes.usernameLink} />
             <span>{postData.description}</span>
-          </p>
+          </TextBreaker>
         </div>
       )}
 

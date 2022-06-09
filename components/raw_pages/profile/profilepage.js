@@ -5,6 +5,8 @@ import { IoSettingsSharp } from "react-icons/io5";
 
 import PostGrid from "../../posts/post_grid/post_grid";
 import Button from "../../form_elements/button";
+import TextBreaker from "../../ui/textbreaker/textbreaker";
+
 import classes from "./profilepage.module.css";
 
 const UserProfilePage = ({ userData, ownProfile }) => {
@@ -67,7 +69,7 @@ const UserProfilePage = ({ userData, ownProfile }) => {
         </div>
       </section>
       <p className={classes.name}>{user.name}</p>
-      <p className={classes.bio}>{user.bio}</p>
+      <TextBreaker className={classes.bio}>{user.bio}</TextBreaker>
 
       {/* Action Buttons */}
       {/* TODO: Add condition to show the corect button if we're following/not following */}

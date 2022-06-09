@@ -1,0 +1,11 @@
+@supports (overflow-wrap: anywhere) {
+  .textBreaker {
+    overflow-wrap: anywhere;
+  }
+}
+
+@supports not (overflow-wrap: anywhere) {
+  .textBreaker {
+    word-break: normal;
+  }
+}
