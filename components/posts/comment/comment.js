@@ -8,13 +8,13 @@
   OR this can be the singular comment and we just iterate in the "post.js"
   file
 */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
 import Username from "../../misc/links/usernameLink";
-import { timeSince } from "../../../lib/time";
+import TextBreaker from "../../ui/textbreaker/textbreaker";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 
@@ -26,13 +26,6 @@ const Comment = ({ postId, comment, viewerId, handleRemove }) => {
     commenterInfo: { username, profilePic },
     content,
   } = comment;
-
-  const [postSince, setPostSince] = useState("");
-
-  useEffect(() => {
-    const date = comment.date;
-    setPostSince(timeSince(date));
-  }, []);
 
   if (!comment || !content) {
     return null;
@@ -71,15 +64,13 @@ const Comment = ({ postId, comment, viewerId, handleRemove }) => {
           />
         </div>
 
-        <p className={classes.content}>
+        <TextBreaker className={classes.content}>
           <Username className={classes.posterName} username={username} />{" "}
           <span className={classes.commentText}>{content}</span>
-        </p>
+        </TextBreaker>
       </div>
 
-      <div className={classes.details}>
-        <div className={classes.timeSince}>{postSince}</div>
-
+      <div className={classes.commentSettings}>
         {/* Dropdown menu for delete option if we made this comment */}
         {viewerId === comment.commenterId && (
           <CommentSettings handleCommentDelete={handleCommentDelete} />
