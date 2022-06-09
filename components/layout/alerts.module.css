@@ -1,0 +1,58 @@
+.alertsWrapper {
+  width: 100%;
+  max-width: var(--max-app-width);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  position: fixed;
+  bottom: 4.25rem;
+
+  font-family: "Source Sans Pro", sans-serif;
+  z-index: 101;
+}
+
+/* Individual Alert */
+.alert {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+
+  padding: 0.25rem 0.5rem;
+
+  border-radius: 0.35rem;
+  background-color: rgba(247, 247, 247, 0.945);
+  border: 1px solid var(--grey-300);
+}
+
+.alertType {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.exitIconContainer:hover {
+  cursor: pointer;
+}
+
+/* Alert Types */
+.default {
+  background-color: rgba(247, 247, 247, 0.945);
+  border: 1px solid var(--grey-300);
+}
+
+.error {
+  background-color: rgba(255, 228, 228, 0.945);
+  border: 1px solid rgb(250, 167, 167);
+}
+
+.success {
+  background-color: rgba(244, 255, 236, 0.945);
+  border: 1px solid rgb(165, 247, 107);
+}
+
+.warning {
+  background-color: rgba(255, 255, 226, 0.945);
+  border: 1px solid rgb(250, 250, 99);
+}
