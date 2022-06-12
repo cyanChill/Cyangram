@@ -12,6 +12,7 @@ import {
 } from "react-icons/io5";
 import { HiUserCircle, HiOutlineUserCircle } from "react-icons/hi";
 
+import { logoutFirebase } from "../../lib/firebaseHelpers";
 import global from "../../global";
 import NavLink from "../misc/links/navlink";
 import DropDownMenu from "../ui/dropdown/dropdown";
@@ -41,6 +42,11 @@ const MainNavigation = () => {
   if (status !== "authenticated") {
     return null;
   }
+
+  const handleLogout = async () => {
+    await logoutFirebase();
+    signOut();
+  };
 
   return (
     <nav className={classes.navbar}>
@@ -102,7 +108,7 @@ const MainNavigation = () => {
             <DropDownItem>
               <div
                 className={`${classes.alignCenter} ${classes.logoutBtn}`}
-                onClick={signOut}
+                onClick={() => handleLogout()}
               >
                 <IoLogOutOutline /> <span>Logout</span>
               </div>

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 
+import { loginInFirebase } from "../../lib/firebaseHelpers";
 import global from "../../global";
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
@@ -39,6 +40,7 @@ const Login = () => {
 
     if (!result.error) {
       // Successfully logged in & redirect
+      await loginInFirebase();
       router.replace("/");
       return;
     }
