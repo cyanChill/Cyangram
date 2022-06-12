@@ -30,6 +30,7 @@ const PostPreview = ({ postInfo }) => {
         width={500}
         layout="responsive"
         priority
+        className={classes.previewImg}
       />
     </div>
   );

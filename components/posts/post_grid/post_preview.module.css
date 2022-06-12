@@ -36,3 +36,7 @@
 .iconflip {
   transform: rotateY(180deg);
 }
+
+.previewImg {
+  object-fit: cover;
+}
