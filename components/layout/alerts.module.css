@@ -10,7 +10,7 @@
   bottom: 4.25rem;
 
   font-family: "Source Sans Pro", sans-serif;
-  z-index: 101;
+  z-index: calc(var(--top-z) + 1);
 }
 
 /* Individual Alert */
@@ -24,7 +24,8 @@
 
   border-radius: 0.35rem;
   background-color: rgba(247, 247, 247, 0.945);
-  border: 1px solid var(--grey-300);
+  border: var(--border);
+  color: black;
 }
 
 .alertType {
@@ -39,7 +40,7 @@
 /* Alert Types */
 .default {
   background-color: rgba(247, 247, 247, 0.945);
-  border: 1px solid var(--grey-300);
+  border: var(--border);
 }
 
 .error {

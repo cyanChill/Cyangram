@@ -1,28 +1,28 @@
 .btn {
-  --primary: #0095f6;
-  --accent: white;
-  --hover: #0078c9;
+  --btn-primary: #0095f6;
+  --btn-accent: white;
+  --btn-hover: #0078c9;
 
   padding: 0.5rem 1rem;
 
   border-radius: 0.5rem;
-  border: 1px solid var(--primary);
+  border: 1px solid var(--btn-primary);
 
-  background-color: var(--primary);
-  color: var(--accent);
+  background-color: var(--btn-primary);
+  color: var(--btn-accent);
 
   font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .btn:hover {
   cursor: pointer;
-  background-color: var(--hover);
+  background-color: var(--btn-hover);
 }
 
 .btn.outline:hover {
   cursor: pointer;
-  background-color: var(--hover);
-  color: var(--accent);
+  background-color: var(--btn-hover);
+  color: var(--btn-accent);
 }
 
 .btn:disabled {
@@ -32,7 +32,7 @@
       rgba(255, 255, 255, 0.65),
       rgba(255, 255, 255, 0.65)
     )
-    var(--primary);
+    var(--btn-primary);
   border: 1px solid transparent;
 }
 
@@ -42,7 +42,7 @@
 
 .outline {
   background-color: transparent;
-  color: var(--primary);
+  color: var(--btn-primary);
 }
 
 .sizeFit {
@@ -50,26 +50,26 @@
 }
 
 .primary {
-  --primary: #0095f6;
-  --hover: #0078c9;
+  --btn-primary: #0095f6;
+  --btn-hover: #0078c9;
 }
 
 .error {
-  --primary: #f5554d;
-  --hover: #df362e;
+  --btn-primary: #f5554d;
+  --btn-hover: #df362e;
 }
 
 .success {
-  --primary: #6ace5e;
-  --hover: #46c738;
+  --btn-primary: #6ace5e;
+  --btn-hover: #46c738;
 }
 
 .transparent {
-  --primary: var(--grey-600);
-  --hover: var(--off-white-900);
+  --btn-primary: var(--grey-600);
+  --btn-hover: var(--off-white-900);
 }
 
 .clear {
-  --primary: transparent;
-  --hover: var(--off-white-600);
+  --btn-primary: transparent;
+  --btn-hover: var(--off-white-600);
 }

@@ -10,7 +10,7 @@ const SharePostBtn = ({ postId, children }) => {
     );
     global.alerts.actions.addAlert({
       type: global.alerts.types.default,
-      content: "Copied post link to clipboard.",
+      content: "Copied link to clipboard.",
     });
   };
 

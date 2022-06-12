@@ -13,7 +13,6 @@ import { timeSince } from "../../lib/time";
 import Comment from "./comment/comment";
 import PostActions from "./actions/post_actions";
 import BackHeader from "../ui/backheader/backHeader";
-import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
 import CommentBody from "./comment/commentBody";
 
@@ -162,14 +161,14 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
         />
 
         {/* Disable the following if the textfield is empty */}
-        <Button
+        <span
           variant="clear"
           className={classes.postBtn}
           disabled={!commentField}
           onClick={handleCommentSubmit}
         >
           Post
-        </Button>
+        </span>
       </div>
     </div>
   );

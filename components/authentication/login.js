@@ -56,7 +56,9 @@ const Login = () => {
           <div className={classes.logo}>
             <Image
               className={classes.logo}
-              src="/images/assets/instagram-logo.png"
+              src={`/images/assets/instagram-logo${
+                global.theme.state === global.theme.types.DARK ? "-dark" : ""
+              }.png`}
               alt="Instagram logo"
               width="210"
               height="75"

@@ -1,8 +1,8 @@
 .card {
   padding: 1rem;
 
-  background-color: white;
-  border: 1px solid var(--off-white-800);
+  background-color: var(--surface);
+  border: var(--border);
 }
 
 .rounded {

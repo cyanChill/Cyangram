@@ -13,7 +13,7 @@
   width: 100%;
   margin: 0;
   padding: 0.5rem 0.25rem;
-  border-bottom: 1px solid var(--grey-600);
+  border-bottom: var(--border);
 }
 
 /* Containing Containing all the comments */
@@ -54,7 +54,7 @@
 
   padding: 0.35rem;
 
-  border-top: 1px solid var(--grey-300);
+  border-top: var(--border);
 }
 
 .commentField input {
@@ -63,7 +63,7 @@
   font-size: 1rem;
   border: none;
   outline: none;
-  color: var(--grey-700);
+  color: var(--on-surface-accent);
 }
 
 .commentField .postBtn {
@@ -72,6 +72,13 @@
   color: var(--blue-400);
 }
 
-.commentField .postBtn:disabled {
+.commentField .postBtn:hover {
+  cursor: pointer;
+}
+
+.commentField .postBtn:disabled,
+.commentField .postBtn[disabled] {
+  cursor: not-allowed;
+  background-color: transparent;
   opacity: 0.5;
 }

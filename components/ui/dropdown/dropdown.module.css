@@ -1,7 +1,7 @@
 .ddWrapper {
   display: none;
   position: relative;
-  z-index: 10;
+  z-index: calc(var(--top-z) + 1);
 
   list-style: none;
   margin: 0;
@@ -26,8 +26,9 @@
 
   font-size: 1.15rem;
   border-radius: 0.15rem;
-  background: var(--off-white-505);
-  box-shadow: 1px 1px 0.65rem var(--shadow-clr-500);
+  background: var(--surface);
+  color: var(--on-surface);
+  box-shadow: var(--shadow);
 }
 
 .arrow {
@@ -35,9 +36,9 @@
   height: 0.5rem;
   display: block;
   position: absolute;
-  z-index: 11;
+  z-index: calc(var(--top-z) + 2);
 
-  background: var(--off-white-505);
+  background: var(--surface);
   transform: translateY(-50%) rotate(45deg);
 }
 
@@ -52,7 +53,7 @@
 
 /* Direction dropdown Opens */
 .openTop .arrow {
-  transform: translateY(-300%) rotate(45deg);
+  transform: translateY(-552%) rotate(45deg);
 }
 
 .openTop .ddMenu {

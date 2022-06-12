@@ -20,7 +20,7 @@
 
 .selectImg:hover {
   cursor: pointer;
-  background-color: #e7e7e7;
+  background-color: rgba(179, 179, 179, 0.35);
 }
 
 /* Hide the actual form input for files */

@@ -12,6 +12,6 @@
 }
 
 .link {
-  color: #0b0080;
+  color: var(--blue-400);
   cursor: pointer;
 }

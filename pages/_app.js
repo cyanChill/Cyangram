@@ -2,6 +2,7 @@ import { SessionProvider } from "next-auth/react";
 
 import global from "../global";
 import useAlert from "../hooks/useAlert";
+import useTheme from "../hooks/useTheme";
 import Layout from "../components/layout/layout";
 import "../styles/globals.css";
 
@@ -11,6 +12,8 @@ function MyApp({ Component, pageProps }) {
     session value)
   */
   global.alerts = useAlert();
+  global.theme = useTheme();
+
   return (
     <SessionProvider session={pageProps.session}>
       <Layout>

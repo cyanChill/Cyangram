@@ -6,11 +6,10 @@
   --mobile-break-point: 568px;
   --max-app-width: 45rem;
   --nav-height: 4rem;
+  --top-z: 100;
 
   --shadow-clr-200: rgba(0, 0, 0, 0.15);
-  --shadow-clr-500: rgba(0, 0, 0, 0.35);
   --shadow-clr-900: rgba(0, 0, 0, 0.75);
-  --shadow: 0px 0px 5px 0px var(--shadow-clr-900);
 
   --off-white-500: #fafafa;
   --off-white-505: #f9f9f9;
@@ -24,9 +23,36 @@
   --grey-700: #757575;
   --grey-800: #5c5c5c;
 
+  --black-500: #1e1e1e;
+  --black-900: #121212;
+
   --red-500: #ec5252;
 
   --blue-400: #1ea1f7;
+
+  /* General Color Palette */
+  --background: var(--off-white-500);
+  --on-background: var(--black-900);
+
+  --surface: var(--off-white-505);
+  --on-surface: ;
+  --on-surface-accent: var(--grey-800);
+
+  --primary: ;
+  --on-primary: ;
+
+  --secondary: ;
+  --on-secondary: ;
+
+  --border: 0.05px solid var(--grey-300);
+
+  --error: var(--red-500);
+  --error-border: ;
+  --error-transparent: ;
+
+  --transparent-highlight: rgba(155, 155, 155, 0.8);
+  --shadow-clr: rgba(0, 0, 0, 0.35);
+  --shadow: 0 0 5px var(--shadow-clr-900);
 }
 
 *,
@@ -37,6 +63,7 @@
 
 html,
 body {
+  min-height: 100vh;
   width: 100vw;
   overflow-x: hidden;
 
@@ -47,7 +74,9 @@ body {
   margin: 0;
 
   font-family: var(--font-family);
-  background-color: var(--off-white-500);
+
+  background-color: var(--background);
+  color: var(--on-background);
 }
 
 a {
@@ -57,6 +86,22 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* Dark Mode */
+body.dark {
+  --background: var(--black-900);
+  --on-background: var(--off-white-500);
+
+  --surface: var(--black-500);
+  --on-surface: var(--off-white-600);
+  --on-surface-accent: var(--grey-600);
+
+  --border: 0.05px solid var(--grey-700);
+
+  --transparent-highlight: rgba(48, 48, 48, 0.8);
+  --shadow-clr: rgba(255, 255, 255, 0.35);
+  --shadow: 0 0 5px var(--shadow-clr);
 }
 
 .center {

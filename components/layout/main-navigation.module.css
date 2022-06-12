@@ -5,9 +5,9 @@
   position: fixed;
   bottom: 0;
 
-  border-top: 0.05px solid var(--grey-300);
-  background-color: var(--off-white-505); /* Make dynamic for light/dark mode */
-  z-index: 100;
+  border-top: var(--border);
+  background-color: var(--background);
+  z-index: var(--top-z);
 }
 
 .navbar ul {
@@ -46,5 +46,5 @@
 }
 
 .logoutBtn {
-  color: var(--red-500);
+  color: var(--error);
 }

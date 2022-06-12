@@ -39,7 +39,7 @@
 .link {
   font-weight: 600;
 
-  color: #0095f6;
+  color: var(--blue-400);
 }
 
 .catch-phrase {
@@ -47,7 +47,7 @@
 
   font-weight: 600;
 
-  color: var(--grey-600);
+  color: var(--on-surface);
 }
 
 @media (min-width: 568px) {

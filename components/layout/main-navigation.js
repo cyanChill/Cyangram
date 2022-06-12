@@ -12,12 +12,13 @@ import {
 } from "react-icons/io5";
 import { HiUserCircle, HiOutlineUserCircle } from "react-icons/hi";
 
+import global from "../../global";
 import NavLink from "../misc/links/navlink";
 import DropDownMenu from "../ui/dropdown/dropdown";
 import DropDownItem from "../ui/dropdown/dropdownitem";
 import classes from "./main-navigation.module.css";
 
-const MainNavigation = (props) => {
+const MainNavigation = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -40,10 +41,6 @@ const MainNavigation = (props) => {
   if (status !== "authenticated") {
     return null;
   }
-
-  const handleThemeChange = () => {
-    console.log("Changing theme...");
-  };
 
   return (
     <nav className={classes.navbar}>
@@ -92,9 +89,11 @@ const MainNavigation = (props) => {
             </DropDownItem>
 
             {/* Option to change theme (light/dark) */}
-            {/* TODO: Implement Light/Dark Mode */}
             <DropDownItem>
-              <div className={classes.alignCenter} onClick={handleThemeChange}>
+              <div
+                className={classes.alignCenter}
+                onClick={global.theme.actions.toggleMode}
+              >
                 <IoColorPalette /> <span>Change Theme</span>
               </div>
             </DropDownItem>

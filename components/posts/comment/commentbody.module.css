@@ -24,7 +24,7 @@
 }
 
 .textContent {
-  color: var(--grey-800);
+  color: var(--on-surface-accent);
 }
 
 @media (min-width: 568px) {

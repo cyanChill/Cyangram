@@ -4,7 +4,7 @@
 }
 
 .active {
-  background-color: var(--grey-100);
+  background-color: var(--transparent-highlight);
 }
 
 .ddItem:hover {

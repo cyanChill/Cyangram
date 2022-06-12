@@ -35,5 +35,5 @@
   align-items: center;
   gap: 0.25rem;
 
-  color: var(--red-500);
+  color: var(--error);
 }
