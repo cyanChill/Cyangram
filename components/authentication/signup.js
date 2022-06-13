@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 import { loginInFirebase } from "../../lib/firebaseHelpers";
@@ -103,10 +103,15 @@ const SignUp = () => {
       });
 
       if (!result.error) {
-        // Successfully logged in & redirect
-        await loginInFirebase();
-        router.replace("/");
-        return;
+        try {
+          // Successfully logged in & redirect
+          await loginInFirebase();
+          router.replace("/");
+          return;
+        } catch (err) {
+          await signOut();
+          console.log(err);
+        }
       }
     } else {
       global.alerts.actions.addAlert({

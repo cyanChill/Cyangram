@@ -1,8 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProviders from "next-auth/providers/credentials";
 
-import { auth } from "../../../firebaseAdmin.config";
-
 import dbConnect from "../../../lib/dbConnect";
 import { verifyPassword } from "../../../lib/hash";
 import User from "../../../models/User";
@@ -31,17 +29,11 @@ export default NextAuth({
 
         if (!isValid) throw new Error("Could not log you in!");
 
-        try {
-          const customToken = await auth.createCustomToken(user._id.toString());
-          return {
-            dbId: user._id,
-            name: user.name,
-            username: user.username,
-            customToken: customToken,
-          };
-        } catch (err) {
-          throw new Error(`Error creating custom token: ${err}`);
-        }
+        return {
+          dbId: user._id,
+          name: user.name,
+          username: user.username,
+        };
       },
     }),
   ],
