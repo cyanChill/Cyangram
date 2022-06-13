@@ -55,9 +55,7 @@ const GeneralGroup = ({ userData }) => {
     e.preventDefault();
     const res = await fetch("/api/account/update-profile", {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         newName: name,
         newUsername: username,

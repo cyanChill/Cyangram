@@ -47,9 +47,7 @@ const PasswordGroup = () => {
 
     const res = await fetch("/api/account/update-password", {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         oldPassword: password,
         newPassword: newPassword,
