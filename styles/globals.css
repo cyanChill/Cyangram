@@ -50,7 +50,7 @@
   --error-border: ;
   --error-transparent: ;
 
-  --transparent-highlight: rgba(155, 155, 155, 0.8);
+  --transparent-highlight: rgba(211, 211, 211, 0.75);
   --shadow-clr: rgba(0, 0, 0, 0.35);
   --shadow: 0 0 5px var(--shadow-clr-900);
 }

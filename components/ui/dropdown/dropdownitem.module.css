@@ -1,5 +1,8 @@
 .ddItem {
   list-style: none;
+}
+
+.pad {
   padding: 0.25rem 1rem;
 }
 

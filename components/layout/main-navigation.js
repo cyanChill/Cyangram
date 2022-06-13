@@ -86,18 +86,19 @@ const MainNavigation = () => {
             {/* Option to goto user's profile page */}
             <DropDownItem
               active={router.asPath === `/${session.user.username}`}
+              noPad
             >
               <NavLink to={`/${session.user.username}`}>
-                <div className={classes.alignCenter}>
+                <div className={classes.dropDownItem}>
                   <HiUserCircle /> <span>Profile</span>
                 </div>
               </NavLink>
             </DropDownItem>
 
             {/* Option to change theme (light/dark) */}
-            <DropDownItem>
+            <DropDownItem noPad>
               <div
-                className={classes.alignCenter}
+                className={classes.dropDownItem}
                 onClick={global.theme.actions.toggleMode}
               >
                 <IoColorPalette /> <span>Change Theme</span>
@@ -105,9 +106,9 @@ const MainNavigation = () => {
             </DropDownItem>
 
             {/* Option to Logout */}
-            <DropDownItem>
+            <DropDownItem noPad>
               <div
-                className={`${classes.alignCenter} ${classes.logoutBtn}`}
+                className={`${classes.dropDownItem} ${classes.logoutBtn}`}
                 onClick={() => handleLogout()}
               >
                 <IoLogOutOutline /> <span>Logout</span>

@@ -7,7 +7,7 @@
 
   border-top: var(--border);
   background-color: var(--background);
-  z-index: var(--top-z);
+  z-index: calc(var(--top-z) + 50);
 }
 
 .navbar ul {
@@ -35,14 +35,19 @@
 
 .ddBtn li {
   font-size: 1.15rem;
+}
+
+.dropDownItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
   padding: 0.25rem 1rem;
 }
 
-.alignCenter {
-  width: 100%;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+.dropDownItem span {
+  flex: 1;
 }
 
 .logoutBtn {
