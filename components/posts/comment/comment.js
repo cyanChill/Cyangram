@@ -76,10 +76,7 @@ const CommentSettings = ({ handleCommentDelete }) => {
   const [ddDisplayStatus, setddDisplayStatus] = useState(false);
 
   return (
-    <div
-      className={classes.ddContainer}
-      onClick={() => setddDisplayStatus((prev) => !prev)}
-    >
+    <div onClick={() => setddDisplayStatus((prev) => !prev)}>
       <BiDotsVerticalRounded className={classes.ddTrigger} />
       <DropDownMenu
         arrowPosition="right"

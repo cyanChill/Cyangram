@@ -19,10 +19,6 @@
 }
 
 /* Dropdown Styles */
-.ddContainer {
-  position: relative;
-}
-
 .ddTrigger {
   vertical-align: bottom;
   cursor: pointer;

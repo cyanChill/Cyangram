@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const FollowSchema = new mongoose.Schema({
-  userId: {
+const FollowerSchema = new mongoose.Schema({
+  followingId: {
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Please provide a userId."],
   },
@@ -11,4 +11,5 @@ const FollowSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.models.Follow || mongoose.model("Follow", FollowSchema);
+export default mongoose.models.Follower ||
+  mongoose.model("Follower", FollowerSchema);
