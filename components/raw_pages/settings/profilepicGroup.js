@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Image from "next/image";
 
 import global from "../../../global";
-import { storage } from "../../../firebase.config";
-import { deleteImg } from "../../../lib/firebaseHelpers";
+import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
 import Button from "../../form_elements/button";
 
 import classes from "./profilepicGroup.module.css";
 
-const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
+const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [currImg, setCurrImg] = useState(profilePic);
 
@@ -19,46 +16,30 @@ const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
     if (imageUpload == null) return;
 
     const setNewProfilePic = async () => {
-      // Access a folder for the given userId in Firebase
-      const imgIdentifier = uuidv4();
-      const imgRef = ref(storage, `${userId}/${imgIdentifier}`);
-      const imgUploadRes = await uploadBytes(imgRef, imageUpload);
-      const downloadURL = await getDownloadURL(imgUploadRes.ref);
+      // Data we'll pass to backend
+      const formData = new FormData();
+      formData.append("action", "SET");
+      formData.append("uploadedImg", imageUpload);
 
-      const res = await fetch("/api/account/update-pic", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          action: "SET",
-          imgInfo: { url: downloadURL, identifier: imgIdentifier },
-        }),
-      });
+      const route = "/api/account/update-pic";
+
+      const res = await callApiWithAppCheck(route, "PATCH", {}, formData);
+      const data = await res.json();
 
       if (!res.ok) {
-        await deleteImg(userId, imgIdentifier);
         global.alerts.actions.addAlert({
           type: global.alerts.types.error,
-          content: "Failed to update profile picture.",
+          content: `Failed to update profile picture [${data.message}]`,
         });
         return;
       }
 
-      /* Remove previous profile picture from database (if not default) & update displayed image*/
-      if (currImg.identifier !== "default_profile_picture") {
-        await deleteImg(userId, currImg.identifier);
-      }
-      setCurrImg({
-        url: downloadURL,
-        identifier: imgIdentifier,
-      });
+      setCurrImg(data.newProfilePic);
 
       global.alerts.actions.addAlert({
-        type: global.alerts.types.error,
+        type: global.alerts.types.success,
         content: "Successfully updated profile picture.",
       });
-      /* Some sort of success alert. */
       setImageUpload(null);
     };
 
@@ -66,18 +47,16 @@ const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
   }, [imageUpload]);
 
   const removeProfilePic = async () => {
-    const res = await fetch("/api/account/update-pic", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        action: "REMOVE",
-      }),
-    });
+    // Data we'll pass to backend
+    const formData = new FormData();
+    formData.append("action", "REMOVE");
+
+    const route = "/api/account/update-pic";
+
+    const res = await callApiWithAppCheck(route, "PATCH", {}, formData);
+    const data = await res.json();
 
     if (!res.ok) {
-      await deleteImg(userId, imgIdentifier);
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
         content: "Failed to remove profile picture.",
@@ -85,14 +64,7 @@ const ProfilePicGroup = ({ userData: { profilePic, userId, name } }) => {
       return;
     }
 
-    /* Remove previous profile picture from database (if not default) & update displayed image*/
-    if (currImg.identifier !== "default_profile_picture") {
-      await deleteImg(userId, currImg.identifier);
-    }
-    setCurrImg({
-      url: `${process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_URL}`,
-      identifier: "default_profile_picture",
-    });
+    setCurrImg(data.newProfilePic);
 
     global.alerts.actions.addAlert({
       type: global.alerts.types.success,

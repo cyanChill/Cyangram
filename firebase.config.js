@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
-import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,18 +15,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Authentication and get a reference to the service
+/* Used for logging users in & out w/ custom tokens */
 export const auth = getAuth(app);
 
 // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
 // key is the counterpart to the secret key you set in the Firebase console.
-const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("6LebTTwgAAAAADjMOZuYE8XSt9yJ1xktzIgiYtbN"),
-
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
+export const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider(
+    process.env.NEXT_PUBLIC_FIREBASE_RECAPTCHA_SITE_KEY
+  ),
+  /* Optional argument. If true, the SDK automatically refreshes App Check tokens as needed. */
   isTokenAutoRefreshEnabled: true,
 });
-
-// Get a reference to the storage service, which is used to create references in your storage bucket
-export const storage = getStorage(app);

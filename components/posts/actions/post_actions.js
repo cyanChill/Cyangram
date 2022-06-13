@@ -5,7 +5,6 @@ import { FaRegComment } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 import global from "../../../global";
-import { deleteImg } from "../../../lib/firebaseHelpers";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import SharePostBtn from "./sharepostbtn";
@@ -100,7 +99,6 @@ const OwnerSettings = ({ postId, isOwner }) => {
         content: `Failed to delete post (${data.errMsg})`,
       });
     } else {
-      deleteImg(data.postOwnerId, data.postImgId);
       global.alerts.actions.addAlert({
         type: global.alerts.types.success,
         content: "Deleted post.",

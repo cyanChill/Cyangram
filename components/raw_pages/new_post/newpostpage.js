@@ -1,12 +1,9 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import global from "../../../global";
-import { storage } from "../../../firebase.config";
-import { deleteImg } from "../../../lib/firebaseHelpers";
+import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
 import FormInput from "../../form_elements/forminput";
 import InputGroup from "../../form_elements/inputGroup";
 import Button from "../../form_elements/button";
@@ -40,30 +37,18 @@ const NewPostPage = ({ userId }) => {
   const createPost = async () => {
     if (imageUpload == null) return;
 
-    // Access a folder for the given userId in Firebase
-    const imgIdentifier = uuidv4();
-    const imgRef = ref(storage, `${userId}/${imgIdentifier}`);
-    const imgUploadRes = await uploadBytes(imgRef, imageUpload);
-    const downloadURL = await getDownloadURL(imgUploadRes.ref);
+    // Data we'll pass to backend
+    const formData = new FormData();
+    formData.append("description", description);
+    formData.append("uploadedImg", imageUpload);
 
-    const res = await fetch("/api/post", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        description: description,
-        imgInfo: { url: downloadURL, identifier: imgIdentifier },
-      }),
-    });
-
+    const res = await callApiWithAppCheck("/api/post", "POST", {}, formData);
     const data = await res.json();
 
     if (!res.ok) {
-      await deleteImg(userId, imgIdentifier);
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
-        content: "Failed to create post.",
+        content: `Failed to create post [${data.message}]`,
       });
       return;
     }

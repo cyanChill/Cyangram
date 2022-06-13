@@ -5,6 +5,7 @@
 
 import { getSession } from "next-auth/react";
 
+import { deleteImage } from "../../../../lib/firebaseAdminHelper";
 import dbConnect from "../../../../lib/dbConnect";
 import User from "../../../../models/User";
 import Post from "../../../../models/Post";
@@ -72,6 +73,7 @@ const handler = async (req, res) => {
             errMsg: err,
           });
         });
+
     case "DELETE":
       const session = await getSession({ req: req });
       if (!session) {
@@ -90,10 +92,13 @@ const handler = async (req, res) => {
 
       try {
         await Post.findByIdAndDelete(postId);
+        // Delete the post image from firebase
+        await deleteImage(
+          postInfo.posterId.toString(),
+          postInfo.image.identifier
+        );
         res.status(200).json({
           message: "Successfully deleted post.",
-          postOwnerId: session.user.dbId,
-          postImgId: postInfo.image.identifier,
         });
       } catch (err) {
         res.status(500).json({
