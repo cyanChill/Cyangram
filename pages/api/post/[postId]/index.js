@@ -97,9 +97,7 @@ const handler = async (req, res) => {
           postInfo.posterId.toString(),
           postInfo.image.identifier
         );
-        res.status(200).json({
-          message: "Successfully deleted post.",
-        });
+        res.status(200).json({ message: "Successfully deleted post." });
       } catch (err) {
         res.status(500).json({
           message: "A problem has occurred while deleting post",
