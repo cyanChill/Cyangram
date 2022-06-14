@@ -64,14 +64,14 @@ const handler = async (req, res) => {
     url: `${process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_URL}`,
     identifier: "default_profile_picture",
   };
-  let img;
-  if (action === "SET") {
-    img = await uploadImage(user._id.toString(), imageInfo);
-  }
-
-  const newProfilePicObj = action === "SET" ? img : defaultProfilePic;
+  let img = { url: "", identifier: "" };
 
   try {
+    if (action === "SET") {
+      img = await uploadImage(user._id.toString(), imageInfo);
+    }
+    const newProfilePicObj = action === "SET" ? img : defaultProfilePic;
+
     await User.updateOne(
       { _id: user._id },
       { $set: { profilePic: newProfilePicObj } }
@@ -91,7 +91,6 @@ const handler = async (req, res) => {
     if (action === "SET") {
       await deleteImage(user._id.toString(), img.identifier);
     }
-
     res.status(500).json({ message: "Internal Server Error.", errMsg: err });
   }
 };

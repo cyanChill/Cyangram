@@ -1,8 +1,8 @@
-import dbConnect from "../../../lib/dbConnect";
-import User from "../../../models/User";
-import Post from "../../../models/Post";
-import Like from "../../../models/Like";
-import Comment from "../../../models/Comment";
+import dbConnect from "../../../../lib/dbConnect";
+import User from "../../../../models/User";
+import Post from "../../../../models/Post";
+import Like from "../../../../models/Like";
+import Comment from "../../../../models/Comment";
 
 const handler = async (req, res) => {
   const method = req.method;

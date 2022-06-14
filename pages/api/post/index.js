@@ -51,17 +51,18 @@ const handler = async (req, res) => {
     res.status(406).json({ message: "File size is too large (Must be <5MB)." });
     return;
   }
-
-  // Upload Image to Firebase
-  const img = await uploadImage(user._id.toString(), imageInfo);
-  const postEntry = {
-    posterId: user._id,
-    description: description,
-    image: img,
-    date: Date.now(),
-  };
+  let img = { url: "", identifier: "" };
 
   try {
+    // Upload Image to Firebase
+    img = await uploadImage(user._id.toString(), imageInfo);
+    const postEntry = {
+      posterId: user._id,
+      description: description,
+      image: img,
+      date: Date.now(),
+    };
+
     const createdPost = await Post.create(postEntry);
     res
       .status(200)
