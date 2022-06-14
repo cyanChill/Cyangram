@@ -102,3 +102,15 @@
 .actions button {
   width: 100%;
 }
+
+.actions .onHover {
+  display: none;
+}
+
+.actions:hover .noHover {
+  display: none;
+}
+
+.actions:hover .onHover {
+  display: inline-block;
+}

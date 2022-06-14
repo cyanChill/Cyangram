@@ -1,18 +1,40 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 
+import global from "../../../global";
 import PostGrid from "../../posts/post_grid/post_grid";
 import Button from "../../form_elements/button";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
 
 import classes from "./profilepage.module.css";
 
-const UserProfilePage = ({ userData, ownProfile }) => {
+const UserProfilePage = ({ userData, ownProfile, viewerIsFollowing }) => {
   const router = useRouter();
 
-  const { user, followerCnt, followingCnt, posts } = userData;
+  const { user, followingCnt, posts } = userData;
+  const [followerCnt, setFollowerCnt] = useState(userData.followerCnt);
+  const [isFollowing, setIsFollowing] = useState(viewerIsFollowing);
+  const [loading, setLoading] = useState(false);
+
+  const handleFollow = async () => {
+    setLoading(true);
+    const res = await fetch(`/api/users/${user.username}/follow`, {
+      method: "POST",
+    });
+    const data = await res.json();
+
+    global.alerts.actions.addAlert({
+      type: global.alerts.types[res.ok ? "success" : "error"],
+      content: data.message,
+    });
+
+    setIsFollowing(data.follow);
+    setFollowerCnt((prev) => prev + (!!data.follow ? 1 : -1));
+    setLoading(false);
+  };
 
   return (
     <div className={classes.profile}>
@@ -71,10 +93,24 @@ const UserProfilePage = ({ userData, ownProfile }) => {
       <TextBreaker className={classes.bio}>{user.bio}</TextBreaker>
 
       {/* Action Buttons */}
-      {/* TODO: Add condition to show the corect button if we're following/not following */}
       {!ownProfile && (
         <div className={classes.actions}>
-          <Button>Follow</Button>
+          <Button
+            className={classes.noHover}
+            onClick={handleFollow}
+            disabled={loading}
+          >
+            {!isFollowing ? "Follow" : "Following"}
+          </Button>
+
+          <Button
+            className={classes.onHover}
+            onClick={handleFollow}
+            disabled={loading}
+            variant={!isFollowing ? "primary" : "error"}
+          >
+            {!isFollowing ? "Follow" : "Un-Follow"}
+          </Button>
         </div>
       )}
 

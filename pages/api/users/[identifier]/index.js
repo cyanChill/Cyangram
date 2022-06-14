@@ -3,6 +3,7 @@ import User from "../../../../models/User";
 import Post from "../../../../models/Post";
 import Like from "../../../../models/Like";
 import Comment from "../../../../models/Comment";
+import Follower from "../../../../models/Follower";
 
 const handler = async (req, res) => {
   const method = req.method;
@@ -28,12 +29,16 @@ const handler = async (req, res) => {
         return;
       }
 
-      /* 
-        TODO: Basically, get and return data on (need to add the logic for):
-          - Followers
-          - Following
-          - Posts ✔️
-      */
+      /* Fetching number of people user is following */
+      const following = await Follower.find({ followerId: existingUser._id });
+
+      /* Fetching number of people following user */
+      const followers = await Follower.find(
+        {
+          followingId: existingUser._id,
+        },
+        "followerId -_id"
+      );
 
       /* Fetching Posts */
       const userPosts = await Post.find({ posterId: existingUser._id }).sort({
@@ -66,6 +71,9 @@ const handler = async (req, res) => {
             message: "Successfully found user.",
             user: existingUser,
             posts: postsData,
+            followerList: followers,
+            followerCnt: followers.length,
+            followingCnt: following.length,
           });
         })
         .catch((err) => {
