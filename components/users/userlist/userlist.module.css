@@ -10,7 +10,7 @@
 
 /* Contains Information about User */
 .infoContainer {
-  width: calc(100vw - 7rem);
+  width: calc(100vw - 8rem);
 
   display: flex;
   flex-direction: row;
@@ -59,13 +59,4 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-/* Actions */
-.actions {
-  width: 4.25rem;
-  text-align: center;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  border: var(--border);
 }

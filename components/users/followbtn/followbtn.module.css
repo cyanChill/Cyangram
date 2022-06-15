@@ -1,0 +1,28 @@
+/* Actions Section */
+.actions {
+  min-width: 7.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.25rem;
+}
+
+.actions button {
+  width: 100%;
+}
+
+.actions .onHover {
+  display: none;
+}
+
+.actions:hover .noHover {
+  display: none;
+}
+
+.actions:hover .onHover {
+  display: inline-block;
+}

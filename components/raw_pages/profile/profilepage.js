@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 
-import global from "../../../global";
+import FollowButton from "../../users/followbtn/followbtn";
 import PostGrid from "../../posts/post_grid/post_grid";
-import Button from "../../form_elements/button";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
 
 import classes from "./profilepage.module.css";
@@ -15,25 +14,18 @@ const UserProfilePage = ({ userData, ownProfile, viewerIsFollowing }) => {
   const router = useRouter();
 
   const { user, followingCnt, posts } = userData;
-  const [followerCnt, setFollowerCnt] = useState(userData.followerCnt);
-  const [isFollowing, setIsFollowing] = useState(viewerIsFollowing);
-  const [loading, setLoading] = useState(false);
+  const [followerCnt, setFollowerCnt] = useState();
 
-  const handleFollow = async () => {
-    setLoading(true);
-    const res = await fetch(`/api/users/${user.username}/follow`, {
-      method: "POST",
-    });
-    const data = await res.json();
+  useEffect(() => {
+    /* 
+      If we only used useState, then if goto our profile after looking at
+      someone else's profile page, we'll have the same followerCnt value
+    */
+    setFollowerCnt(userData.followerCnt);
+  }, [userData]);
 
-    global.alerts.actions.addAlert({
-      type: global.alerts.types[res.ok ? "success" : "error"],
-      content: data.message,
-    });
-
-    setIsFollowing(data.follow);
-    setFollowerCnt((prev) => prev + (!!data.follow ? 1 : -1));
-    setLoading(false);
+  const updateFollowCnt = (didFollow) => {
+    setFollowerCnt((prev) => prev + (didFollow ? 1 : -1));
   };
 
   return (
@@ -94,24 +86,11 @@ const UserProfilePage = ({ userData, ownProfile, viewerIsFollowing }) => {
 
       {/* Action Buttons */}
       {!ownProfile && (
-        <div className={classes.actions}>
-          <Button
-            className={classes.noHover}
-            onClick={handleFollow}
-            disabled={loading}
-          >
-            {!isFollowing ? "Follow" : "Following"}
-          </Button>
-
-          <Button
-            className={classes.onHover}
-            onClick={handleFollow}
-            disabled={loading}
-            variant={!isFollowing ? "primary" : "error"}
-          >
-            {!isFollowing ? "Follow" : "Un-Follow"}
-          </Button>
-        </div>
+        <FollowButton
+          username={user.username}
+          viewerIsFollowing={viewerIsFollowing}
+          updateFollowCount={updateFollowCnt}
+        />
       )}
 
       {/* Posts */}

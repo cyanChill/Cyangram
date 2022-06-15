@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import FollowButton from "../followbtn/followbtn";
+
 import classes from "./userlist.module.css";
 
 const UserList = ({ shared, notShared }) => {
@@ -43,7 +45,13 @@ const User = ({ user, showActions }) => {
         </div>
       </div>
 
-      {showActions && <div className={classes.actions}>Follow</div>}
+      {showActions && (
+        <FollowButton
+          username={user.username}
+          viewerIsFollowing={false}
+          updateFollowCount={() => {}}
+        />
+      )}
     </div>
   );
 };
