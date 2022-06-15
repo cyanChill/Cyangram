@@ -4,12 +4,10 @@ import Link from "next/link";
 import classes from "./userlist.module.css";
 
 const UserList = ({ shared, notShared }) => {
-  const sharedUsers = shared.map((user) => (
-    <User key={user.userId} user={user} />
-  ));
+  const sharedUsers = shared.map((user) => <User key={user._id} user={user} />);
 
   const notSharedUsers = notShared.map((user) => (
-    <User key={user.userId} user={user} showActions />
+    <User key={user._id} user={user} showActions />
   ));
 
   return (
@@ -24,13 +22,18 @@ export default UserList;
 
 const User = ({ user, showActions }) => {
   return (
-    <div className={classes.userContainer}>
+    <div className={classes.wrapper}>
       <div className={classes.infoContainer}>
-        <img
-          src={user.profileImg}
-          alt={`${user.name}'s Profile Picture`}
-          className={classes.img}
-        />
+        <div className={classes.img}>
+          <Image
+            src={user.profilePic.url}
+            alt={`${user.name}'s Profile Picture`}
+            width="500"
+            height="500"
+            layout="responsive"
+            className={classes.rounded}
+          />
+        </div>
 
         <div className={classes.userInfo}>
           <Link href={`/${user.username}`}>

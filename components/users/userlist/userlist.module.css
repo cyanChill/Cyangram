@@ -1,5 +1,5 @@
 /* For (Singular) User Component */
-.userContainer {
+.wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -15,15 +15,19 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.5rem;
+
+  overflow: hidden;
 }
 
 .img {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2rem;
+  width: 2rem;
+}
 
-  padding: 0.25rem;
-
+.rounded {
   border-radius: 50%;
+  overflow: hidden;
 }
 
 /* User Info (Name & Username) */
