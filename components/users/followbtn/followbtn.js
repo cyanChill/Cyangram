@@ -5,7 +5,12 @@ import Button from "../../form_elements/button";
 
 import classes from "./followbtn.module.css";
 
-const FollowButton = ({ username, viewerIsFollowing, updateFollowCount }) => {
+const FollowButton = ({
+  username,
+  viewerIsFollowing,
+  updateFollowCount,
+  className,
+}) => {
   const [isFollowing, setIsFollowing] = useState(viewerIsFollowing);
   const [loading, setLoading] = useState(false);
 
@@ -27,7 +32,7 @@ const FollowButton = ({ username, viewerIsFollowing, updateFollowCount }) => {
   };
 
   return (
-    <div className={classes.actions}>
+    <div className={`${classes.actions} ${className}`}>
       <Button
         className={classes.noHover}
         onClick={handleFollow}

@@ -50,6 +50,7 @@ const User = ({ user, showActions }) => {
           username={user.username}
           viewerIsFollowing={false}
           updateFollowCount={() => {}}
+          className={classes.action}
         />
       )}
     </div>

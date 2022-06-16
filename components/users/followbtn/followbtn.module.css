@@ -1,7 +1,5 @@
 /* Actions Section */
 .actions {
-  min-width: 7.5rem;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
