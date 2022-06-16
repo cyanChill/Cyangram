@@ -2,13 +2,17 @@
   This is the post we see on the feed
 */
 import Link from "next/link";
+import Image from "next/image";
+
 import Username from "../../misc/links/usernameLink";
 import PostActions from "../actions/post_actions";
+import CommentBody from "../comment/commentBody";
 
 import classes from "./post_excerpt.module.css";
 
 const PostExcerpt = ({ post }) => {
-  const { postId, uploader, postImg, description, likeCnt } = post;
+  const { image, description, likeCnt, _id: postId } = post;
+  const { profilePic, username, name } = post.userInfo;
 
   if (!post) {
     return null;
@@ -16,19 +20,28 @@ const PostExcerpt = ({ post }) => {
 
   return (
     <div className={classes.post}>
-      <header>
-        <img src={uploader.profilePic} alt={uploader.username} />
-        <Link href={`/${uploader.username}`}>{uploader.username}</Link>
-      </header>
+      <CommentBody
+        picUrl={profilePic.url}
+        picAlt={`${username}'s profile picture`}
+        username={username}
+        noContent
+      />
 
-      <img src={postImg} className={classes.postImg} />
+      <Image
+        src={image.url}
+        alt={`${username}'s post`}
+        width="500"
+        height="500"
+        layout="responsive"
+        className={classes.postImg}
+      />
 
       <PostActions postId={postId} redirectPost />
 
       <span className={classes.likes}>{likeCnt} Likes</span>
 
       <div className={classes.description}>
-        <Username username={uploader.username} />
+        <Username username={username} />
         <span>{description}</span>
       </div>
     </div>

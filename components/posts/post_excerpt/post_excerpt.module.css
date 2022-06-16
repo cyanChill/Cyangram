@@ -1,45 +1,12 @@
 .post {
-  margin: 1rem 0rem;
-
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
-.post header {
-  display: flex;
-  align-items: center;
-
+  width: 100%;
+  max-width: 35rem;
   padding: 0.25rem;
-
-  border-bottom: 1px solid black;
-}
-
-.post header img {
-  height: 2rem;
-  width: 2rem;
-
-  padding: 0.25rem;
-
-  border-radius: 50%;
+  margin: 0.5rem 0;
 }
 
 .postImg {
-  width: 100%;
   object-fit: contain;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  padding: 0.25rem;
-
-  border-top: 1px solid black;
-}
-
-.actions:hover {
-  cursor: pointer;
 }
 
 .likes {
