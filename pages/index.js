@@ -1,32 +1,9 @@
 import { getSession } from "next-auth/react";
-import PostExcerpt from "../components/posts/post_excerpt/post_excerpt";
 
-const DUMMY_POST = {
-  postId: "p1",
-  uploader: {
-    username: "testUser",
-    profilePic: "https://randomuser.me/api/portraits/women/19.jpg",
-  },
-  postImg:
-    "https://d279m997dpfwgl.cloudfront.net/wp/2020/05/pencil-standardized-test.jpg",
-  /*
-  postImgs: [
-    "https://d279m997dpfwgl.cloudfront.net/wp/2020/05/pencil-standardized-test.jpg",
-  ],
-  */
-  description: "This is a test post",
-  likeCnt: 100,
-};
+import HomeFeedPage from "../components/raw_pages/home_page/homepage";
 
 const HomePage = (props) => {
-  return (
-    <>
-      <div>
-        <h1>This is the home feed</h1>
-        <PostExcerpt post={DUMMY_POST} />
-      </div>
-    </>
-  );
+  return <HomeFeedPage {...props} />;
 };
 
 export default HomePage;
@@ -37,7 +14,26 @@ export const getServerSideProps = async (context) => {
     return { redirect: { destination: "/accounts/login" } };
   }
 
+  /* Get home feed for posts from people we follow */
+  const res = await fetch(
+    `${process.env.NEXTAUTH_URL}api/users/${session.user.username}/yourfeed`
+  );
+  const data = await res.json();
+  // console.log("-=-=- Feed Of People We're Following -=-=-");
+  // console.log(data.feedPosts);
+
+  /* Get home feed for posts from people we don't follow (discover) */
+  const res2 = await fetch(
+    `${process.env.NEXTAUTH_URL}api/users/${session.user.username}/globalfeed`
+  );
+  const data2 = await res2.json();
+  // console.log("-=-=- Feed Of People We're Not Following -=-=-");
+  // console.log(data2.feedPosts);
+
   return {
-    props: { session },
+    props: {
+      ourFeed: data.feedPosts,
+      discoverFeed: data2.feedPosts,
+    },
   };
 };
