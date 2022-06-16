@@ -29,6 +29,7 @@
   background: var(--surface);
   color: var(--on-surface);
   box-shadow: var(--shadow);
+  z-index: calc(var(--top-z) + 3);
 }
 
 .arrow {
