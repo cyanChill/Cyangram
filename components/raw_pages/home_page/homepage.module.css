@@ -1,9 +1,14 @@
 .header {
+  height: var(--nav-height);
   width: 100%;
   position: fixed;
+  top: 0;
+  left: 0;
 
+  padding-left: 0.25rem;
+  border-bottom: var(--border);
   background-color: var(--background);
-  z-index: 50;
+  z-index: calc(var(--top-z) + 51);
 }
 
 .selection {
@@ -21,10 +26,28 @@
   flex-direction: column;
   align-items: center;
 
-  padding: 0.5rem;
-  padding-top: 3.25rem;
+  margin: 0 -0.5rem;
 }
 
 .dropDown {
   transform: translate(-0.5rem, 1rem);
+}
+
+@media (min-width: 568px) {
+  .header {
+    width: max-content;
+    padding-left: 1rem;
+    border: none;
+  }
+  .content {
+    margin: 0 auto;
+    max-width: calc(var(--reasonable-max-app-width) - 7.5rem);
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding-left: 3rem;
+  }
 }

@@ -20,7 +20,7 @@ const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
   };
 
   return (
-    <div>
+    <>
       <header className={classes.header}>
         <div
           className={classes.selection}
@@ -68,7 +68,7 @@ const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
               <PostExcerpt key={post._id} post={post} />
             ))}
       </div>
-    </div>
+    </>
   );
 };
 
