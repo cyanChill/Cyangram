@@ -29,27 +29,18 @@ const UserProfilePage = ({ userData, ownProfile, viewerIsFollowing }) => {
   };
 
   return (
-    <div className={classes.profile}>
+    <div className={classes.wrapper}>
       {/* Header bar */}
       <header>
-        <div>
-          {/* If this is the user's profile, don't show the back button*/}
-          {!ownProfile && (
-            <MdOutlineArrowBack
-              className={classes.hoverCursor}
-              onClick={() => router.back()}
-            />
-          )}
-
-          <span className={classes.name}>{user.username}</span>
-        </div>
-
-        {ownProfile && (
-          <IoSettingsSharp
-            className={classes.setting}
-            onClick={() => router.push(`/accounts/settings`)}
+        {/* If this is the user's profile, don't show the back button*/}
+        {!ownProfile && (
+          <MdOutlineArrowBack
+            className={classes.hoverCursor}
+            onClick={() => router.back()}
           />
         )}
+
+        <span className={classes.name}>{user.username}</span>
       </header>
 
       {/* Profile Picture + User Stats */}
