@@ -1,10 +1,3 @@
-/* 
-  The main Post component which displays comments, the post, etc.
-    - Allows user to comment, like, etc (given they're logged in)
-
-  Post Page (With Comments and Such):
-    - Can probably reuse the "post_excerpt.js" component as the basis (as it has the likes & description stuff)
-*/
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -15,6 +8,7 @@ import PostActions from "./actions/post_actions";
 import BackHeader from "../ui/backheader/backHeader";
 import FormInput from "../form_elements/forminput";
 import CommentBody from "./comment/commentBody";
+import Card from "../ui/card/card";
 
 import classes from "./post.module.css";
 
@@ -93,81 +87,91 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
       {/* Where we put the back button & name of poster */}
       <BackHeader text={username} linkPath={`/${username}`} />
 
-      <div>
-        <Image
-          src={postData.image.url}
-          alt={`Post by ${username}`}
-          className={classes.postImg}
-          width="500"
-          height="500"
-          layout="responsive"
-          priority
-        />
-      </div>
-
-      {/* Post Description */}
-      {!!postData.description.trim() && (
-        <div className={classes.descriptionWrapper}>
-          <CommentBody
-            picUrl={postData.posterInfo.profilePic.url}
-            picAlt={`${postData.posterInfo.username} profile picture`}
-            username={postData.posterInfo.username}
-            textContent={postData.description}
+      <Card className={classes.cardClasses}>
+        {/* Put the image into a container */}
+        <div className={classes.imgContainer}>
+          <Image
+            src={postData.image.url}
+            alt={`Post by ${username}`}
+            className={classes.postImg}
+            width="500"
+            height="500"
+            layout="responsive"
+            priority
           />
         </div>
-      )}
 
-      {/* Div with scrollable containing comments */}
-      <div className={classes.commentContainer}>
-        {comments.map((comment) => (
-          <Comment
-            key={comment._id}
-            postId={postId}
-            comment={comment}
-            viewerId={viewerId}
-            handleRemove={removeComment}
-          />
-        ))}
-      </div>
+        {/* Wraps general content of post */}
+        <div className={classes.generalContent}>
+          <div className={classes.nonActions}>
+            {/* Post Description */}
+            {!!postData.description.trim() && (
+              <div className={classes.descriptionWrapper}>
+                <CommentBody
+                  picUrl={postData.posterInfo.profilePic.url}
+                  picAlt={`${postData.posterInfo.username} profile picture`}
+                  username={postData.posterInfo.username}
+                  textContent={postData.description}
+                />
+              </div>
+            )}
 
-      {/* Like button, "comment, share" buttons, settings drop down */}
-      <PostActions
-        postId={postId}
-        settings
-        likeBtnAction={handleLikes}
-        commentBtnAction={focusCommentField}
-        isOwner={ownPost}
-        hasLiked={hasLiked}
-      />
+            {/* Div with scrollable containing comments */}
+            <div className={classes.commentContainer}>
+              {comments.map((comment) => (
+                <Comment
+                  key={comment._id}
+                  postId={postId}
+                  comment={comment}
+                  viewerId={viewerId}
+                  handleRemove={removeComment}
+                />
+              ))}
+            </div>
+          </div>
 
-      <div className={classes.statistics}>
-        <p className={classes.likeCount}>{numLikes} Likes</p>
-        <p className={classes.postedSince}>{postedSince}</p>
-      </div>
+          <div className={classes.action}>
+            {/* Like button, "comment, share" buttons, settings drop down */}
+            <PostActions
+              postId={postId}
+              settings
+              likeBtnAction={handleLikes}
+              commentBtnAction={focusCommentField}
+              isOwner={ownPost}
+              hasLiked={hasLiked}
+            />
 
-      {/* Comment field */}
-      <div className={classes.commentField}>
-        <FormInput
-          id="commentField"
-          name="commentField"
-          type="text"
-          placeholder="Add a comment..."
-          required
-          value={commentField}
-          onChange={(e) => setCommentField(e.target.value)}
-          noExternalPadding
-        />
+            <div className={classes.statistics}>
+              <p className={classes.likeCount}>{numLikes} Likes</p>
+              <p className={classes.postedSince}>{postedSince}</p>
+            </div>
 
-        {/* Disable the following if the textfield is empty */}
-        <span
-          variant="clear"
-          className={classes.postBtn}
-          disabled={!commentField}
-          onClick={handleCommentSubmit}
-        >
-          Post
-        </span>
-      </div>
+            {/* Comment field */}
+            <div className={classes.commentField}>
+              <FormInput
+                id="commentField"
+                name="commentField"
+                type="text"
+                placeholder="Add a comment..."
+                required
+                value={commentField}
+                onChange={(e) => setCommentField(e.target.value)}
+                noExternalPadding
+              />
+
+              {/* Disable the following if the textfield is empty */}
+              <span
+                variant="clear"
+                className={classes.postBtn}
+                disabled={!commentField}
+                onClick={handleCommentSubmit}
+              >
+                Post
+              </span>
+            </div>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 };

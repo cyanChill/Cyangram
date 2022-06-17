@@ -1,16 +1,17 @@
-/* 
-  This is the post we see on the feed
-*/
+/*  This is the post we see on the feed */
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import Username from "../../misc/links/usernameLink";
 import PostActions from "../actions/post_actions";
 import CommentBody from "../comment/commentBody";
+import Card from "../../ui/card/card";
 
 import classes from "./post_excerpt.module.css";
 
 const PostExcerpt = ({ post }) => {
+  const router = useRouter();
   const { image, description, likeCnt, _id: postId, hasLiked } = post;
   const { profilePic, username, name } = post.userInfo;
 
@@ -29,12 +30,13 @@ const PostExcerpt = ({ post }) => {
   };
 
   return (
-    <div className={classes.post}>
+    <Card className={classes.wrapper}>
       <CommentBody
         picUrl={profilePic.url}
         picAlt={`${username}'s profile picture`}
         username={username}
         noContent
+        className={classes.padding}
       />
 
       <Image
@@ -45,22 +47,25 @@ const PostExcerpt = ({ post }) => {
         layout="responsive"
         className={classes.postImg}
         priority
+        onClick={() => router.push(`/p/${postId}`)}
       />
 
-      <PostActions
-        postId={postId}
-        likeBtnAction={handleLikes}
-        hasLiked={hasLiked}
-        redirectPost
-      />
+      <div className={classes.padding}>
+        <PostActions
+          postId={postId}
+          likeBtnAction={handleLikes}
+          hasLiked={hasLiked}
+          redirectPost
+        />
 
-      <span className={classes.likes}>{numLikes} Likes</span>
+        <span className={classes.likes}>{numLikes} Likes</span>
 
-      <div className={classes.description}>
-        <Username username={username} />
-        <span>{description}</span>
+        <div className={classes.description}>
+          <Username username={username} />
+          <span>{description}</span>
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

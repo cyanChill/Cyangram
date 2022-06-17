@@ -1,11 +1,36 @@
 .wrapper {
-  padding: 0.5rem;
+  margin: 0 -0.5rem;
+}
+
+.wrapper header {
+  padding: 0.25rem 0;
+}
+
+/* Classes for card component */
+.cardClasses {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 -0.25rem;
+  margin-top: 1rem;
+  padding: 0;
+
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 0 1rem var(--shadow-clr);
 }
 
 /* Sizing Post Image to Screen */
 .postImg {
-  width: 100%;
   object-fit: contain;
+}
+
+/* Container of everything but img */
+.generalContent {
+  height: inherit;
+  position: relative;
+  padding: 0.5rem;
 }
 
 /* Post Description */
@@ -21,6 +46,7 @@
   max-height: 50vh;
   overflow-y: auto;
   overflow-x: hidden;
+  padding: 0.25rem 0;
 }
 
 /* Statistics Field */
@@ -28,20 +54,19 @@
   padding: 0.25rem;
 }
 
-/* Like Count */
 .likeCount {
-  margin: 0;
-  padding: 0 0.25rem;
-  font-size: 0.95rem;
   font-weight: 500;
 }
 
-/* Posted Since */
+.postedSince {
+  color: var(--grey-600);
+}
+
+.likeCount,
 .postedSince {
   margin: 0;
   padding: 0 0.25rem;
   font-size: 0.95rem;
-  color: var(--grey-600);
 }
 
 /* Comments Field */
@@ -66,6 +91,10 @@
   color: var(--on-surface-accent);
 }
 
+.commentField input::placeholder {
+  color: var(--on-surface-accent);
+}
+
 .commentField .postBtn {
   font-weight: 550;
   text-align: center;
@@ -81,4 +110,59 @@
   cursor: not-allowed;
   background-color: transparent;
   opacity: 0.5;
+}
+
+@media (min-width: 568px) {
+  .wrapper {
+    margin: 0 auto;
+    padding: 0.5rem;
+    max-width: calc(var(--reasonable-max-app-width) - 10rem);
+  }
+
+  .cardClasses {
+    max-width: calc(var(--reasonable-max-app-width) - 10rem);
+  }
+}
+
+@media (min-width: 950px) {
+  .wrapper {
+    max-width: calc(var(--reasonable-max-app-width) + 18.5rem);
+  }
+
+  /* General actions a user can take besides reading comments */
+  .action {
+    height: 8.5rem;
+    width: calc(100% - 2rem);
+    max-width: 23.25rem;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .nonActions {
+    max-height: calc(100% - 8.5rem);
+    overflow: auto;
+  }
+
+  .imgContainer {
+    height: calc(var(--reasonable-max-app-width) - 7rem);
+    width: calc(var(--reasonable-max-app-width) - 7rem);
+    margin: auto 0;
+  }
+
+  .generalContent {
+    width: calc(100% - var(--reasonable-max-app-width) + 7rem);
+  }
+
+  .commentContainer {
+    max-height: initial;
+  }
+
+  .cardClasses {
+    max-height: 37.5rem;
+    max-width: calc(var(--reasonable-max-app-width) + 18.5rem);
+
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.25rem;
+  }
 }
