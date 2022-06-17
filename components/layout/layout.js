@@ -4,7 +4,7 @@ import classes from "./layout.module.css";
 
 const Layout = (props) => {
   return (
-    <div className={classes.layout}>
+    <div>
       <MainNavigation />
       <Alerts />
       {/* Extra Actions Component - messages */}

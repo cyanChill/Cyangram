@@ -1,7 +1,28 @@
+/* Logo Container */
+.logo {
+  width: 100%;
+  max-height: var(--nav-height);
+  position: fixed;
+  top: 0;
+
+  overflow: hidden;
+  padding-left: 0.25rem;
+  border-bottom: var(--border);
+  background-color: var(--background);
+  z-index: calc(var(--top-z) + 51);
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Navbar */
 .navbar {
   width: 100%;
-  max-width: var(--max-app-width);
-
   position: fixed;
   bottom: 0;
 
@@ -10,7 +31,7 @@
   z-index: calc(var(--top-z) + 50);
 }
 
-.navbar ul {
+.navItems {
   display: flex;
   justify-content: space-around;
 
@@ -52,4 +73,33 @@
 
 .logoutBtn {
   color: var(--error);
+}
+
+@media (min-width: 568px) {
+  .logo {
+    width: max-content;
+    padding-left: 1rem;
+    border: none;
+  }
+
+  .navbar {
+    top: 0;
+    bottom: auto;
+
+    border-top: none;
+    border-bottom: var(--border);
+  }
+
+  .navItems {
+    justify-content: flex-end;
+    gap: 1.5rem;
+
+    padding: 0.5rem 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .logo {
+    padding-left: 3rem;
+  }
 }

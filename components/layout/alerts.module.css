@@ -1,6 +1,6 @@
 .alertsWrapper {
   width: 100%;
-  max-width: var(--max-app-width);
+  max-width: var(--reasonable-max-app-width);
 
   display: flex;
   flex-direction: column;
@@ -8,6 +8,8 @@
 
   position: fixed;
   bottom: 4.25rem;
+  left: 50%;
+  transform: translateX(-50%);
 
   font-family: "Source Sans Pro", sans-serif;
   z-index: calc(var(--top-z) - 1);
@@ -56,4 +58,10 @@
 .warning {
   background-color: rgba(255, 255, 226, 0.945);
   border: 1px solid rgb(250, 250, 99);
+}
+
+@media (min-width: 568px) {
+  .alertsWrapper {
+    bottom: 1.5rem;
+  }
 }
