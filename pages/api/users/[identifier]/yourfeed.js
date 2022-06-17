@@ -34,10 +34,11 @@ const handler = async (req, res) => {
 
   const informizePosts = async (post) => {
     try {
-      const likes = await Like.find({ postId: post._id });
+      const likes = await Like.find({ postId: post._id }, "likerId -_id");
       return Promise.resolve({
         ...post._doc,
         likeCnt: likes.length,
+        hasLiked: likes.some((like) => like.likerId.equals(user._id)),
       });
     } catch (err) {
       return Promise.reject(err);
