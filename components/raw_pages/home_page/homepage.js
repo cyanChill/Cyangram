@@ -37,29 +37,31 @@ const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
             responsive="true"
           />
           <AiOutlineDown />
+          <div>
+            <DropDownMenu
+              arrowPosition="right"
+              openFromDirection="bottom"
+              display={ddDisplayStatus}
+              className={classes.dropDown}
+            >
+              <DropDownItem
+                onClick={() => handleChangeFeed("ourFeed")}
+                active={feedType === "ourFeed"}
+              >
+                <span>Our Feed</span>
+              </DropDownItem>
+              <DropDownItem
+                onClick={() => handleChangeFeed("discoverFeed")}
+                active={feedType === "discoverFeed"}
+              >
+                <span>Discover</span>
+              </DropDownItem>
+            </DropDownMenu>
+          </div>
         </div>
-        <DropDownMenu
-          arrowPosition="right"
-          openFromDirection="bottom"
-          display={ddDisplayStatus}
-          className={classes.dropDown}
-        >
-          <DropDownItem
-            onClick={() => handleChangeFeed("ourFeed")}
-            active={feedType === "ourFeed"}
-          >
-            <span>Our Feed</span>
-          </DropDownItem>
-          <DropDownItem
-            onClick={() => handleChangeFeed("discoverFeed")}
-            active={feedType === "discoverFeed"}
-          >
-            <span>Discover</span>
-          </DropDownItem>
-        </DropDownMenu>
       </header>
 
-      <div className={classes.center}>
+      <div className={classes.content}>
         {feedType === "ourFeed"
           ? ourFeed.map((post) => <PostExcerpt key={post._id} post={post} />)
           : discoverFeed.map((post) => (

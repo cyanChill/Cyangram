@@ -1,19 +1,30 @@
 .header {
-  display: flex;
-  align-items: flex-end;
+  width: 100%;
+  position: fixed;
+
+  background-color: var(--background);
+  z-index: 50;
 }
 
 .selection {
+  width: max-content;
   display: flex;
   align-items: center;
 }
 
-.center {
+.selection:hover {
+  cursor: pointer;
+}
+
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  padding: 0.5rem;
+  padding-top: 3.25rem;
 }
 
 .dropDown {
-  transform: translateX(-0.5rem);
+  transform: translate(-0.5rem, 1rem);
 }
