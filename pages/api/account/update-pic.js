@@ -5,9 +5,9 @@ import {
   appCheckVerification,
   deleteImage,
   uploadImage,
-  validImageSize,
 } from "../../../lib/firebaseAdminHelper";
 import dbConnect from "../../../lib/dbConnect";
+import { validImageSize } from "../../../lib/validate";
 import User from "../../../models/User";
 
 const handler = async (req, res) => {
