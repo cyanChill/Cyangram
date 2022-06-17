@@ -5,7 +5,7 @@ import BackHeader from "../../components/ui/backheader/backHeader";
 
 const UserFollowers = ({ mutual, acquaintances }) => {
   return (
-    <div>
+    <div className="centerPage">
       <BackHeader text="Followers" />
       <UserList shared={mutual} notShared={acquaintances} />
     </div>

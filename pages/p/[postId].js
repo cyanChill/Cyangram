@@ -1,4 +1,4 @@
-/*  Page to display the post, its comments, etc */
+import Head from "next/head";
 import { getSession } from "next-auth/react";
 
 import PostPage from "../../components/posts/post";
@@ -10,12 +10,20 @@ const UserPostPage = ({ errorCode, postData, ownPost, hasLiked, viewerId }) => {
   }
 
   return (
-    <PostPage
-      postData={postData}
-      ownPost={ownPost}
-      hasLiked={hasLiked}
-      viewerId={viewerId}
-    />
+    <>
+      <Head>
+        <title>
+          {postData.posterInfo.name} (@{postData.posterInfo.username})
+        </title>
+        <meta name="description" content="Create a new instagram post here!" />
+      </Head>
+      <PostPage
+        postData={postData}
+        ownPost={ownPost}
+        hasLiked={hasLiked}
+        viewerId={viewerId}
+      />
+    </>
   );
 };
 

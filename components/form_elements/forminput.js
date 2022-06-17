@@ -30,6 +30,7 @@ const FormInput = React.forwardRef((props, ref) => {
       <div className={wrapperClass}>
         <textarea
           ref={ref}
+          autoComplete="off"
           className={`${classes.textarea} ${additClasses} ${
             noResize && classes.noResize
           }`}
@@ -45,6 +46,7 @@ const FormInput = React.forwardRef((props, ref) => {
     <div className={wrapperClass}>
       <input
         ref={ref}
+        autoComplete="off"
         type={inputType}
         className={`${classes.input} ${additClasses}`}
         {...rest}
