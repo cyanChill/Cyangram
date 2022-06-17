@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 
 import {} from "../firebase.config"; // For initialization
@@ -17,6 +18,10 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <SessionProvider session={pageProps.session}>
+      <Head>
+        <title>Next-Instagram</title>
+        <meta name="description" content="Mock Instagram App using NextJS." />
+      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>

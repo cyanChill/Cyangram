@@ -23,6 +23,7 @@ const NewPostPage = () => {
 
       /* Validate Upload Image is <5MB in size */
       if (!validImageSize(this.files[0].size, 5)) {
+        setImageUpload(null);
         global.alerts.actions.addAlert({
           type: global.alerts.types.error,
           content: "Image must be <5MB in size.",
