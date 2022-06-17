@@ -55,7 +55,7 @@ const handler = async (req, res) => {
   }
 
   const imageInfo = data.files.uploadedImg;
-  if (action === "SET" && !validImageSize(imageInfo, 5)) {
+  if (action === "SET" && !validImageSize(imageInfo.size, 5)) {
     res.status(406).json({ message: "File size is too large (Must be <5MB)." });
     return;
   }
