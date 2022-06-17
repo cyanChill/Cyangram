@@ -4,13 +4,13 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import global from "../../../global";
 import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
+import { validImageSize } from "../../../lib/validate";
 import FormInput from "../../form_elements/forminput";
-import InputGroup from "../../form_elements/inputGroup";
 import Button from "../../form_elements/button";
 
 import classes from "./newpostpage.module.css";
 
-const NewPostPage = ({ userId }) => {
+const NewPostPage = () => {
   const router = useRouter();
 
   const [imageUpload, setImageUpload] = useState(null);
@@ -20,6 +20,15 @@ const NewPostPage = ({ userId }) => {
     const imgInput = document.getElementById("imgInput");
     imgInput.addEventListener("change", function () {
       if (this.files.length === 0) return;
+
+      /* Validate Upload Image is <5MB in size */
+      if (!validImageSize(this.files[0].size, 5)) {
+        global.alerts.actions.addAlert({
+          type: global.alerts.types.error,
+          content: "Image must be <5MB in size.",
+        });
+        return;
+      }
 
       const reader = new FileReader();
       reader.addEventListener("load", () => {
@@ -62,41 +71,45 @@ const NewPostPage = ({ userId }) => {
 
   return (
     <div className={classes.wrapper}>
-      <h2>Create a New Post</h2>
-      <button
-        id="postImg"
-        className={classes.selectImg}
-        onClick={() => document.getElementById("imgInput").click()}
-      >
-        <AiOutlinePlus id="add-icon" className={classes.iconSize} />
-      </button>
-      <input
-        type="file"
-        id="imgInput"
-        accept="image/jpeg, image/png, image/jpg"
-        className={classes.selectImgInput}
-        onChange={(e) => {
-          if (e.target.files.length > 0) {
-            setImageUpload(e.target.files[0]);
-          }
-        }}
-      />
-
-      <InputGroup ignoreAlign className={classes.descriptionGroup}>
-        <label className={classes.label}>Description:</label>
-        <FormInput
-          type="textarea"
-          rows={3}
-          noResize
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+      <h2 className={classes.header}>Create new post</h2>
+      <div className={classes.content}>
+        <button
+          id="postImg"
+          className={classes.selectImg}
+          onClick={() => document.getElementById("imgInput").click()}
+        >
+          <AiOutlinePlus id="add-icon" className={classes.iconSize} />
+        </button>
+        <input
+          type="file"
+          id="imgInput"
+          accept="image/jpeg, image/png, image/jpg"
+          className={classes.selectImgInput}
+          onChange={(e) => {
+            if (e.target.files.length > 0) {
+              setImageUpload(e.target.files[0]);
+            }
+          }}
         />
-      </InputGroup>
 
-      <div className={classes.alignRight}>
-        <Button onClick={createPost} disabled={!imageUpload}>
-          Create New Post
-        </Button>
+        <div className={classes.actions}>
+          <section className={classes.descriptionGroup}>
+            <label className={classes.label}>Description:</label>
+            <FormInput
+              type="textarea"
+              rows={3}
+              noResize
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </section>
+
+          <div className={classes.alignRight}>
+            <Button onClick={createPost} disabled={!imageUpload}>
+              Create New Post
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,19 @@
   padding: 0.5rem;
 }
 
+.header {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+/* Wraps the general content of the page */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 /* Button + Where the Uploaded Image Preview is Displayed */
 .selectImg {
   width: 80vw;
@@ -33,15 +46,23 @@
   text-align: center;
 }
 
+/* Contains Description + Create New Post Button */
+.actions {
+  width: 100%;
+}
+
 /* Assorted Form Classes */
 .descriptionGroup {
-  padding: 1rem 0.25rem;
+  padding: 0.25rem;
 }
 
 .label {
+  display: block;
   font-weight: 500;
+  padding-bottom: 0.25rem;
 }
 
+/* Create New Post Button Class */
 .alignRight {
   display: flex;
   flex-direction: row-reverse;
@@ -53,5 +74,12 @@
   .selectImg {
     max-width: 20rem;
     max-height: 20rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+    justify-content: space-around;
   }
 }

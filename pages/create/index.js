@@ -1,9 +1,18 @@
 import { getSession } from "next-auth/react";
+import Head from "next/head";
 
 import NewPostPage from "../../components/raw_pages/new_post/newpostpage";
 
 const CreatePostPage = ({ userId }) => {
-  return <NewPostPage userId={userId} />;
+  return (
+    <>
+      <Head>
+        <title>Create new post</title>
+        <meta name="description" content="Create a new instagram post here!" />
+      </Head>
+      <NewPostPage userId={userId} />
+    </>
+  );
 };
 
 export default CreatePostPage;
