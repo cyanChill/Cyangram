@@ -1,12 +1,18 @@
-/* 
-  Simple settings page (a bit different than what Instagram actually uses)
-*/
+import Head from "next/head";
 import { getSession } from "next-auth/react";
 
 import UserSettingsPage from "../../components/raw_pages/settings/settingspage";
 
 const SettingsPage = ({ userData }) => {
-  return <UserSettingsPage userData={userData} />;
+  return (
+    <>
+      <Head>
+        <title>Settings</title>
+        <meta name="description" content="Settings page." />
+      </Head>
+      <UserSettingsPage userData={userData} />
+    </>
+  );
 };
 
 export default SettingsPage;

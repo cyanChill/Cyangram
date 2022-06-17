@@ -1,9 +1,4 @@
-/* 
-  Profile Page:
-    - # of Posts
-    - # of Followers
-    - # Following
-*/
+import Head from "next/head";
 import { getSession } from "next-auth/react";
 
 import ErrorPage from "../../components/raw_pages/error/errorpage";
@@ -14,7 +9,17 @@ const ProfilePage = ({ errorCode, ...rest }) => {
     return <ErrorPage />;
   }
 
-  return <UserProfilePage {...rest} />;
+  return (
+    <>
+      <Head>
+        <title>
+          {rest.userData.user.name} (@{rest.userData.user.username})
+        </title>
+        <meta name="description" content="Create a new instagram post here!" />
+      </Head>
+      <UserProfilePage {...rest} />
+    </>
+  );
 };
 
 export default ProfilePage;

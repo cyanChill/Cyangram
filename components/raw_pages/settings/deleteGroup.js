@@ -17,9 +17,11 @@ const DeleteGroup = () => {
     <form onSubmit={deleteAccount}>
       <InputGroup>
         <Label>Permanently Delete Account?</Label>
-        <Button type="submit" variant="error" sizeFit>
-          Delete Account
-        </Button>
+        <div className={classes.alignRight}>
+          <Button type="submit" variant="error" sizeFit>
+            Delete Account
+          </Button>
+        </div>
       </InputGroup>
     </form>
   );

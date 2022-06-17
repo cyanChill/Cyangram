@@ -2,6 +2,22 @@
   padding: 0.5rem;
 }
 
+.wrapper h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.wrapper h2 {
+  font-size: 1.35rem;
+  font-weight: 500;
+  margin: 0.75rem 0;
+}
+
+.wrapper label {
+  font-weight: 500;
+}
+
 .alignRight {
   display: flex;
   flex-direction: row-reverse;

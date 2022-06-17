@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import global from "../../../global";
+import { validImageSize } from "../../../lib/validate";
 import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
 import Button from "../../form_elements/button";
 
@@ -14,6 +15,16 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
   /* Handles when we want to set a new profile picture */
   useEffect(() => {
     if (imageUpload == null) return;
+
+    /* Validate Upload Image is <5MB in size */
+    if (!validImageSize(imageUpload.size, 5)) {
+      setImageUpload(null);
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Image must be <5MB in size.",
+      });
+      return;
+    }
 
     const setNewProfilePic = async () => {
       // Data we'll pass to backend
