@@ -16,7 +16,6 @@ const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
   const handleChangeFeed = (type) => {
     if (type !== "ourFeed" && type !== "discoverFeed") return;
     setFeedType(type);
-    setddDisplayStatus(false);
   };
 
   return (
