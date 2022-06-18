@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 
-import {} from "../firebase.config"; // For initialization
 import global from "../global";
 import useAlert from "../hooks/useAlert";
 import useTheme from "../hooks/useTheme";

@@ -18,12 +18,9 @@ const app = initializeApp(firebaseConfig);
 /* Used for logging users in & out w/ custom tokens */
 export const auth = getAuth(app);
 
-// Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
-// key is the counterpart to the secret key you set in the Firebase console.
 export const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(
     process.env.NEXT_PUBLIC_FIREBASE_RECAPTCHA_SITE_KEY
   ),
-  /* Optional argument. If true, the SDK automatically refreshes App Check tokens as needed. */
   isTokenAutoRefreshEnabled: true,
 });
