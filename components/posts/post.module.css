@@ -132,8 +132,8 @@
   /* General actions a user can take besides reading comments */
   .action {
     height: 8.5rem;
-    width: calc(100% - 2rem);
-    max-width: 23.25rem;
+    width: calc(100% - 1rem);
+    max-width: 23.5rem;
     position: absolute;
     bottom: 0;
   }

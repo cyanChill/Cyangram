@@ -1,0 +1,46 @@
+.modal {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: calc(var(--top-z) * 2);
+}
+
+.modalBackdrop {
+  height: 100%;
+  width: 100%;
+  background-color: var(--shadow-clr-500);
+}
+
+.modalBody {
+  width: max-content;
+  max-width: min(85vw, 50rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 0.65rem;
+  background-color: var(--surface);
+}
+
+/* Modal Stuff */
+.modalText {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modalBtn {
+  padding: 0.35rem 0.65rem;
+}

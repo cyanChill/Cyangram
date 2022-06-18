@@ -14,18 +14,18 @@
   font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
   cursor: pointer;
   background-color: var(--btn-hover);
 }
 
-.btn.outline:hover {
+.btn.outline:hover:not(:disabled) {
   cursor: pointer;
   background-color: var(--btn-hover);
   color: var(--btn-accent);
 }
 
-.btn:disabled {
+.btn:disabled:not(.outline) {
   cursor: default;
   background: linear-gradient(
       to right,
@@ -34,6 +34,10 @@
     )
     var(--btn-primary);
   border: 1px solid transparent;
+}
+
+.btn.outline:disabled {
+  background: var(--shadow-clr-200);
 }
 
 .pill {

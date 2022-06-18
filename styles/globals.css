@@ -9,6 +9,7 @@
   --top-z: 100;
 
   --shadow-clr-200: rgba(0, 0, 0, 0.15);
+  --shadow-clr-500: rgba(0, 0, 0, 0.45);
   --shadow-clr-900: rgba(0, 0, 0, 0.75);
 
   --off-white-500: #fafafa;
@@ -38,17 +39,9 @@
   --on-surface: ;
   --on-surface-accent: var(--grey-800);
 
-  --primary: ;
-  --on-primary: ;
-
-  --secondary: ;
-  --on-secondary: ;
-
   --border: 0.05px solid var(--grey-300);
 
   --error: var(--red-500);
-  --error-border: ;
-  --error-transparent: ;
 
   --transparent-highlight: rgba(211, 211, 211, 0.75);
   --shadow-clr: rgba(0, 0, 0, 0.35);

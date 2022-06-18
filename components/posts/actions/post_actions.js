@@ -5,9 +5,11 @@ import { FaRegComment } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 import global from "../../../global";
+import Button from "../../form_elements/button";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import SharePostBtn from "./sharepostbtn";
+import Modal from "../../ui/modal/modal";
 
 import classes from "./post_actions.module.css";
 
@@ -76,16 +78,16 @@ const PostActions = ({
 
 export default PostActions;
 
-/* TODO: Add modal for deletion confirmation */
 const OwnerSettings = ({ postId, isOwner }) => {
   const router = useRouter();
 
+  const [modalActive, setModalActive] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [ddDisplayStatus, setddDisplayStatus] = useState(false);
 
   const handlePostDelete = async () => {
-    const res = await fetch(`/api/post/${postId}`, {
-      method: "DELETE",
-    });
+    setIsDeleting(true);
+    const res = await fetch(`/api/post/${postId}`, { method: "DELETE" });
     const data = await res.json();
 
     global.alerts.actions.addAlert({
@@ -99,26 +101,52 @@ const OwnerSettings = ({ postId, isOwner }) => {
   };
 
   return (
-    <div onClick={() => setddDisplayStatus((prev) => !prev)}>
-      <BiDotsHorizontalRounded className={classes.ddTrigger} />
-      <DropDownMenu
-        arrowPosition="right"
-        openFromDirection="bottom"
-        display={ddDisplayStatus}
-      >
-        <DropDownItem>
-          <SharePostBtn postId={postId}>Share</SharePostBtn>
-        </DropDownItem>
-        {isOwner && (
-          <DropDownItem
-            className={classes.deleteBtn}
-            onClick={handlePostDelete}
-          >
-            <AiOutlineDelete />
-            <span>Delete Post</span>
+    <>
+      <div onClick={() => setddDisplayStatus((prev) => !prev)}>
+        <BiDotsHorizontalRounded className={classes.ddTrigger} />
+        <DropDownMenu
+          arrowPosition="right"
+          openFromDirection="bottom"
+          display={ddDisplayStatus}
+        >
+          <DropDownItem>
+            <SharePostBtn postId={postId}>Share</SharePostBtn>
           </DropDownItem>
-        )}
-      </DropDownMenu>
-    </div>
+          {isOwner && (
+            <DropDownItem
+              className={classes.deleteBtn}
+              onClick={() => setModalActive(true)}
+            >
+              <AiOutlineDelete />
+              <span>Delete Post</span>
+            </DropDownItem>
+          )}
+        </DropDownMenu>
+      </div>
+
+      {/* Delete confirmation modal */}
+      <Modal active={modalActive}>
+        <p className={classes.modalText}>Confirm Post Deletion?</p>
+        <div className={classes.modalActions}>
+          <Button
+            className={classes.modalBtn}
+            onClick={() => setModalActive(false)}
+            disabled={isDeleting}
+            outline
+          >
+            Cancel
+          </Button>
+          <Button
+            className={classes.modalBtn}
+            onClick={handlePostDelete}
+            disabled={isDeleting}
+            variant="error"
+            outline
+          >
+            Ok
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 };

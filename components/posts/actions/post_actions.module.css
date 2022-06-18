@@ -37,3 +37,19 @@
 
   color: var(--error);
 }
+
+/* Modal Stuff */
+.modalText {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modalBtn {
+  padding: 0.35rem 0.65rem;
+}
