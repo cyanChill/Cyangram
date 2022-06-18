@@ -33,22 +33,18 @@ const PostActions = ({
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/like`,
       { method: method }
     );
+    const data = await res.json();
 
     if (!res.ok) {
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
-        content: `Something went wrong with ${
-          method === "POST" ? "liking" : "unliking"
-        } the post.`,
+        content: data.message,
       });
       return;
     }
 
-    /* 
-      Add animation for when we change like icons
-    */
+    /* TODO: Add animation for when we change like icons */
     likeBtnAction(method === "POST" ? "ADD" : "SUB");
-    // After updating server-side, we update client-side
     setIsLiked((prevLike) => !prevLike);
   };
 
@@ -90,19 +86,14 @@ const OwnerSettings = ({ postId, isOwner }) => {
     const res = await fetch(`/api/post/${postId}`, {
       method: "DELETE",
     });
-
     const data = await res.json();
 
-    if (!res.ok) {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.error,
-        content: `Failed to delete post (${data.errMsg})`,
-      });
-    } else {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.success,
-        content: "Deleted post.",
-      });
+    global.alerts.actions.addAlert({
+      type: global.alerts.types[res.ok ? "success" : "error"],
+      content: data.message,
+    });
+    // If we deleted successfully, returned to home feed
+    if (res.ok) {
       router.replace("/");
     }
   };

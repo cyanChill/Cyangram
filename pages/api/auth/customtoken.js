@@ -8,12 +8,13 @@ const handler = async (req, res) => {
   const method = req.method;
 
   if (method !== "POST") {
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
   const session = await getSession({ req: req });
   if (!session) {
-    res.status(401).json({ message: "User Is Not Authenticated." });
+    res.status(401).json({ message: "User is not authenticated." });
     return;
   }
 
@@ -23,7 +24,7 @@ const handler = async (req, res) => {
     );
     res.status(200).json({ message: "Obtained custom token.", customToken });
   } catch (err) {
-    throw new Error(`Error creating custom token: ${err}`);
+    res.status(500).json({ message: "Error creating custom token.", err: err });
   }
 };
 

@@ -6,21 +6,23 @@ import {
   deleteImage,
   uploadImage,
 } from "../../../lib/firebaseAdminHelper";
+import { DefaultProfilePic } from "../../../lib/constants";
 import dbConnect from "../../../lib/dbConnect";
 import { validImageSize } from "../../../lib/validate";
 import User from "../../../models/User";
 
 const handler = async (req, res) => {
   if (req.method !== "PATCH") {
-    res.status(400).json({ message: "Invalid Request" });
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
   const session = await getSession({ req: req });
   if (!session) {
-    res.status(401).json({ message: "User Is Not Authenticated." });
+    res.status(401).json({ message: "User is not authenticated." });
     return;
   }
+  const userId = session.user.dbId;
 
   try {
     await appCheckVerification(req);
@@ -30,15 +32,7 @@ const handler = async (req, res) => {
   }
 
   await dbConnect();
-
-  const userId = session.user.dbId;
-  const user = await User.findOne({ _id: userId });
-  if (!user) {
-    res.status(404).json({ message: "User Not Found" });
-    return;
-  }
-  const prevImg = user.profilePic;
-
+  /* Get data from formData */
   const data = await new Promise((resolve, reject) => {
     const form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
@@ -60,38 +54,33 @@ const handler = async (req, res) => {
     return;
   }
 
-  const defaultProfilePic = {
-    url: `${process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_URL}`,
-    identifier: "default_profile_picture",
-  };
   let img = { url: "", identifier: "" };
-
   try {
     if (action === "SET") {
-      img = await uploadImage(user._id.toString(), imageInfo);
+      img = await uploadImage(userId, imageInfo);
     }
-    const newProfilePicObj = action === "SET" ? img : defaultProfilePic;
-
-    await User.updateOne(
-      { _id: user._id },
-      { $set: { profilePic: newProfilePicObj } }
-    );
-
+    const newProfilePicObj = action === "SET" ? img : DefaultProfilePic;
+    // By default, it returns the previous entry
+    const prevEntry = await User.findByIdAndUpdate(userId, {
+      $set: { profilePic: newProfilePicObj },
+    });
     // Delete previous profile picture
-    if (prevImg.identifier !== "default_profile_picture") {
-      await deleteImage(user._id.toString(), prevImg.identifier);
+    if (prevEntry.profilePic.identifier !== "default_profile_picture") {
+      await deleteImage(userId, prevEntry.profilePic.identifier);
     }
 
     res.status(200).json({
-      message: "Profile Picture Successfully Updated.",
+      message: "Updated profile picture successfully.",
       newProfilePic: newProfilePicObj,
     });
   } catch (err) {
     // Delete uploaded profile picture if we fail
     if (action === "SET") {
-      await deleteImage(user._id.toString(), img.identifier);
+      await deleteImage(userId, img.identifier);
     }
-    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
+    res
+      .status(500)
+      .json({ message: "Failed to update profile picture.", err: err });
   }
 };
 

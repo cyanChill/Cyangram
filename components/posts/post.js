@@ -66,20 +66,16 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
     );
     const data = await res.json();
 
-    if (!res.ok) {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.error,
-        content: "An error has occurred when submitting your comment.",
-      });
-      return;
-    }
-
     global.alerts.actions.addAlert({
-      type: global.alerts.types.success,
-      content: "Successfully added comment to post.",
+      type: global.alerts.types[res.ok ? "success" : "error"],
+      content: data.message,
     });
-    setComments((prev) => [...prev, data.comment]);
-    setCommentField("");
+
+    // If we successfully created comment, update client-side
+    if (res.ok) {
+      setComments((prev) => [...prev, data.comment]);
+      setCommentField("");
+    }
   };
 
   return (

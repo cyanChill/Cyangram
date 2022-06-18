@@ -11,19 +11,15 @@ const handler = async (req, res) => {
   switch (method) {
     case "GET":
       const { identifier } = req.query;
-
       if (!identifier.trim()) {
-        res.status(400).json({ message: "Invalid Request" });
+        res.status(400).json({ message: "Invalid Request." });
         return;
       }
 
       await dbConnect();
 
       // See if username exists
-      const existingUser = await User.findOne({
-        username: identifier,
-      });
-
+      const existingUser = await User.findOne({ username: identifier });
       if (!existingUser) {
         res.status(404).json({ message: "User does not exist." });
         return;
@@ -31,16 +27,12 @@ const handler = async (req, res) => {
 
       /* Fetching number of people user is following */
       const following = await Follower.find({ followerId: existingUser._id });
-
       /* Fetching number of people following user */
       const followers = await Follower.find(
-        {
-          followingId: existingUser._id,
-        },
+        { followingId: existingUser._id },
         "followerId -_id"
       );
-
-      /* Fetching Posts */
+      /* Fetching Posts & order from newest to oldest*/
       const userPosts = await Post.find({ posterId: existingUser._id }).sort({
         date: "-1",
       });
@@ -62,13 +54,12 @@ const handler = async (req, res) => {
         });
       };
 
-      /* Sorts posts from date of creation (newests to oldest) */
       const promises = userPosts.map((post) => informizePosts(post));
 
       return Promise.all(promises)
         .then((postsData) => {
           res.status(200).json({
-            message: "Successfully found user.",
+            message: "Successfully found user data.",
             user: existingUser,
             posts: postsData,
             followerList: followers,
@@ -79,8 +70,8 @@ const handler = async (req, res) => {
         .catch((err) => {
           res.status(500).json({
             message:
-              "A problem has occurred while fetching like & comment data for posts",
-            errMsg: err,
+              "A problem has occurred while fetching like & comment data for posts.",
+            err: err,
           });
         });
   }

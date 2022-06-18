@@ -6,6 +6,7 @@ import User from "../../../../models/User";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
@@ -47,7 +48,7 @@ const handler = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       message: "A problem has occurred with following/unfollowing the user.",
-      errMsg: err,
+      err: err,
     });
   }
 };

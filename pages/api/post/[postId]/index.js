@@ -1,8 +1,3 @@
-/* 
-  Expect either a GET, and DELETE request [maybe patch but only to
-  edit description]
-*/
-
 import { getSession } from "next-auth/react";
 
 import { deleteImage } from "../../../../lib/firebaseAdminHelper";
@@ -14,22 +9,21 @@ import Comment from "../../../../models/Comment";
 
 const handler = async (req, res) => {
   const method = req.method;
-  const { postId } = req.query;
 
   await dbConnect();
 
+  const { postId } = req.query;
   const postInfo = await Post.findById(postId);
   if (!postInfo) {
     res.status(404).json({ message: "Post does not exist." });
     return;
   }
 
-  /* TODO: Minimize data fetched? */
   switch (method) {
     case "GET":
       /* Get info on the poster */
       const posterInfo = await User.findById(postInfo.posterId);
-
+      /* Get info on the post*/
       const postLikes = await Like.find({ postId: postInfo._id });
       const postComments = await Comment.find({ postId: postInfo._id });
 
@@ -69,15 +63,15 @@ const handler = async (req, res) => {
         .catch((err) => {
           res.status(500).json({
             message:
-              "A problem has occurred while fetching commenter data for comment",
-            errMsg: err,
+              "A problem has occurred while fetching commenter data for comment.",
+            err: err,
           });
         });
 
     case "DELETE":
       const session = await getSession({ req: req });
       if (!session) {
-        res.status(401).json({ message: "User is not authenticated" });
+        res.status(401).json({ message: "User is not authenticated." });
         return;
       }
 
@@ -100,8 +94,8 @@ const handler = async (req, res) => {
         res.status(200).json({ message: "Successfully deleted post." });
       } catch (err) {
         res.status(500).json({
-          message: "A problem has occurred while deleting post",
-          errMsg: err,
+          message: "A problem has occurred while deleting post.",
+          err: err,
         });
       }
   }

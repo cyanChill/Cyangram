@@ -1,4 +1,4 @@
-import { getSession, signIn, signOut } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
@@ -11,17 +11,17 @@ import Validator, {
 
 const handler = async (req, res) => {
   if (req.method !== "PATCH") {
-    res.status(400).json({ message: "Invalid Request" });
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
   const session = await getSession({ req: req });
-
   if (!session) {
-    res.status(401).json({ message: "User Is Not Authenticated." });
+    res.status(401).json({ message: "User is not authenticated." });
     return;
   }
 
+  const userId = session.user.dbId;
   const username = session.user.username;
   const newName = req.body.newName;
   const newUsername = req.body.newUsername;
@@ -34,7 +34,7 @@ const handler = async (req, res) => {
   ]);
 
   if (!validNameStruc || !validUsernameStruc) {
-    res.status(422).json({ message: "Invalid Inputs" });
+    res.status(422).json({ message: "Invalid inputs." });
     return;
   }
 
@@ -52,22 +52,18 @@ const handler = async (req, res) => {
     }
   }
 
-  const user = await User.findOne({ username: username }, "+password");
-  if (!user) {
-    res.status(404).json({ message: "User Not Found" });
-    return;
-  }
-
   try {
-    await User.updateOne(
-      { _id: user._id },
-      { $set: { name: newName, username: newUsername, bio: newBio } }
-    );
+    await User.findByIdAndUpdate(userId, {
+      $set: { name: newName, username: newUsername, bio: newBio },
+    });
     res
       .status(200)
-      .json({ message: "General Profile Settings Updated Successfully." });
+      .json({ message: "Successfully updated general profile settings." });
   } catch (err) {
-    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
+    res.status(500).json({
+      message: "Failed to update general profile settings.",
+      err: err,
+    });
   }
 };
 

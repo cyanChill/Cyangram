@@ -1,16 +1,14 @@
 import { getFollowList } from "../../../../lib/backendHelpers";
 
 const handler = async (req, res) => {
-  const { identifier } = req.query;
-
   if (req.method !== "GET") {
-    res.status(400).json({ message: "Invalid Request" });
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
   let promises;
   try {
-    promises = await getFollowList(identifier, "following");
+    promises = await getFollowList(req.query.identifier, "following");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -27,7 +25,7 @@ const handler = async (req, res) => {
         message:
           "A problem has occurred while fetching data for users being followed.",
         users: [],
-        errMsg: err,
+        err: err,
       });
     });
 };

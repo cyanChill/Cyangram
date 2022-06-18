@@ -26,8 +26,12 @@ const FollowButton = ({
       content: data.message,
     });
 
-    setIsFollowing(data.follow);
-    updateFollowCount(!!data.follow);
+    // If the like request was successfully, update client-side info
+    if (res.ok) {
+      setIsFollowing(data.follow);
+      updateFollowCount(!!data.follow);
+    }
+
     setLoading(false);
   };
 

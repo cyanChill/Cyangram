@@ -36,18 +36,16 @@ const Comment = ({ postId, comment, viewerId, handleRemove }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ commentId: commentId }),
     });
+    const data = await res.json();
 
-    if (!res.ok) {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.error,
-        content: "Failed to delete comment.",
-      });
-    } else {
+    global.alerts.actions.addAlert({
+      type: global.alerts.types[res.ok ? "success" : "error"],
+      content: data.message,
+    });
+
+    // If we successfully removed comment server-side, do it client-side
+    if (res.ok) {
       handleRemove(commentId);
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.success,
-        content: "Successfully deleted comment.",
-      });
     }
   };
 

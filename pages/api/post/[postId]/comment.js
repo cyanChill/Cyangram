@@ -7,33 +7,30 @@ import Comment from "../../../../models/Comment";
 
 const handler = async (req, res) => {
   const method = req.method;
-  const { postId } = req.query;
-
   if (method !== "POST" && method !== "DELETE") {
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
   const session = await getSession({ req: req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
   const commenterId = session.user.dbId;
 
   await dbConnect();
 
+  const { postId } = req.query;
   const postExists = await Post.findById(postId);
   if (!postExists) {
-    res.status(404).json({ message: "Post not found" });
-    return;
-  }
-
-  const userExists = await User.findById(commenterId);
-  if (!userExists) {
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: "Post not found." });
     return;
   }
 
   switch (method) {
     case "POST":
       const commentContent = req.body.comment;
-
       try {
         const commentEntry = {
           postId: postId,
@@ -46,13 +43,11 @@ const handler = async (req, res) => {
         const commenterInfo = await User.findById(commenterId);
 
         res.status(200).json({
-          message: "Successfully commented on post",
+          message: "Successfully commented on post.",
           comment: { ...result._doc, commenterInfo },
         });
       } catch (err) {
-        res
-          .status(500)
-          .json({ message: "Internal Server Error.", errMsg: err });
+        res.status(500).json({ message: "Internal Server Error.", err: err });
       }
       return;
     case "DELETE":
@@ -60,13 +55,10 @@ const handler = async (req, res) => {
 
       /* Verify Deleter of Comment in Fact Made Comment */
       const commentInfo = await Comment.findById(commentId);
-
       if (!commentInfo) {
         res.status(404).json({ message: "Comment not found" });
         return;
-      }
-
-      if (commentInfo.commenterId != commenterId) {
+      } else if (commentInfo.commenterId != commenterId) {
         res
           .status(401)
           .json({ message: "You cannot delete a comment you have not made." });
@@ -75,11 +67,11 @@ const handler = async (req, res) => {
 
       try {
         await Comment.findByIdAndDelete(commentId);
-        res.status(200).json({ message: "Successfully deleted comment" });
+        res.status(200).json({ message: "Successfully deleted comment." });
       } catch (err) {
         res
           .status(500)
-          .json({ message: "Internal Server Error.", errMsg: err });
+          .json({ message: "Failed to delete comment.", err: err });
       }
       return;
   }

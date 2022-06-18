@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Router from "next/router";
 
 import global from "../../../global";
 import Button from "../../form_elements/button";
@@ -62,22 +63,16 @@ const GeneralGroup = ({ userData }) => {
         newBio: bio,
       }),
     });
-
     const data = await res.json();
 
-    if (res.ok) {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.success,
-        content: data.message,
-      });
+    global.alerts.actions.addAlert({
+      type: global.alerts.types[res.ok ? "success" : "error"],
+      content: data.message,
+    });
 
-      setError({ name: false, username: false });
-      setPrevData({ name: name, username: username, bio: bio });
-    } else {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.error,
-        content: `An Error Has Occurred: ${data.message}`,
-      });
+    // Refresh session data if we updated profile info
+    if (res.ok) {
+      Router.reload();
     }
   };
 
@@ -117,7 +112,6 @@ const GeneralGroup = ({ userData }) => {
             type="textarea"
             rows={3}
             noResize
-            required
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           />

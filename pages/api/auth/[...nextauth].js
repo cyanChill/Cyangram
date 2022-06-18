@@ -17,7 +17,7 @@ export default NextAuth({
 
         const user = await User.findOne(
           { username: credentials.username },
-          "+password"
+          "name username password"
         );
 
         if (!user) throw new Error("No user found!");

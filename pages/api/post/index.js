@@ -8,17 +8,20 @@ import {
 } from "../../../lib/firebaseAdminHelper";
 import dbConnect from "../../../lib/dbConnect";
 import { validImageSize } from "../../../lib/validate";
-import User from "../../../models/User";
 import Post from "../../../models/Post";
 
 const handler = async (req, res) => {
-  if (req.method !== "POST") return;
+  if (req.method !== "POST") {
+    res.status(400).json({ message: "Invalid Request." });
+    return;
+  }
 
   const session = await getSession({ req: req });
   if (!session) {
-    res.status(401).json({ message: "User Is Not Authenticated." });
+    res.status(401).json({ message: "User is not authenticated." });
     return;
   }
+  const userId = session.user.dbId;
 
   try {
     await appCheckVerification(req);
@@ -28,14 +31,7 @@ const handler = async (req, res) => {
   }
 
   await dbConnect();
-
-  const userId = session.user.dbId;
-  const user = await User.findOne({ _id: userId });
-  if (!user) {
-    res.status(404).json({ message: "User Not Found" });
-    return;
-  }
-
+  /* Get data from formData */
   const data = await new Promise((resolve, reject) => {
     const form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
@@ -51,13 +47,13 @@ const handler = async (req, res) => {
     res.status(406).json({ message: "File size is too large (Must be <5MB)." });
     return;
   }
-  let img = { url: "", identifier: "" };
 
+  let img = { url: "", identifier: "" };
   try {
     // Upload Image to Firebase
-    img = await uploadImage(user._id.toString(), imageInfo);
+    img = await uploadImage(userId, imageInfo);
     const postEntry = {
-      posterId: user._id,
+      posterId: userId,
       description: description,
       image: img,
       date: Date.now(),
@@ -66,11 +62,11 @@ const handler = async (req, res) => {
     const createdPost = await Post.create(postEntry);
     res
       .status(200)
-      .json({ message: "Post Created Successfully.", postId: createdPost._id });
+      .json({ message: "Successfully created post.", postId: createdPost._id });
   } catch (err) {
     // Also delete image we've just uploaded
-    await deleteImage(user._id.toString(), img.identifier);
-    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
+    await deleteImage(userId, img.identifier);
+    res.status(500).json({ message: "Failed to create post.", err: err });
   }
 };
 

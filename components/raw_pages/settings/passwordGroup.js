@@ -54,25 +54,19 @@ const PasswordGroup = () => {
         confirmedNewPassword: confirmPassword,
       }),
     });
-
     const data = await res.json();
 
-    if (res.ok) {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.success,
-        content: data.message,
-      });
+    global.alerts.actions.addAlert({
+      type: global.alerts.types[res.ok ? "success" : "error"],
+      content: data.message,
+    });
 
-      // Clear fields
+    // Clear fields if we updated password
+    if (res.ok) {
       setPassword("");
       setNewPassword("");
       setConfirmPassword("");
       setError(false);
-    } else {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.error,
-        content: `An Error Has Occurred: ${data.message}`,
-      });
     }
   };
 

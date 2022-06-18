@@ -6,10 +6,14 @@ import Validator, {
   usernameFriendly,
   minLength,
 } from "../../../lib/validate";
+import { DefaultProfilePic } from "../../../lib/constants";
 import { hashPassword } from "../../../lib/hash";
 
 const handler = async (req, res) => {
-  if (req.method !== "POST") return;
+  if (req.method !== "POST") {
+    res.status(400).json({ message: "Invalid Request." });
+    return;
+  }
 
   const { username, password } = req.body;
 
@@ -41,10 +45,7 @@ const handler = async (req, res) => {
       name: username,
       password: hashedPassword,
       bio: "",
-      profilePic: {
-        url: `${process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_URL}`,
-        identifier: "default_profile_picture",
-      },
+      profilePic: DefaultProfilePic,
     });
 
     res.status(201).json({
@@ -52,7 +53,7 @@ const handler = async (req, res) => {
       user: { username, name: username, id: newUser._id.toString() },
     });
   } catch (err) {
-    res.status(500).json({ message: "Internal Server Error.", errMsg: err });
+    res.status(500).json({ message: "Failed to sign up user.", err: err });
   }
 };
 

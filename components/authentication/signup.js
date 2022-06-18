@@ -48,7 +48,6 @@ const SignUp = () => {
     if (!identifier) return;
 
     const res = await fetch(`/api/users/${identifier}`);
-
     if (res.ok && type === "username") {
       setErrors((prev) => ({
         ...prev,
@@ -92,6 +91,7 @@ const SignUp = () => {
         password: password.trim(),
       }),
     });
+    const data = await res.json();
 
     if (res.ok) {
       const result = await signIn("credentials", {
@@ -114,7 +114,7 @@ const SignUp = () => {
     } else {
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
-        content: "Please re-verify your inputs.",
+        content: data.message,
       });
     }
   };
