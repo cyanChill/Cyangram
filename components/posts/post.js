@@ -43,7 +43,9 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
     }
   };
 
-  const handleCommentSubmit = async () => {
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+
     if (commentField.trim().length === 0) {
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
@@ -143,7 +145,10 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
             </div>
 
             {/* Comment field */}
-            <div className={classes.commentField}>
+            <form
+              onSubmit={handleCommentSubmit}
+              className={classes.commentField}
+            >
               <FormInput
                 id="commentField"
                 name="commentField"
@@ -164,7 +169,7 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
               >
                 Post
               </span>
-            </div>
+            </form>
           </div>
         </div>
       </Card>
