@@ -32,15 +32,18 @@ export const getServerSideProps = async (context) => {
 
   const { username } = context.params;
   // Fetch from server user profile data
-  const res = await fetch(`${process.env.NEXTAUTH_URL}api/users/${username}`);
-  const errorCode = res.ok ? false : res.status;
+  const userDataRes = await fetch(
+    `${process.env.NEXTAUTH_URL}api/users/${username}`
+  );
+  const errorCode = userDataRes.ok ? false : res.status;
 
   if (errorCode) {
     return { props: { errorCode } };
   }
 
   // Process the data fetched
-  const { message, followerList, ...data } = await res.json();
+  const { message, followerCnt, followingCnt, followerList, ...data } =
+    await userDataRes.json();
 
   return {
     props: {
@@ -49,6 +52,9 @@ export const getServerSideProps = async (context) => {
       viewerIsFollowing: followerList.some(
         (follower) => follower.followerId === session.user.dbId
       ),
+      followerCnt: followerCnt,
+      followingCnt: followingCnt,
+      viewerInfo: session.user,
     },
   };
 };

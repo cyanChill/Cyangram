@@ -5,11 +5,18 @@ import FollowButton from "../followbtn/followbtn";
 
 import classes from "./userlist.module.css";
 
-const UserList = ({ shared, notShared }) => {
-  const sharedUsers = shared.map((user) => <User key={user._id} user={user} />);
+const UserList = ({ shared, notShared, updateFollowCount }) => {
+  const sharedUsers = shared.map((user) => (
+    <User key={user._id} user={user} updateFollowCount={updateFollowCount} />
+  ));
 
   const notSharedUsers = notShared.map((user) => (
-    <User key={user._id} user={user} showActions />
+    <User
+      key={user._id}
+      user={user}
+      showActions
+      updateFollowCount={updateFollowCount}
+    />
   ));
 
   return (
@@ -22,7 +29,7 @@ const UserList = ({ shared, notShared }) => {
 
 export default UserList;
 
-const User = ({ user, showActions }) => {
+const User = ({ user, showActions, updateFollowCount }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.infoContainer}>
@@ -49,7 +56,7 @@ const User = ({ user, showActions }) => {
         <FollowButton
           username={user.username}
           viewerIsFollowing={false}
-          updateFollowCount={() => {}}
+          updateFollowCount={updateFollowCount}
           className={classes.action}
         />
       )}

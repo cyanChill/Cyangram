@@ -1,7 +1,7 @@
 import Card from "../card/card";
 import classes from "./modal.module.css";
 
-const Modal = ({ active, children }) => {
+const Modal = ({ active, children, modalBodyClasses }) => {
   if (!active) {
     return null;
   }
@@ -9,7 +9,9 @@ const Modal = ({ active, children }) => {
   return (
     <div className={classes.modal}>
       <div className={classes.modalBackdrop} />
-      <Card className={classes.modalBody}>{children}</Card>
+      <Card className={`${classes.modalBody} ${modalBodyClasses}`}>
+        {children}
+      </Card>
     </div>
   );
 };
