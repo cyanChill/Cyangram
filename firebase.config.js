@@ -4,12 +4,12 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCOngpTCxU6BPe8VkEma-mKgTVtU6qbpyk",
-  authDomain: "next-instagram-4d6f7.firebaseapp.com",
-  projectId: "next-instagram-4d6f7",
-  storageBucket: "next-instagram-4d6f7.appspot.com",
-  messagingSenderId: "636664925460",
-  appId: "1:636664925460:web:461a17021f5baca7a60601",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDERID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
 };
 
 // Initialize Firebase

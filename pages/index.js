@@ -16,7 +16,7 @@ export const getServerSideProps = async (context) => {
 
   /* Get home feed for posts from people we follow */
   const res = await fetch(
-    `${process.env.NEXTAUTH_URL}api/users/${session.user.username}/yourfeed`
+    `${process.env.NEXTAUTH_URL}/api/users/${session.user.username}/yourfeed`
   );
   const data = await res.json();
   // console.log("-=-=- Feed Of People We're Following -=-=-");
@@ -24,7 +24,7 @@ export const getServerSideProps = async (context) => {
 
   /* Get home feed for posts from people we don't follow (discover) */
   const res2 = await fetch(
-    `${process.env.NEXTAUTH_URL}api/users/${session.user.username}/globalfeed`
+    `${process.env.NEXTAUTH_URL}/api/users/${session.user.username}/globalfeed`
   );
   const data2 = await res2.json();
   // console.log("-=-=- Feed Of People We're Not Following -=-=-");

@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
   const { username } = context.params;
   // Fetch from server user profile data
   const userDataRes = await fetch(
-    `${process.env.NEXTAUTH_URL}api/users/${username}`
+    `${process.env.NEXTAUTH_URL}/api/users/${username}`
   );
   const errorCode = userDataRes.ok ? false : res.status;
 
