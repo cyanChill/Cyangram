@@ -37,7 +37,9 @@ export const getServerSideProps = async (context) => {
 
   const { postId } = context.params;
   // Fetch from server user profile data
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/post/${postId}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}`
+  );
   const errorCode = res.ok ? false : res.status;
 
   if (errorCode) {
