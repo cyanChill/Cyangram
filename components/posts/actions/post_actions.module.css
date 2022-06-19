@@ -53,3 +53,31 @@
 .modalBtn {
   padding: 0.35rem 0.65rem;
 }
+
+.liked {
+  animation: liked 0.75s linear forwards;
+}
+
+.unliked {
+  animation: unliked 0.5s linear forwards;
+}
+
+@keyframes liked {
+  0% {
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    opacity: 1;
+    color: red;
+  }
+}
+
+@keyframes unliked {
+  0% {
+    color: red;
+    transform: scale(1.15);
+  }
+}

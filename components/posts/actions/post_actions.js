@@ -66,7 +66,11 @@ const PostActions = ({
     <div className={classes.actions}>
       <div className={classes.mainActions}>
         <div onClick={updateLike}>
-          {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
+          {isLiked ? (
+            <AiFillHeart className={classes.liked} />
+          ) : (
+            <AiOutlineHeart className={classes.unliked} />
+          )}
         </div>
         <FaRegComment onClick={redirectPost ? gotoPost : commentBtnAction} />
       </div>
