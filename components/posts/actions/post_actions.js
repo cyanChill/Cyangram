@@ -6,7 +6,7 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 import global from "../../../global";
 import Button from "../../form_elements/button";
-import DropDownMenu from "../../ui/dropdown/dropdown";
+import DropDownMenu from "../../ui/dropDown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import SharePostBtn from "./sharepostbtn";
 import Modal from "../../ui/modal/modal";

@@ -7,7 +7,7 @@ import Comment from "./comment/comment";
 import PostActions from "./actions/post_actions";
 import BackHeader from "../ui/backheader/backHeader";
 import FormInput from "../form_elements/forminput";
-import CommentBody from "./comment/commentBody";
+import CommentBody from "./comment/commentbody";
 import Card from "../ui/card/card";
 
 import classes from "./post.module.css";

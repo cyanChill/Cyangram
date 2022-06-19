@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import Username from "../../misc/links/usernameLink";
 import PostActions from "../actions/post_actions";
-import CommentBody from "../comment/commentBody";
+import CommentBody from "../comment/commentbody";
 import Card from "../../ui/card/card";
 
 import classes from "./post_excerpt.module.css";
