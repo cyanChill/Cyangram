@@ -14,7 +14,7 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 
 import global from "../../../global";
 import CommentBody from "./commentbody";
-import DropDownMenu from "../../ui/dropDown/dropdown";
+import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 
 import classes from "./comment.module.css";
