@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import FollowButton from "../followbtn/followbtn";
+import LoadImage from "../../ui/loadimage/loadimage";
 
 import classes from "./userlist.module.css";
 
@@ -34,7 +34,7 @@ const User = ({ user, showActions, updateFollowCount }) => {
     <div className={classes.wrapper}>
       <div className={classes.infoContainer}>
         <div className={classes.img}>
-          <Image
+          <LoadImage
             src={user.profilePic.url}
             alt={`${user.name}'s Profile Picture`}
             width="500"

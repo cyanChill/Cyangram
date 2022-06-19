@@ -1,12 +1,12 @@
 /*  This is the post we see on the feed */
 import { useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Username from "../../misc/links/usernameLink";
 import PostActions from "../actions/post_actions";
 import CommentBody from "../comment/commentbody";
 import Card from "../../ui/card/card";
+import LoadImage from "../../ui/loadimage/loadimage";
 
 import classes from "./post_excerpt.module.css";
 
@@ -39,7 +39,7 @@ const PostExcerpt = ({ post }) => {
         className={classes.padding}
       />
 
-      <Image
+      <LoadImage
         src={image.url}
         alt={`${username}'s post`}
         width="500"

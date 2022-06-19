@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 import global from "../../../global";
 import { validImageSize } from "../../../lib/validate";
 import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
 import Button from "../../form_elements/button";
+import LoadImage from "../../ui/loadimage/loadimage";
 
 import classes from "./profilepicGroup.module.css";
 
@@ -88,7 +88,7 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
       <h2>Update Profile Picture Settings</h2>
       <div className={classes.profileContainer}>
         <div className={classes.imgContainer}>
-          <Image
+          <LoadImage
             src={currImg.url}
             alt={`${name}'s profile pic`}
             layout="responsive"

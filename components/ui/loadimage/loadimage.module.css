@@ -1,0 +1,25 @@
+.imgBackdrop {
+  background-color: var(--loading-bkg);
+}
+
+.animatedBkg {
+  background-image: linear-gradient(
+    to right,
+    var(--loading-bkg) 0%,
+    var(--loading-contrast) 10%,
+    var(--loading-bkg) 20%,
+    var(--loading-bkg) 100%
+  );
+  background-size: 200% 100%;
+  animation: bgPos 1s linear infinite;
+}
+
+@keyframes bgPos {
+  0% {
+    background-position: 50% 0;
+  }
+
+  100% {
+    background-position: -150%, 0;
+  }
+}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import { MdOutlineArrowBack, MdClose } from "react-icons/md";
 
 import Modal from "../../ui/modal/modal";
@@ -8,6 +7,7 @@ import UserList from "../../users/userlist/userlist";
 import FollowButton from "../../users/followbtn/followbtn";
 import PostGrid from "../../posts/post_grid/post_grid";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
+import LoadImage from "../../ui/loadimage/loadimage";
 
 import classes from "./profilepage.module.css";
 
@@ -137,7 +137,7 @@ const UserProfilePage = ({
 
         {/* Profile Picture + User Stats */}
         <section>
-          <Image
+          <LoadImage
             src={user.profilePic.url}
             alt={`${user.name}'s Profile Picture`}
             width={80}

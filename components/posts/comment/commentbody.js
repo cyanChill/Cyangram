@@ -1,7 +1,6 @@
-import Image from "next/image";
-
 import Username from "../../misc/links/usernameLink";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
+import LoadImage from "../../ui/loadimage/loadimage";
 
 import classes from "./commentbody.module.css";
 
@@ -16,7 +15,7 @@ const CommentBody = ({
   return (
     <div className={`${classes.wrapper} ${className}`}>
       <div className={classes.imgContainer}>
-        <Image
+        <LoadImage
           src={picUrl}
           alt={picAlt}
           width="500"

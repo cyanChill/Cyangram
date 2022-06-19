@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 import global from "../../global";
 import { timeSince } from "../../lib/time";
@@ -9,6 +8,7 @@ import BackHeader from "../ui/backheader/backHeader";
 import FormInput from "../form_elements/forminput";
 import CommentBody from "./comment/commentbody";
 import Card from "../ui/card/card";
+import LoadImage from "../ui/loadimage/loadimage";
 
 import classes from "./post.module.css";
 
@@ -86,7 +86,7 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
       <Card className={classes.cardClasses}>
         {/* Put the image into a container */}
         <div className={classes.imgContainer}>
-          <Image
+          <LoadImage
             src={postData.image.url}
             alt={`Post by ${username}`}
             className={classes.postImg}

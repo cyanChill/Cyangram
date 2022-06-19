@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import Image from "next/image";
-
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
+
+import LoadImage from "../../ui/loadimage/loadimage";
 import classes from "./post_preview.module.css";
 
 const PostPreview = ({ postInfo }) => {
@@ -23,7 +23,7 @@ const PostPreview = ({ postInfo }) => {
           <span>{postInfo.comments}</span>
         </div>
       </div>
-      <Image
+      <LoadImage
         src={postInfo.image.url}
         alt=""
         height={500}

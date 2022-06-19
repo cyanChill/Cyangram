@@ -46,6 +46,9 @@
   --transparent-highlight: rgba(211, 211, 211, 0.75);
   --shadow-clr: rgba(0, 0, 0, 0.35);
   --shadow: 0 0 5px var(--shadow-clr-900);
+
+  --loading-bkg: var(--off-white-600);
+  --loading-contrast: var(--off-white-900);
 }
 
 *,
@@ -95,6 +98,9 @@ body.dark {
   --transparent-highlight: rgba(48, 48, 48, 0.8);
   --shadow-clr: rgba(255, 255, 255, 0.35);
   --shadow: 0 0 5px var(--shadow-clr);
+
+  --loading-bkg: var(--black-900);
+  --loading-contrast: var(--black-500);
 }
 
 .center {
