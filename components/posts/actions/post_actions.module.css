@@ -74,10 +74,3 @@
     color: red;
   }
 }
-
-@keyframes unliked {
-  0% {
-    color: red;
-    transform: scale(1.15);
-  }
-}
