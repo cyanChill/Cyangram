@@ -1,0 +1,17 @@
+.wrapper {
+  padding-top: 0.5rem;
+}
+
+.noResult {
+  padding: 0;
+  text-align: center;
+}
+
+@media (min-width: 568px) {
+  .wrapper {
+    padding: 0.5rem;
+    padding-top: 0.75rem;
+    max-width: var(--reasonable-max-app-width);
+    margin: 0 auto;
+  }
+}
