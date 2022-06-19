@@ -50,6 +50,7 @@ export default NextAuth({
         of name or username in our settings page
       */
       if (token?.user?.dbId) {
+        await dbConnect();
         const user = await User.findOne({ _id: token.user.dbId });
         session.user = {
           ...session.user,
