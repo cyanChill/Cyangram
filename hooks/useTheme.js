@@ -10,13 +10,17 @@ const useTheme = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setMode((prev) => localStorage.getItem("theme") || prev);
+      setMode(
+        (prev) =>
+          localStorage.getItem(`${process.env.NEXT_PUBLIC_BASE_URL}-theme`) ||
+          prev
+      );
     }
   }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined" && !!mode) {
-      localStorage.setItem("theme", mode);
+      localStorage.setItem(`${process.env.NEXT_PUBLIC_BASE_URL}-theme`, mode);
 
       if (mode === modes.LIGHT) {
         document.body.classList.remove("dark");

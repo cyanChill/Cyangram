@@ -2,7 +2,7 @@
 
 An implementation of Instagram utilizing NextJS - a React framework.
 
-Live Demonstration: https://cyanchill-instagram.netlify.app/
+Live Demonstration: https://cyanchill-instagram.herokuapp.com/
 
 ## Project Info
 
