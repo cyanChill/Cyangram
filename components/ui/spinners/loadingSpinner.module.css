@@ -1,0 +1,17 @@
+.loader {
+  border: 0.15rem solid var(--loading-bkg);
+  border-top: 0.15rem solid var(--loading-contrast);
+  border-radius: 50%;
+  width: 1.75rem;
+  height: 1.75rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

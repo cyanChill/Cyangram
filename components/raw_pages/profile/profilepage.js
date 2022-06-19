@@ -8,6 +8,7 @@ import FollowButton from "../../users/followbtn/followbtn";
 import PostGrid from "../../posts/post_grid/post_grid";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
 import LoadImage from "../../ui/loadimage/loadimage";
+import LoadingSpinner from "../../ui/spinners/loadingSpinner";
 
 import classes from "./profilepage.module.css";
 
@@ -211,8 +212,9 @@ const UserProfilePage = ({
         {/* List of followers/following */}
         <div className={classes.modalContent}>
           {modalLoading ? (
-            /* TODO: Have proper loading wheel */
-            <div>Loading...</div>
+            <div className={classes.spinnerContainer}>
+              <LoadingSpinner />
+            </div>
           ) : (
             <UserList
               updateFollowCount={

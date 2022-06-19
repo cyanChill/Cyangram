@@ -175,6 +175,12 @@
   overflow: auto;
 }
 
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 768px) {
   .modal {
     min-width: 45rem;
