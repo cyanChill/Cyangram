@@ -6,7 +6,7 @@ const modes = {
 };
 
 const useTheme = () => {
-  const [mode, setMode] = useState();
+  const [mode, setMode] = useState(modes.LIGHT);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
