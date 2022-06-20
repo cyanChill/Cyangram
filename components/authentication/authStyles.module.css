@@ -19,11 +19,6 @@
   gap: 1.25rem;
 }
 
-.logo {
-  display: flex;
-  justify-content: center;
-}
-
 .wrapper form {
   display: flex;
   flex-direction: column;

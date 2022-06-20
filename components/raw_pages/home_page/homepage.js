@@ -1,12 +1,10 @@
 import { useState } from "react";
-import Image from "next/image";
 import { AiOutlineDown } from "react-icons/ai";
 
-import global from "../../../global";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import PostExcerpt from "../../posts/post_excerpt/post_excerpt";
-
+import AppLogo from "../../ui/applogo/applogo";
 import classes from "./homepage.module.css";
 
 const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
@@ -25,16 +23,7 @@ const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
           className={classes.selection}
           onClick={() => setddDisplayStatus((prev) => !prev)}
         >
-          <Image
-            className={classes.logo}
-            src={`/images/assets/instagram-logo${
-              global.theme.state === global.theme.types.DARK ? "-dark" : ""
-            }.png`}
-            alt="Instagram logo"
-            width="150"
-            height="50"
-            responsive="true"
-          />
+          <AppLogo />
           <AiOutlineDown />
           <div>
             <DropDownMenu

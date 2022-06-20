@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
-import Image from "next/image";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import {
   IoSearchOutline,
@@ -19,6 +18,7 @@ import global from "../../global";
 import NavLink from "../misc/links/navlink";
 import DropDownMenu from "../ui/dropdown/dropdown";
 import DropDownItem from "../ui/dropdown/dropdownitem";
+import AppLogo from "../ui/applogo/applogo";
 import classes from "./main-navigation.module.css";
 
 const MainNavigation = () => {
@@ -59,21 +59,11 @@ const MainNavigation = () => {
 
   return (
     <>
-      <div
+      <AppLogo
         className={`${classes.logo} ${router.asPath === "/" && classes.hidden}`}
         onClick={() => router.push("/")}
-      >
-        <Image
-          className={classes.logo}
-          src={`/images/assets/instagram-logo${
-            global.theme.state === global.theme.types.DARK ? "-dark" : ""
-          }.png`}
-          alt="Instagram logo"
-          width="150"
-          height="50"
-          responsive="true"
-        />
-      </div>
+        overrideClass
+      />
       <nav className={classes.navbar}>
         <ul className={classes.navItems}>
           <li>
