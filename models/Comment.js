@@ -9,7 +9,11 @@ const CommentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Please provide a commenterId."],
   },
-  content: { type: String, required: [true, "Please provide a comment."] },
+  content: {
+    type: String,
+    required: [true, "Please provide a comment."],
+    maxlength: [200, "Comments can't be more than 200 characters."],
+  },
   date: { type: Number, required: [true, "Please provide a date (in ms)."] },
 });
 

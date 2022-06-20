@@ -1,15 +1,15 @@
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
-import { loginInFirebase } from "../../lib/firebaseHelpers";
 import global from "../../global";
+import { loginInFirebase } from "../../lib/firebaseHelpers";
+import { usernameFriendly } from "../../lib/validate";
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
 import Card from "../ui/card/card";
-
+import AppLogo from "../ui/applogo/applogo";
 import classes from "./authStyles.module.css";
 
 const Login = () => {
@@ -20,7 +20,7 @@ const Login = () => {
   const [canSubmit, setCanSubmit] = useState(false);
 
   useEffect(() => {
-    if (username && password.length > 5) {
+    if (usernameFriendly(username) && password.trim().length > 5) {
       setCanSubmit(true);
     } else {
       setCanSubmit(false);
@@ -29,13 +29,21 @@ const Login = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
+    /* Final Client-Side Checks before attempt submission to backend */
+    if (!usernameFriendly(username) || password.trim().length < 6) {
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "Invalid inputs.",
+      });
+      setCanSubmit(false);
+      return;
+    }
 
-    /*  Do some validation? */
+    const userInfoObj = { username: username, password: password.trim() };
 
     const result = await signIn("credentials", {
       redirect: false,
-      username: username,
-      password: password,
+      ...userInfoObj,
     });
 
     if (!result.error) {
@@ -45,8 +53,8 @@ const Login = () => {
         router.replace("/");
         return;
       } catch (err) {
+        // Failed to log into firebase
         await signOut();
-        console.log(err);
       }
     }
 
@@ -60,27 +68,17 @@ const Login = () => {
     <div className={classes.containerWrap}>
       <div className={classes.wrapper}>
         <Card className={classes["main-content-wrapper"]}>
-          <div className={classes.logo}>
-            <Image
-              className={classes.logo}
-              src={`/images/assets/instagram-logo${
-                global.theme.state === global.theme.types.DARK ? "-dark" : ""
-              }.png`}
-              alt="Instagram logo"
-              width="210"
-              height="75"
-              responsive="true"
-            />
-          </div>
+          <AppLogo />
 
           <form onSubmit={loginHandler}>
             <FormInput
               type="text"
               placeholder="Username"
               minLength="3"
+              maxLength="30"
               required
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value.trim())}
             />
             <FormInput
               type="password"
@@ -88,7 +86,8 @@ const Login = () => {
               minLength="6"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value.trimStart())}
+              onBlur={() => setUsername((prev) => prev.trimEnd())}
             />
             <Button
               type="submit"

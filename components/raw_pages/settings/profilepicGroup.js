@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 
 import global from "../../../global";
-import { validImageSize } from "../../../lib/validate";
+import { isImage, validImageSize } from "../../../lib/validate";
 import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
 import Button from "../../form_elements/button";
 import LoadImage from "../../ui/loadimage/loadimage";
-
 import classes from "./profilepicGroup.module.css";
 
 const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
@@ -14,7 +13,7 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
 
   /* Handles when we want to set a new profile picture */
   useEffect(() => {
-    if (imageUpload == null) return;
+    if (imageUpload == null || !isImage(imageUpload)) return;
 
     /* Validate Upload Image is <5MB in size */
     if (!validImageSize(imageUpload.size, 5)) {
@@ -27,6 +26,9 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
     }
 
     const setNewProfilePic = async () => {
+      // Final validation
+      if (imageUpload == null || !isImage(imageUpload)) return;
+
       // Data we'll pass to backend
       const formData = new FormData();
       formData.append("action", "SET");
@@ -110,7 +112,8 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
             accept="image/jpeg, image/png, image/jpg"
             style={{ display: "none" }}
             onChange={(e) => {
-              if (e.target.files.length > 0) {
+              if (e.target.files.length === 0) return;
+              if (isImage(e.target.files[0])) {
                 setImageUpload(e.target.files[0]);
               }
             }}

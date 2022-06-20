@@ -4,10 +4,9 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import global from "../../../global";
 import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
-import { validImageSize } from "../../../lib/validate";
+import { isImage, validImageSize } from "../../../lib/validate";
 import FormInput from "../../form_elements/forminput";
 import Button from "../../form_elements/button";
-
 import classes from "./newpostpage.module.css";
 
 const NewPostPage = () => {
@@ -19,7 +18,13 @@ const NewPostPage = () => {
   useEffect(() => {
     const imgInput = document.getElementById("imgInput");
     imgInput.addEventListener("change", function () {
-      if (this.files.length === 0) return;
+      if (this.files.length === 0 || !isImage(this.files[0])) {
+        global.alerts.actions.addAlert({
+          type: global.alerts.types.error,
+          content: "File must be an image.",
+        });
+        return;
+      }
 
       /* Validate Upload Image is <5MB in size */
       if (!validImageSize(this.files[0].size, 5)) {
@@ -45,11 +50,17 @@ const NewPostPage = () => {
   }, []);
 
   const createPost = async () => {
-    if (imageUpload == null) return;
+    if (
+      imageUpload == null ||
+      !isImage(imageUpload) ||
+      description.trim().length > 200
+    ) {
+      return;
+    }
 
     // Data we'll pass to backend
     const formData = new FormData();
-    formData.append("description", description);
+    formData.append("description", description.trim());
     formData.append("uploadedImg", imageUpload);
 
     const res = await callApiWithAppCheck("/api/post", "POST", {}, formData);
@@ -60,14 +71,13 @@ const NewPostPage = () => {
         type: global.alerts.types.error,
         content: `Failed to create post [${data.message}]`,
       });
-      return;
+    } else {
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.success,
+        content: "Successfully created post.",
+      });
+      router.replace(`/p/${data.postId}`);
     }
-
-    global.alerts.actions.addAlert({
-      type: global.alerts.types.success,
-      content: "Successfully created post.",
-    });
-    router.replace(`/p/${data.postId}`);
   };
 
   return (
@@ -87,7 +97,8 @@ const NewPostPage = () => {
           accept="image/jpeg, image/png, image/jpg"
           className={classes.selectImgInput}
           onChange={(e) => {
-            if (e.target.files.length > 0) {
+            if (e.target.files.length === 0) return;
+            if (isImage(e.target.files[0])) {
               setImageUpload(e.target.files[0]);
             }
           }}
@@ -98,10 +109,12 @@ const NewPostPage = () => {
             <label className={classes.label}>Description:</label>
             <FormInput
               type="textarea"
+              maxLength="200"
               rows={3}
               noResize
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value.trimStart())}
+              onBlur={() => setDescription((prev) => prev.trimEnd())}
             />
           </section>
 

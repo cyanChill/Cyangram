@@ -7,7 +7,7 @@ import {
   uploadImage,
 } from "../../../lib/firebaseAdminHelper";
 import dbConnect from "../../../lib/dbConnect";
-import { validImageSize } from "../../../lib/validate";
+import { isImage, validImageSize } from "../../../lib/validate";
 import Post from "../../../models/Post";
 
 const handler = async (req, res) => {
@@ -40,8 +40,12 @@ const handler = async (req, res) => {
     });
   });
 
-  const description = data.fields.description;
+  const description = data.fields.description.trim();
   const imageInfo = data.files.uploadedImg;
+  if (description.length > 200 || !isImage(imageInfo)) {
+    res.status(406).json({ message: "Invalid inputs." });
+    return;
+  }
 
   if (!validImageSize(imageInfo.size, 5)) {
     res.status(406).json({ message: "File size is too large (Must be <5MB)." });

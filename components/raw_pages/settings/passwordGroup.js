@@ -33,25 +33,36 @@ const PasswordGroup = () => {
 
   // Helper Functions
   const checkNewPassword = () => {
-    let newPasswordStatus = false;
-    if (newPassword !== confirmPassword) {
-      newPasswordStatus = true;
-    }
-
-    setError(newPasswordStatus);
+    setError(newPassword !== confirmPassword);
   };
 
   // Main Functions
   const updatePasswordHandler = async (e) => {
     e.preventDefault();
 
+    // Validate inputs
+    if (
+      password.trim().length < 6 &&
+      newPassword.trim().length < 6 &&
+      confirmPassword.trim().length < 6 &&
+      password === newPassword &&
+      newPassword !== confirmPassword
+    ) {
+      global.alerts.actions.addAlert({
+        type: global.alerts.types[res.ok ? "success" : "error"],
+        content: "Invalid inputs.",
+      });
+      setCanSubmit(false);
+      return;
+    }
+
     const res = await fetch("/api/account/update-password", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        oldPassword: password,
-        newPassword: newPassword,
-        confirmedNewPassword: confirmPassword,
+        oldPassword: password.trim(),
+        newPassword: newPassword.trim(),
+        confirmedNewPassword: confirmPassword.trim(),
       }),
     });
     const data = await res.json();
@@ -81,7 +92,8 @@ const PasswordGroup = () => {
             minLength="6"
             required
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trimStart())}
+            onBlur={() => setPassword((prev) => prev.trimEnd())}
           />
         </InputGroup>
         <InputGroup>
@@ -91,8 +103,11 @@ const PasswordGroup = () => {
             minLength="6"
             required
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            onBlur={checkNewPassword}
+            onChange={(e) => setNewPassword(e.target.value.trimStart())}
+            onBlur={() => {
+              setNewPassword((prev) => prev.trimEnd());
+              checkNewPassword();
+            }}
           />
         </InputGroup>
         <InputGroup>
@@ -102,8 +117,11 @@ const PasswordGroup = () => {
             minLength="6"
             required
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            onBlur={checkNewPassword}
+            onChange={(e) => setConfirmPassword(e.target.value.trimStart())}
+            onBlur={() => {
+              setConfirmPassword((prev) => prev.trimEnd());
+              checkNewPassword();
+            }}
             errMsg="New & Confirmed Passwords are not the same."
             hasErr={error}
           />

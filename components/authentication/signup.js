@@ -1,16 +1,15 @@
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
-import { loginInFirebase } from "../../lib/firebaseHelpers";
 import global from "../../global";
+import { loginInFirebase } from "../../lib/firebaseHelpers";
 import { usernameFriendly } from "../../lib/validate";
 import Button from "../form_elements/button";
 import FormInput from "../form_elements/forminput";
 import Card from "../ui/card/card";
-
+import AppLogo from "../ui/applogo/applogo";
 import classes from "./authStyles.module.css";
 
 const SignUp = () => {
@@ -19,20 +18,15 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [canSubmit, setCanSubmit] = useState(false);
-  const [errors, setErrors] = useState({
-    username: false,
-    extraUsernameMsg: null,
-    password: false,
-  });
+  const [errors, setErrors] = useState({ username: false, password: false });
 
+  /* On field update, check to see if we can submit form */
   useEffect(() => {
-    // 30 >= username length >= 3 & password length >= 6
     if (
-      username.trim().length > 2 &&
-      username.trim().length < 31 &&
-      password.trim().length > 5 &&
       !errors.username &&
-      !errors.password
+      !errors.password &&
+      usernameFriendly(username) &&
+      password.trim().length > 5
     ) {
       setCanSubmit(true);
     } else {
@@ -40,64 +34,54 @@ const SignUp = () => {
     }
   }, [username, password, errors]);
 
-  const isUnused = async (e) => {
-    const type = e.target.name;
+  /* Used to check if a username is avaliable */
+  const isUsernameUnused = async () => {
+    if (username.length === 0) return;
 
-    const identifier = username.trim();
-
-    if (!identifier) return;
-
-    const res = await fetch(`/api/users/${identifier}`);
-    if (res.ok && type === "username") {
-      setErrors((prev) => ({
-        ...prev,
-        username: true,
-        extraUsernameMsg: "This username has already been used.",
-      }));
+    const res = await fetch(
+      `/api/users/${encodeURIComponent(username)}/isAvaliable`
+    );
+    const data = await res.json();
+    if (res.ok) {
+      setErrors((prev) => ({ ...prev, username: data.used }));
     } else {
-      setErrors((prev) => ({
-        ...prev,
-        username: false,
-        extraUsernameMsg: null,
-      }));
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: data.message,
+      });
     }
   };
 
+  /* Used to validate password structure */
   const checkPassword = () => {
-    setErrors((prev) => ({
-      ...prev,
-      password: !(password.trim().length > 5),
-    }));
+    setErrors((prev) => ({ ...prev, password: password.length < 6 }));
   };
 
   const signupHandler = async (e) => {
     e.preventDefault();
-    let trimUser = username.trim();
-
-    // Basic checks if user somehow messes with the page to submit (bypassing validation)
-    if (!usernameFriendly(trimUser) || password.trim().length < 6) {
+    /* Final Client-Side Checks before attempt submission to backend */
+    if (!usernameFriendly(username) || password.trim().length < 6) {
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
         content: "Invalid inputs.",
       });
+      setCanSubmit(false);
       return;
     }
+
+    const userInfoObj = { username: username, password: password.trim() };
 
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: username.trim(),
-        password: password.trim(),
-      }),
+      body: JSON.stringify(userInfoObj),
     });
     const data = await res.json();
 
     if (res.ok) {
       const result = await signIn("credentials", {
         redirect: false,
-        username: username.trim(),
-        password: password.trim(),
+        ...userInfoObj,
       });
 
       if (!result.error) {
@@ -107,8 +91,8 @@ const SignUp = () => {
           router.replace("/");
           return;
         } catch (err) {
+          // Failed to log into firebase
           await signOut();
-          console.log(err);
         }
       }
     } else {
@@ -123,48 +107,37 @@ const SignUp = () => {
     <div className={classes.containerWrap}>
       <div className={classes.wrapper}>
         <Card className={classes["main-content-wrapper"]}>
-          <div className={classes.logo}>
-            <Image
-              className={classes.logo}
-              src={`/images/assets/instagram-logo${
-                global.theme.state === global.theme.types.DARK ? "-dark" : ""
-              }.png`}
-              alt="Instagram logo"
-              width="210"
-              height="75"
-              responsive="true"
-            />
-          </div>
+          <AppLogo />
 
           <p className={`center ${classes["catch-phrase"]}`}>
             Sign up to see photos and videos from your friends.
           </p>
 
+          {/* Will trim front of inputs onChange & trim end of inputs onBlur/focus out. */}
           <form onSubmit={signupHandler}>
             <FormInput
               type="text"
-              name="username"
               placeholder="Username"
               minLength="3"
               maxLength="30"
               required
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              onBlur={isUnused}
-              errMsg={
-                errors.extraUsernameMsg || "Please enter a valid username."
-              }
+              onChange={(e) => setUsername(e.target.value.trim())}
+              onBlur={isUsernameUnused}
+              errMsg="This username has already been used."
               hasErr={errors.username}
             />
             <FormInput
               type="password"
-              name="password"
               placeholder="Password"
               minLength="6"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onBlur={checkPassword}
+              onChange={(e) => setPassword(e.target.value.trimStart())}
+              onBlur={() => {
+                setPassword((prev) => prev.trimEnd());
+                checkPassword();
+              }}
               errMsg="Please enter a password (min 6 characters)."
               hasErr={errors.password}
             />

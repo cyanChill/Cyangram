@@ -4,9 +4,8 @@ import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 import Validator, {
   required,
+  nameFriendly,
   usernameFriendly,
-  minLength,
-  maxLength,
 } from "../../../lib/validate";
 
 const handler = async (req, res) => {
@@ -25,15 +24,15 @@ const handler = async (req, res) => {
   const username = session.user.username;
   const newName = req.body.newName;
   const newUsername = req.body.newUsername;
-  const newBio = req.body.newBio;
+  const newBio = req.body.newBio.trim();
 
-  const validNameStruc = Validator(newName, [minLength(3), maxLength(30)]);
+  const validNameStruc = Validator(newName, [required, nameFriendly]);
   const validUsernameStruc = Validator(newUsername, [
     required,
     usernameFriendly,
   ]);
 
-  if (!validNameStruc || !validUsernameStruc) {
+  if (!validNameStruc || !validUsernameStruc || newBio.length > 200) {
     res.status(422).json({ message: "Invalid inputs." });
     return;
   }

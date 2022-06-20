@@ -9,7 +9,6 @@ import FormInput from "../form_elements/forminput";
 import CommentBody from "./comment/commentbody";
 import Card from "../ui/card/card";
 import LoadImage from "../ui/loadimage/loadimage";
-
 import classes from "./post.module.css";
 
 const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
@@ -25,7 +24,7 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
   useEffect(() => {
     const date = postData.date;
     setPostedSince(timeSince(date));
-  }, []);
+  }, [postData.date]);
 
   const focusCommentField = () => {
     document.getElementById("commentField").focus();
@@ -46,24 +45,20 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
-    if (commentField.trim().length === 0) {
+    if (commentField.trim().length === 0 && commentField.trim().length <= 200) {
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
-        content: "Cannot submit empty comment.",
+        content: "Invalid comment length (>0 & <=200).",
       });
       return;
     }
-
-    /* TODO: Safeguard the contents we're submitting (check it's not malicious/need censoring) */
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}/comment`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          comment: commentField.trim(),
-        }),
+        body: JSON.stringify({ comment: commentField.trim() }),
       }
     );
     const data = await res.json();
@@ -151,12 +146,13 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
             >
               <FormInput
                 id="commentField"
-                name="commentField"
                 type="text"
                 placeholder="Add a comment..."
+                maxLength="200"
                 required
                 value={commentField}
-                onChange={(e) => setCommentField(e.target.value)}
+                onChange={(e) => setCommentField(e.target.value.trimStart())}
+                onBlur={() => setCommentField((prev) => prev.trimEnd())}
                 noExternalPadding
               />
 
@@ -164,7 +160,7 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
               <span
                 variant="clear"
                 className={classes.postBtn}
-                disabled={!commentField}
+                disabled={!commentField && commentField.length <= 200}
                 onClick={handleCommentSubmit}
               >
                 Post

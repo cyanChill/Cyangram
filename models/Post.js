@@ -5,7 +5,10 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Please provide a userId."],
   },
-  description: String,
+  description: {
+    type: String,
+    maxlength: [200, "Descriptions can't be more than 200 characters."],
+  },
   image: {
     url: { type: String, required: [true, "Please provide a img url."] },
     identifier: {

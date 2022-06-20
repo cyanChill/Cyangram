@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Router from "next/router";
 
 import global from "../../../global";
+import { nameFriendly, usernameFriendly } from "../../../lib/validate";
 import Button from "../../form_elements/button";
 import Label from "../../form_elements/label";
 import FormInput from "../../form_elements/forminput";
@@ -23,16 +24,19 @@ const GeneralGroup = ({ userData }) => {
   // Check to see if we can submit updates
   useEffect(() => {
     let userDataStatus = false;
+
     if (
-      (name.trim() != prevData.name &&
-        name.trim().length > 3 &&
-        name.trim().length < 31) ||
-      (username.trim() != prevData.username &&
-        username.trim().length > 3 &&
-        username.trim().length < 31) ||
-      bio.trim() != prevData.bio
+      name.trim() !== prevData.name ||
+      username !== prevData.username ||
+      bio !== prevData.bio
     ) {
-      userDataStatus = true;
+      if (
+        nameFriendly(name) &&
+        usernameFriendly(username) &&
+        bio.length <= 200
+      ) {
+        userDataStatus = true;
+      }
     }
 
     setCanSubmit(userDataStatus);
@@ -54,6 +58,22 @@ const GeneralGroup = ({ userData }) => {
   // Main Function
   const updateGeneralHandler = async (e) => {
     e.preventDefault();
+    // Revalidate inputs
+    if (
+      name !== prevData.name ||
+      username !== prevData.username ||
+      bio !== prevData.bio
+    ) {
+      if (
+        nameFriendly(name) &&
+        usernameFriendly(username) &&
+        bio.length <= 200
+      ) {
+        setCanSubmit(false);
+        return;
+      }
+    }
+
     const res = await fetch("/api/account/update-profile", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -85,10 +105,15 @@ const GeneralGroup = ({ userData }) => {
           <FormInput
             name="name"
             type="text"
+            minLength="3"
+            maxLength="30"
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
-            onBlur={checkValidField}
+            onChange={(e) => setName(e.target.value.trimStart())}
+            onBlur={(e) => {
+              setName((prev) => prev.trimEnd());
+              checkValidField(e);
+            }}
             errMsg="Name must be between 3 & 30 characters long."
             hasErr={error.name}
           />
@@ -98,9 +123,11 @@ const GeneralGroup = ({ userData }) => {
           <FormInput
             name="username"
             type="text"
+            minLength="3"
+            maxLength="30"
             required
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.trim())}
             onBlur={checkValidField}
             errMsg="Username must be between 3 & 30 characters long."
             hasErr={error.username}
@@ -110,6 +137,7 @@ const GeneralGroup = ({ userData }) => {
           <Label>Bio</Label>
           <FormInput
             type="textarea"
+            maxLength="200"
             rows={3}
             noResize
             value={bio}

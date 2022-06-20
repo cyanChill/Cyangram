@@ -6,9 +6,8 @@ import {
   deleteImage,
   uploadImage,
 } from "../../../lib/firebaseAdminHelper";
-import { DefaultProfilePic } from "../../../lib/constants";
 import dbConnect from "../../../lib/dbConnect";
-import { validImageSize } from "../../../lib/validate";
+import { isImage, validImageSize } from "../../../lib/validate";
 import User from "../../../models/User";
 
 const handler = async (req, res) => {
@@ -49,12 +48,24 @@ const handler = async (req, res) => {
   }
 
   const imageInfo = data.files.uploadedImg;
-  if (action === "SET" && !validImageSize(imageInfo.size, 5)) {
-    res.status(406).json({ message: "File size is too large (Must be <5MB)." });
-    return;
+  if (action === "SET") {
+    if (!isImage(imageInfo)) {
+      res.status(406).json({ message: "Input must be an image" });
+      return;
+    }
+    if (!validImageSize(imageInfo.size, 5)) {
+      res.status(406).json({
+        message: "File size is too large (Must be <5MB).",
+      });
+      return;
+    }
   }
 
   let img = { url: "", identifier: "" };
+  const DefaultProfilePic = {
+    url: process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_URL,
+    identifier: process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_IDENTIFIER,
+  };
   try {
     if (action === "SET") {
       img = await uploadImage(userId, imageInfo);

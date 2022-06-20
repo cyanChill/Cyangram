@@ -30,7 +30,14 @@ const handler = async (req, res) => {
 
   switch (method) {
     case "POST":
-      const commentContent = req.body.comment;
+      const commentContent = req.body.comment.trim();
+      if (commentContent.length > 200) {
+        res.status(200).json({
+          message: "Comment is too long (Must be <=200 characters).",
+        });
+        return;
+      }
+
       try {
         const commentEntry = {
           postId: postId,

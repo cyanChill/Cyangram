@@ -18,9 +18,9 @@ const handler = async (req, res) => {
   }
 
   const userId = session.user.dbId;
-  const oldPassword = req.body.oldPassword;
-  const newPassword = req.body.newPassword;
-  const confirmedNewPassword = req.body.confirmedNewPassword;
+  const oldPassword = req.body.oldPassword.trim();
+  const newPassword = req.body.newPassword.trim();
+  const confirmedNewPassword = req.body.confirmedNewPassword.trim();
 
   const validPassword = Validator(newPassword, [required, minLength(6)]);
   if (!validPassword || newPassword !== confirmedNewPassword) {
