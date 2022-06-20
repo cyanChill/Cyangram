@@ -55,7 +55,7 @@
 }
 
 .liked {
-  animation: liked 0.75s linear forwards;
+  animation: liked 0.5s linear forwards;
 }
 
 .unliked {
@@ -71,6 +71,6 @@
   }
   100% {
     opacity: 1;
-    color: red;
+    color: var(--error);
   }
 }

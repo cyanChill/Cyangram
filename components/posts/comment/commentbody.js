@@ -1,7 +1,6 @@
 import Username from "../../misc/links/usernameLink";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
 import LoadImage from "../../ui/loadimage/loadimage";
-
 import classes from "./commentbody.module.css";
 
 const CommentBody = ({

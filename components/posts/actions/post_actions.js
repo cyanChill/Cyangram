@@ -10,7 +10,6 @@ import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import SharePostBtn from "./sharepostbtn";
 import Modal from "../../ui/modal/modal";
-
 import classes from "./post_actions.module.css";
 
 const PostActions = ({
@@ -45,7 +44,6 @@ const PostActions = ({
       return;
     }
 
-    /* TODO: Add animation for when we change like icons */
     likeBtnAction(method === "POST" ? "ADD" : "SUB");
     setIsLiked((prevLike) => !prevLike);
   };

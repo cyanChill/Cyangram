@@ -7,7 +7,6 @@ import PostActions from "../actions/post_actions";
 import CommentBody from "../comment/commentbody";
 import Card from "../../ui/card/card";
 import LoadImage from "../../ui/loadimage/loadimage";
-
 import classes from "./post_excerpt.module.css";
 
 const PostExcerpt = ({ post }) => {

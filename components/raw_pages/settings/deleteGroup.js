@@ -6,7 +6,6 @@ import Button from "../../form_elements/button";
 import Label from "../../form_elements/label";
 import InputGroup from "../../form_elements/inputGroup";
 import Modal from "../../ui/modal/modal";
-
 import classes from "./settingspage.module.css";
 
 const DeleteGroup = () => {
@@ -19,6 +18,7 @@ const DeleteGroup = () => {
 
     if (res.ok) {
       alert("Account Successfully Deleted.");
+      await logoutFirebase();
       await signOut();
     }
   };

@@ -3,7 +3,6 @@ import { useState, useEffect, useMemo } from "react";
 import { debounce } from "../../../lib/debounce";
 import FormInput from "../../form_elements/forminput";
 import User from "../../users/userlist/user";
-
 import classes from "./search.module.css";
 
 const SearchBar = () => {

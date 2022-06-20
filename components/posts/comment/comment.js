@@ -1,13 +1,3 @@
-/* 
-  This is the comments box (displays the comments) on the actual post page
-  (ie: on the ".../p/<postId>" route)
-    - I guess take a list of comments and display them
-    - Need a different look for when in "phone" vs "window"
-      - With "window", have a border, maybe some curviness?
-
-  OR this can be the singular comment and we just iterate in the "post.js"
-  file
-*/
 import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
@@ -16,7 +6,6 @@ import global from "../../../global";
 import CommentBody from "./commentbody";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
-
 import classes from "./comment.module.css";
 
 const Comment = ({ postId, comment, viewerId, handleRemove }) => {

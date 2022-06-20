@@ -1,6 +1,6 @@
 import NoPost from "../no_posts/nopost";
-import classes from "./post_grid.module.css";
 import PostPreview from "./post_preview";
+import classes from "./post_grid.module.css";
 
 const PostGrid = ({ posts }) => {
   if (posts.length == 0) {

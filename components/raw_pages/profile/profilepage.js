@@ -9,7 +9,6 @@ import PostGrid from "../../posts/post_grid/post_grid";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
 import LoadImage from "../../ui/loadimage/loadimage";
 import LoadingSpinner from "../../ui/spinners/loadingSpinner";
-
 import classes from "./profilepage.module.css";
 
 const DEFAULT_LIST = { mutual: [], acquaintances: [] };
