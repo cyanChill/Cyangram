@@ -27,7 +27,13 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
 
     const setNewProfilePic = async () => {
       // Final validation
-      if (imageUpload == null || !isImage(imageUpload)) return;
+      if (imageUpload == null || !isImage(imageUpload)) {
+        global.alerts.actions.addAlert({
+          type: global.alerts.types.error,
+          content: "There was a problem with the selected image.",
+        });
+        return;
+      }
 
       // Data we'll pass to backend
       const formData = new FormData();

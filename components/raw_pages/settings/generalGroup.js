@@ -58,20 +58,26 @@ const GeneralGroup = ({ userData }) => {
   // Main Function
   const updateGeneralHandler = async (e) => {
     e.preventDefault();
+    // Make sure new inputs are different values
+    if (
+      name === prevData.name &&
+      username === prevData.username &&
+      bio === prevData.bio
+    ) {
+      return;
+    }
     // Revalidate inputs
     if (
-      name !== prevData.name ||
-      username !== prevData.username ||
-      bio !== prevData.bio
+      !nameFriendly(name) ||
+      !usernameFriendly(username) ||
+      bio.length > 200
     ) {
-      if (
-        nameFriendly(name) &&
-        usernameFriendly(username) &&
-        bio.length <= 200
-      ) {
-        setCanSubmit(false);
-        return;
-      }
+      global.alerts.actions.addAlert({
+        type: global.alerts.types.error,
+        content: "There was a problem with one of your inputs.",
+      });
+      setCanSubmit(false);
+      return;
     }
 
     const res = await fetch("/api/account/update-profile", {

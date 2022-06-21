@@ -49,8 +49,8 @@ const PasswordGroup = () => {
       newPassword !== confirmPassword
     ) {
       global.alerts.actions.addAlert({
-        type: global.alerts.types[res.ok ? "success" : "error"],
-        content: "Invalid inputs.",
+        type: global.alerts.types.error,
+        content: "There was a problem with one of your inputs.",
       });
       setCanSubmit(false);
       return;
