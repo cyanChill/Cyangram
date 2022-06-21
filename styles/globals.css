@@ -36,7 +36,7 @@
   --on-background: var(--black-900);
 
   --surface: var(--off-white-505);
-  --on-surface: ;
+  --on-surface: var(--black-500);
   --on-surface-accent: var(--grey-800);
 
   --border: 0.05px solid var(--grey-300);
