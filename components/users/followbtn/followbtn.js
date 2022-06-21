@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import global from "../../../global";
 import Button from "../../form_elements/button";
@@ -12,6 +12,10 @@ const FollowButton = ({
 }) => {
   const [isFollowing, setIsFollowing] = useState(viewerIsFollowing);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setIsFollowing(viewerIsFollowing);
+  }, [viewerIsFollowing]);
 
   const handleFollow = async () => {
     setLoading(true);

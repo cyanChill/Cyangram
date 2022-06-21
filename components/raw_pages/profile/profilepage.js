@@ -60,9 +60,7 @@ const UserProfilePage = ({
       try {
         const res = await fetch(
           `/api/users/${user.username}/list?type=${modalTab}`,
-          {
-            signal,
-          }
+          { signal }
         );
         const data = await res.json();
 
