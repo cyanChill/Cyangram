@@ -27,6 +27,7 @@ const HomeFeedPage = ({ username }) => {
   const handleChangeFeed = (type) => {
     if (type !== "ourFeed" && type !== "discoverFeed") return;
     setFeedType(type);
+    window.scrollTo(0, 0);
   };
 
   return (
