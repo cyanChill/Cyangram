@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { MdOutlineArrowBack, MdClose } from "react-icons/md";
 
+import global from "../../../global";
+import useLazyFetch from "../../../hooks/useLazyFetch";
 import Modal from "../../ui/modal/modal";
 import UserList from "../../users/userlist/userlist";
 import FollowButton from "../../users/followbtn/followbtn";
@@ -12,6 +14,7 @@ import LoadingSpinner from "../../ui/spinners/loadingSpinner";
 import classes from "./profilepage.module.css";
 
 const DEFAULT_LIST = { mutual: [], acquaintances: [] };
+const FETCH_AMOUNT = 9;
 
 const UserProfilePage = ({
   userData,
@@ -23,7 +26,7 @@ const UserProfilePage = ({
 }) => {
   const router = useRouter();
 
-  const { user, posts } = userData;
+  const { user, postCnt } = userData;
 
   const [followerCnt, setFollowerCnt] = useState();
   const [followingCnt, setFollowingCnt] = useState();
@@ -145,7 +148,7 @@ const UserProfilePage = ({
           />
           <div>
             <p>
-              <span className={classes.num}>{posts.length}</span>
+              <span className={classes.num}>{postCnt}</span>
               <span className={classes.label}>Posts</span>
             </p>
             <p
@@ -177,7 +180,8 @@ const UserProfilePage = ({
         )}
 
         {/* Posts */}
-        <PostGrid posts={userData.posts} />
+        {/* TODO: Update w/ lazy fetching */}
+        <UserPosts username={user.username} />
       </div>
 
       {/* Followers/Following Modal */}
@@ -240,3 +244,28 @@ const UserProfilePage = ({
 };
 
 export default UserProfilePage;
+
+const UserPosts = ({ username }) => {
+  const { loading, error, results } = useLazyFetch(
+    `/api/users/${username}/posts`,
+    FETCH_AMOUNT
+  );
+
+  if (error) {
+    global.alerts.actions.addAlert({
+      type: global.alerts.types.error,
+      content: `Failed to fetch all of ${username}'s posts.`,
+    });
+  }
+
+  return (
+    <>
+      <PostGrid posts={results} />
+      {loading && (
+        <div className={classes.spinnerContainer}>
+          <LoadingSpinner />
+        </div>
+      )}
+    </>
+  );
+};
