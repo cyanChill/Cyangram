@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { AiOutlineDown } from "react-icons/ai";
 
+import useLazyFetch from "../../../hooks/useLazyFetch";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import PostExcerpt from "../../posts/post_excerpt/post_excerpt";
 import AppLogo from "../../ui/applogo/applogo";
+import LoadingSpinner from "../../ui/spinners/loadingSpinner";
 import classes from "./homepage.module.css";
 
-const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
+const FETCH_AMOUNT = 9;
+
+const HomeFeedPage = ({ username }) => {
   const [ddDisplayStatus, setddDisplayStatus] = useState(false);
   const [feedType, setFeedType] = useState("ourFeed");
+
+  const { loading, results: ourFeed } = useLazyFetch(
+    `/api/users/${username}/feed?type=follow&`,
+    FETCH_AMOUNT
+  );
+  const { loading: loading2, results: discoverFeed } = useLazyFetch(
+    `/api/users/${username}/feed?type=discover&`,
+    FETCH_AMOUNT
+  );
 
   const handleChangeFeed = (type) => {
     if (type !== "ourFeed" && type !== "discoverFeed") return;
@@ -50,11 +63,29 @@ const HomeFeedPage = ({ ourFeed, discoverFeed }) => {
       </header>
 
       <div className={classes.content}>
-        {feedType === "ourFeed"
-          ? ourFeed.map((post) => <PostExcerpt key={post._id} post={post} />)
-          : discoverFeed.map((post) => (
+        {feedType === "ourFeed" ? (
+          <>
+            {ourFeed.map((post) => (
               <PostExcerpt key={post._id} post={post} />
             ))}
+            {loading && (
+              <div className={classes.spinnerContainer}>
+                <LoadingSpinner />
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {discoverFeed.map((post) => (
+              <PostExcerpt key={post._id} post={post} />
+            ))}
+            {loading2 && (
+              <div className={classes.spinnerContainer}>
+                <LoadingSpinner />
+              </div>
+            )}
+          </>
+        )}
       </div>
     </>
   );

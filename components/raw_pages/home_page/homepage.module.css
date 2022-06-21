@@ -33,6 +33,12 @@
   transform: translate(-0.5rem, 1rem);
 }
 
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 568px) {
   .header {
     width: max-content;
