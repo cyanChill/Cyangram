@@ -1,8 +1,6 @@
 import dbConnect from "../../../../lib/dbConnect";
 import User from "../../../../models/User";
 import Post from "../../../../models/Post";
-import Like from "../../../../models/Like";
-import Comment from "../../../../models/Comment";
 import Follower from "../../../../models/Follower";
 
 const handler = async (req, res) => {
@@ -27,32 +25,10 @@ const handler = async (req, res) => {
   }
 
   /* Fetching Posts & order from newest to oldest */
-  const userPosts = await Post.find({ posterId: existingUser._id }).sort({
-    date: "-1",
-  });
-  /* Fetch info such as comments count for each posts*/
-  const informizePosts = async (post) => {
-    try {
-      const likes = await Like.find({ postId: post._id });
-      const comments = await Comment.find({ postId: post._id });
-
-      return Promise.resolve({
-        ...post._doc,
-        likes: likes.length,
-        comments: comments.length,
-      });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  };
-
+  const userPosts = await Post.find({ posterId: existingUser._id }, "_id");
   try {
-    const postPromises = userPosts.map((post) => informizePosts(post));
-    const postsData = await Promise.all(postPromises);
-    /* 
-      - Get the # of people this user is following
-      - Get the # of people that is following the user
-    */
+    // - Get the # of people this user is following
+    // - Get the # of people that is following the user
     const [followerList, followingList] = await Promise.all([
       Follower.find({ followingId: existingUser._id }),
       Follower.find({ followerId: existingUser._id }),
@@ -61,7 +37,7 @@ const handler = async (req, res) => {
     res.status(200).json({
       message: "Successfully found user data.",
       user: existingUser,
-      posts: postsData,
+      postCnt: userPosts.length,
       followerList: followerList,
       followerCnt: followerList.length,
       followingCnt: followingList.length,
