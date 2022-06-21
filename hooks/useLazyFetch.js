@@ -9,6 +9,7 @@ const useLazyFetch = (url, amount) => {
   const [results, setResults] = useState([]);
   const [usedIds, setUsedIds] = useState([]);
 
+  const [initialized, setInialized] = useState(false);
   const [finished, setFinished] = useState(false);
 
   const sendQuery = useCallback(async () => {
@@ -41,7 +42,22 @@ const useLazyFetch = (url, amount) => {
     }
   }, [url, amount, asOfTime, usedIds]);
 
+  /* Reset hook if the url changes (when hook has been initialized already) */
   useEffect(() => {
+    if (initialized) {
+      setAsOfTime(Date.now());
+      setLoading(true);
+      setResults([]);
+      setUsedIds([]);
+      setError(false);
+      setFinished(false);
+    }
+  }, [url]);
+
+  useEffect(() => {
+    if (!initialized) {
+      setInialized(true);
+    }
     if (!finished) {
       sendQuery();
     }

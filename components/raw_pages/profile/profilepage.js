@@ -48,7 +48,7 @@ const UserProfilePage = ({
     setModalActive(false);
     setFollowerCnt(erCnt);
     setFollowingCnt(ingCnt);
-  }, [erCnt, ingCnt]);
+  }, [userData, erCnt, ingCnt]);
 
   useEffect(() => {
     const controller = new AbortController();
