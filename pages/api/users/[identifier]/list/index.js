@@ -1,14 +1,15 @@
-import { getFollowList } from "../../../../lib/backendHelpers";
+import { getFollowList } from "../../../../../lib/backendHelpers";
 
 const handler = async (req, res) => {
-  if (req.method !== "GET") {
+  const { type } = req.query;
+  if (req.method !== "GET" || (type !== "followers" && type !== "following")) {
     res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
   let promises;
   try {
-    promises = await getFollowList(req.query.identifier, "followers");
+    promises = await getFollowList(req.query.identifier, type);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -16,14 +17,13 @@ const handler = async (req, res) => {
   return Promise.all(promises)
     .then((promiseData) => {
       res.status(200).json({
-        message: "Successfully found the followers of the user.",
+        message: `Successfully found ${type}.`,
         users: promiseData,
       });
     })
     .catch((err) => {
       res.status(500).json({
-        message:
-          "A problem has occurred while fetching data for the followers of the user.",
+        message: `A problem has occurred while fetching data for ${type}.`,
         users: [],
         err: err,
       });

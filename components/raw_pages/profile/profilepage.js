@@ -58,14 +58,17 @@ const UserProfilePage = ({
       setModalLoading(true);
 
       try {
-        const res = await fetch(`/api/users/${user.username}/${modalTab}`, {
-          signal,
-        });
+        const res = await fetch(
+          `/api/users/${user.username}/list?type=${modalTab}`,
+          {
+            signal,
+          }
+        );
         const data = await res.json();
 
         // Get the list of people we are following
         const followingRes = await fetch(
-          `/api/users/${viewerInfo.username}/following`,
+          `/api/users/${viewerInfo.username}/list?type=following`,
           { signal }
         );
         const ourFollowingData = await followingRes.json();
