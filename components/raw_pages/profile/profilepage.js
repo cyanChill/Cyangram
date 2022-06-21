@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { MdOutlineArrowBack, MdClose } from "react-icons/md";
 
-import global from "../../../global";
 import useLazyFetch from "../../../hooks/useLazyFetch";
 import Modal from "../../ui/modal/modal";
 import UserList from "../../users/userlist/userlist";
@@ -180,7 +179,6 @@ const UserProfilePage = ({
         )}
 
         {/* Posts */}
-        {/* TODO: Update w/ lazy fetching */}
         <UserPosts username={user.username} />
       </div>
 
@@ -246,17 +244,10 @@ const UserProfilePage = ({
 export default UserProfilePage;
 
 const UserPosts = ({ username }) => {
-  const { loading, error, results } = useLazyFetch(
+  const { loading, results } = useLazyFetch(
     `/api/users/${username}/posts`,
     FETCH_AMOUNT
   );
-
-  if (error) {
-    global.alerts.actions.addAlert({
-      type: global.alerts.types.error,
-      content: `Failed to fetch all of ${username}'s posts.`,
-    });
-  }
 
   return (
     <>

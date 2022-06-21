@@ -1,11 +1,3 @@
-/*
-  TODO: Custom hook to fetch data based on amount
-    - Maybe first get a date such that we don't fetch the same results
-    - 
-  
-  TODO: Turn API route to use "slug"
-    - Since we'll prob have a "date" query & "page" query
-*/
 import { useState, useEffect, useCallback } from "react";
 
 /* "query" is an object with "method", "application", and "body" fields (we expect a POST method) */
@@ -21,11 +13,14 @@ const useLazyFetch = (url, amount) => {
 
   const sendQuery = useCallback(async () => {
     try {
-      console.log("Triggered");
+      console.log("Triggered Lazy Fetch");
       setLoading(true);
       setError(false);
 
-      const res = await fetch(`${url}?fromDate=${asOfTime}&amount=${amount}`, {
+      const route = `${url}${
+        url.charAt(url.length - 1) === "&" ? "" : "?"
+      }fromDate=${asOfTime}&amount=${amount}`;
+      const res = await fetch(route, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ usedIds: usedIds }),
