@@ -12,6 +12,7 @@ import {
   IoSettingsSharp,
 } from "react-icons/io5";
 import { HiUserCircle, HiOutlineUserCircle } from "react-icons/hi";
+import { RiSendPlaneFill, RiSendPlaneLine } from "react-icons/ri";
 
 import { logoutFirebase } from "../../lib/firebaseHelpers";
 import global from "../../global";
@@ -69,6 +70,11 @@ const MainNavigation = () => {
           <li>
             <NavLink to="/" activeEl={<AiFillHome />}>
               <AiOutlineHome />
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/direct/inbox" activeEl={<RiSendPlaneFill />}>
+              <RiSendPlaneLine />
             </NavLink>
           </li>
           <li>

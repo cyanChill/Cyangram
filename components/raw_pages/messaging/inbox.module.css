@@ -1,0 +1,74 @@
+.wrapper {
+  height: calc(90vh - var(--nav-height));
+  max-height: calc(90vh - var(--nav-height));
+  max-width: var(--reasonable-max-app-width);
+  margin: 0 auto;
+  padding-top: 1rem;
+}
+
+.cardStyles {
+  height: 100%;
+  overflow: auto;
+  padding: 0;
+}
+
+.conversationList > div:not(:last-child) {
+  border-bottom: var(--border);
+}
+
+/* User Widget Style */
+.userWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.5rem 0.75rem;
+  transition: all 150ms ease-in-out;
+}
+
+.userWrapper:hover {
+  background-color: var(--shadow-clr-200);
+  cursor: pointer;
+}
+
+/* Image Styles */
+.img {
+  height: 2rem;
+  width: 2rem;
+}
+
+.rounded {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* UserInfo Styles */
+.userInfo {
+  width: 100%;
+}
+
+.userInfo p {
+  margin: 0;
+  padding: 0;
+
+  max-width: calc(100% - 0.75rem);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.userInfo p:first-child {
+  font-weight: 500;
+}
+
+.userInfo p:last-child {
+  font-size: 0.9rem;
+  color: var(--on-surface-accent);
+}
+
+@media (min-width: 568px) {
+  .wrapper {
+    height: 90vh;
+    max-height: 90vh;
+  }
+}
