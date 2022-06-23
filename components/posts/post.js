@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import global from "../../global";
-import { timeSince } from "../../lib/time";
+import { timeSince } from "../../lib/conversions";
 import Comment from "./comment/comment";
 import PostActions from "./actions/post_actions";
 import BackHeader from "../ui/backheader/backHeader";

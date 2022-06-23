@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProviders from "next-auth/providers/credentials";
 
 import dbConnect from "../../../lib/dbConnect";
-import { verifyPassword } from "../../../lib/hash";
+import { verifyPassword } from "../../../lib/backendHelpers";
 import User from "../../../models/User";
 
 export default NextAuth({

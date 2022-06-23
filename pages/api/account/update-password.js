@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react";
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 import Validator, { required, minLength } from "../../../lib/validate";
-import { hashPassword, verifyPassword } from "../../../lib/hash";
+import { hashPassword, verifyPassword } from "../../../lib/backendHelpers";
 
 const handler = async (req, res) => {
   if (req.method !== "PATCH") {

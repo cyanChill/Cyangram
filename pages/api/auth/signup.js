@@ -7,7 +7,7 @@ import Validator, {
   usernameFriendly,
   minLength,
 } from "../../../lib/validate";
-import { hashPassword } from "../../../lib/hash";
+import { hashPassword } from "../../../lib/backendHelpers";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {

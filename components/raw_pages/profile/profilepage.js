@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { MdOutlineArrowBack, MdClose } from "react-icons/md";
 
+import { followConversion } from "../../../lib/conversions";
 import useLazyFetch from "../../../hooks/useLazyFetch";
 import Modal from "../../ui/modal/modal";
 import UserList from "../../users/userlist/userlist";
@@ -155,14 +156,18 @@ const UserProfilePage = ({
               onClick={() => displayFollowList("followers")}
               className={classes.link}
             >
-              <span className={classes.num}>{followerCnt}</span>
+              <span className={classes.num}>
+                {followConversion(followerCnt)}
+              </span>
               <span className={classes.label}>Followers</span>
             </p>
             <p
               onClick={() => displayFollowList("following")}
               className={classes.link}
             >
-              <span className={classes.num}>{followingCnt}</span>
+              <span className={classes.num}>
+                {followConversion(followingCnt)}
+              </span>
               <span className={classes.label}>Following</span>
             </p>
           </div>
