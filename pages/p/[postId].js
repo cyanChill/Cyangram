@@ -40,8 +40,8 @@ export const getServerSideProps = async (context) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}`
   );
-  const errorCode = res.ok ? false : res.status;
 
+  const errorCode = res.ok ? false : res.status;
   if (errorCode) {
     return { props: { errorCode } };
   }

@@ -35,8 +35,8 @@ export const getServerSideProps = async (context) => {
   const userDataRes = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${username}`
   );
-  const errorCode = userDataRes.ok ? false : res.status;
-
+  
+  const errorCode = userDataRes.ok ? false : userDataRes.status;
   if (errorCode) {
     return { props: { errorCode } };
   }

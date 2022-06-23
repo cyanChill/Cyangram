@@ -2,8 +2,13 @@ import Head from "next/head";
 import { getSession } from "next-auth/react";
 
 import UserSettingsPage from "../../components/raw_pages/settings/settingspage";
+import ErrorPage from "../../components/raw_pages/error/errorpage";
 
 const SettingsPage = ({ userData }) => {
+  if (errorCode) {
+    return <ErrorPage />;
+  }
+
   return (
     <>
       <Head>
@@ -28,8 +33,8 @@ export const getServerSideProps = async (context) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${session.user.username}`
   );
-  const errorCode = res.ok ? false : res.status;
 
+  const errorCode = res.ok ? false : res.status;
   if (errorCode) {
     return { props: { errorCode } };
   }
