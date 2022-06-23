@@ -13,8 +13,12 @@ const handler = async (req, res) => {
   const { identifier: username, fromDate, amount } = req.query;
   const { usedIds } = req.body;
 
-  await dbConnect();
+  if (!username.trim()) {
+    res.status(400).json({ message: "Invalid Request." });
+    return;
+  }
 
+  await dbConnect();
   /* See if the "username" identifier is an actual user */
   const currUser = await User.findOne({ username: username });
   if (!currUser) {

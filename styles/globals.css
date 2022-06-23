@@ -39,7 +39,8 @@
   --on-surface: var(--black-500);
   --on-surface-accent: var(--grey-800);
 
-  --border: 0.05px solid var(--grey-300);
+  --border-color: var(--grey-300);
+  --border: 0.05px solid var(--border-color);
 
   --error: var(--red-500);
 
@@ -94,7 +95,8 @@ body.dark {
   --on-surface: var(--off-white-600);
   --on-surface-accent: var(--grey-600);
 
-  --border: 0.05px solid var(--grey-700);
+  --border-color: var(--grey-700);
+  --border: 0.05px solid var(--border-color);
 
   --transparent-highlight: rgba(48, 48, 48, 0.8);
   --shadow-clr: rgba(255, 255, 255, 0.35);

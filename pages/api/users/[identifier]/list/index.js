@@ -2,7 +2,11 @@ import { getFollowList } from "../../../../../lib/backendHelpers";
 
 const handler = async (req, res) => {
   const { type } = req.query;
-  if (req.method !== "GET" || (type !== "followers" && type !== "following")) {
+  if (
+    req.method !== "GET" ||
+    (type !== "followers" && type !== "following") ||
+    !username.trim()
+  ) {
     res.status(400).json({ message: "Invalid Request." });
     return;
   }

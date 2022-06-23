@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
 /* "query" is an object with "method", "application", and "body" fields (we expect a POST method) */
-const useLazyFetch = (url, amount) => {
+const useLazyFetch = (url, amount, continuousFetchInterval = 0) => {
   // Uses this time as a point of reference for future results
   const [asOfTime, setAsOfTime] = useState(Date.now());
   const [loading, setLoading] = useState(true);
@@ -42,8 +42,12 @@ const useLazyFetch = (url, amount) => {
     }
   }, [url, amount, asOfTime, usedIds]);
 
-  /* Reset hook if the url changes (when hook has been initialized already) */
+  const forceUpdate = useCallback(() => {
+    setAsOfTime(Date.now());
+  }, []);
+
   useEffect(() => {
+    /* Reset hook if the url changes (when hook has been initialized already) */
     if (initialized) {
       setAsOfTime(Date.now());
       setLoading(true);
@@ -55,6 +59,29 @@ const useLazyFetch = (url, amount) => {
   }, [url]);
 
   useEffect(() => {
+    /* Continuously Fetch Updates based on interval after getting initial results */
+    let interval = null;
+    if (continuousFetchInterval > 0) {
+      interval = setInterval(() => {
+        // Attempt to fetch new results once we've finished fetching all initial content
+        if (finished) {
+          setAsOfTime(Date.now());
+        }
+      }, continuousFetchInterval);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [finished]);
+
+  useEffect(() => {
+    if (initialized) {
+      sendQuery();
+    }
+  }, [asOfTime]);
+
+  useEffect(() => {
     if (!initialized) {
       setInialized(true);
     }
@@ -63,7 +90,7 @@ const useLazyFetch = (url, amount) => {
     }
   }, [finished, sendQuery]);
 
-  return { loading, error, results };
+  return { loading, error, results, forceUpdate };
 };
 
 export default useLazyFetch;

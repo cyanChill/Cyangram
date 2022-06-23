@@ -1,8 +1,8 @@
 import { getSession } from "next-auth/react";
 
-import dbConnect from "../../../../lib/dbConnect";
-import Follower from "../../../../models/Follower";
-import User from "../../../../models/User";
+import dbConnect from "../../../../../lib/dbConnect";
+import Follower from "../../../../../models/Follower";
+import User from "../../../../../models/User";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
@@ -10,8 +10,12 @@ const handler = async (req, res) => {
     return;
   }
 
-  await dbConnect();
+  if (!req.query.identifier.trim()) {
+    res.status(400).json({ message: "Invalid Request." });
+    return;
+  }
 
+  await dbConnect();
   const followingInfo = await User.findOne({ username: req.query.identifier });
   if (!followingInfo) {
     res.status(404).json({ message: "User does not exist." });

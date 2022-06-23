@@ -4,7 +4,7 @@ import FollowButton from "../followbtn/followbtn";
 import LoadImage from "../../ui/loadimage/loadimage";
 import classes from "./userlist.module.css";
 
-const User = ({ user, showActions, updateFollowCount }) => {
+const User = ({ user, showActions, updateFollowCount, path }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.infoContainer}>
@@ -20,7 +20,7 @@ const User = ({ user, showActions, updateFollowCount }) => {
         </div>
 
         <div className={classes.userInfo}>
-          <Link href={`/${user.username}`}>
+          <Link href={path ? path : `/${user.username}`}>
             <a>{user.name}</a>
           </Link>
           <p>@{user.username}</p>

@@ -6,14 +6,17 @@ import Follower from "../../../../../models/Follower";
 const handler = async (req, res) => {
   // Would use SEARCH method if supported (correct verb)
   const { identifier: username, type, fromDate, amount } = req.query;
-  if (req.method !== "POST" || (type !== "discover" && type !== "follow")) {
+  if (
+    req.method !== "POST" ||
+    (type !== "discover" && type !== "follow") ||
+    !username.trim()
+  ) {
     res.status(400).json({ message: "Invalid Request." });
     return;
   }
   const { usedIds } = req.body;
 
   await dbConnect();
-
   /* See if the "username" identifier is an actual user */
   const user = await User.findOne({ username: username });
   if (!user) {
