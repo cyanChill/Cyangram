@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/react";
+import Filter from "bad-words";
 
 import dbConnect from "../../../../lib/dbConnect";
 import User from "../../../../models/User";
@@ -32,17 +33,21 @@ const handler = async (req, res) => {
     case "POST":
       const commentContent = req.body.comment.trim();
       if (commentContent.length > 200) {
-        res.status(200).json({
+        res.status(422).json({
           message: "Comment is too long (Must be <=200 characters).",
         });
         return;
+      } else if (commentContent.length === 0) {
+        res.status(422).json({ message: "Comment cannot be empty." });
+        return;
       }
 
+      const filter = new Filter();
       try {
         const commentEntry = {
           postId: postId,
           commenterId: commenterId,
-          content: commentContent,
+          content: filter.clean(commentContent),
           date: Date.now(),
         };
 

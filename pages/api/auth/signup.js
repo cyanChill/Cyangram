@@ -1,5 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
+import Filter from "bad-words";
 
 import Validator, {
   required,
@@ -21,6 +22,12 @@ const handler = async (req, res) => {
     !Validator(password, [required, minLength(6)])
   ) {
     res.status(422).json({ message: "Invalid inputs." });
+    return;
+  }
+
+  const filter = new Filter();
+  if (filter.isProfane(username)) {
+    res.status(406).json({ message: "Username is a profane word." });
     return;
   }
 

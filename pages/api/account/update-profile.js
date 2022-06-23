@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/react";
+import Filter from "bad-words";
 
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
@@ -37,6 +38,14 @@ const handler = async (req, res) => {
     return;
   }
 
+  const filter = new Filter();
+  if (filter.isProfane(newName) || filter.isProfane(newUsername)) {
+    res
+      .status(406)
+      .json({ message: "Name or username contains profane words." });
+    return;
+  }
+
   await dbConnect();
 
   /* 
@@ -53,7 +62,11 @@ const handler = async (req, res) => {
 
   try {
     await User.findByIdAndUpdate(userId, {
-      $set: { name: newName, username: newUsername, bio: newBio },
+      $set: {
+        name: newName,
+        username: newUsername,
+        bio: newBio ? filter.clean(newBio) : "",
+      },
     });
     res
       .status(200)

@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import formidable from "formidable";
+import Filter from "bad-words";
 
 import {
   appCheckVerification,
@@ -54,11 +55,12 @@ const handler = async (req, res) => {
 
   let img = { url: "", identifier: "" };
   try {
+    const filter = new Filter();
     // Upload Image to Firebase
     img = await uploadImage(userId, imageInfo);
     const postEntry = {
       posterId: userId,
-      description: description,
+      description: description ? filter.clean(description) : "",
       image: img,
       date: Date.now(),
     };
