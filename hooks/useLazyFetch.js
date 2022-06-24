@@ -55,6 +55,7 @@ const useLazyFetch = (url, amount, continuousFetchInterval = 0) => {
       setUsedIds([]);
       setError(false);
       setFinished(false);
+      setInialized(false);
     }
   }, [url]);
 
