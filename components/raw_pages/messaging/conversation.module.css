@@ -2,12 +2,13 @@
   height: calc(100vh - 2 * var(--nav-height));
   max-height: calc(100vh - 2 * var(--nav-height));
   max-width: var(--reasonable-max-app-width);
-  position: relative;
-
   margin: 0 -1rem;
 }
 
 .cardStyles {
+  display: flex;
+  flex-direction: column;
+
   height: 100%;
   overflow: hidden;
   padding: 0;
@@ -21,7 +22,6 @@
   gap: 0.5rem;
 
   padding: 0.5rem 0.75rem;
-
   border-bottom: var(--border);
 }
 
@@ -58,7 +58,7 @@
 
 /* Message Container */
 .msgContainer {
-  max-height: calc(100vh - 2 * var(--nav-height) - 6rem);
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -117,21 +117,14 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 0.25rem;
-
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  gap: 0.5rem;
 
   padding: 0.5rem 0.75rem;
-
   background-color: var(--surface);
   border-top: var(--border);
 }
 
 .messageField input {
-  width: 100%;
-
   border: none;
   outline: none;
   color: var(--on-surface-accent);
@@ -165,10 +158,6 @@
 
     padding-top: 1rem;
     margin: 0 auto;
-  }
-
-  .msgContainer {
-    max-height: calc(100% - 5.5rem);
   }
 }
 
