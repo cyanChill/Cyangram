@@ -7,6 +7,7 @@ import Follower from "../../../models/Follower";
 import Like from "../../../models/Like";
 import Post from "../../../models/Post";
 import User from "../../../models/User";
+import Message from "../../../models/Message";
 
 const handler = async (req, res) => {
   if (req.method !== "DELETE") {
@@ -49,6 +50,7 @@ const handler = async (req, res) => {
       - Delete all post data (their comments & likes & post itself)
       - Removing all follows of people we're following and all followers
       - Remove all of our likes & comments
+      - Remove all messages related to use
       - Delete the folder containing all of our images for this user
       - Delete user's firebase account
       - Delete our user data
@@ -57,6 +59,9 @@ const handler = async (req, res) => {
       ...postDeletionPromises,
       Follower.deleteMany({
         $or: [{ followerId: userId }, { followingId: userId }],
+      }),
+      Message.deleteMany({
+        $or: [{ recieverId: userId }, { senderId: userId }],
       }),
       Like.deleteMany({ likerId: userId }),
       Comment.deleteMany({ commenterId: userId }),
