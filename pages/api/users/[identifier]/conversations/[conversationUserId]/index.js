@@ -2,32 +2,28 @@ import dbConnect from "../../../../../../lib/dbConnect";
 import User from "../../../../../../models/User";
 import Message from "../../../../../../models/Message";
 
-/* We fetch the conversation with a specific user */
+/* 
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+          This route is made for our lazy-loading hook
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*/
+/* This fetches the conversation with a specific user */
 const handler = async (req, res) => {
   // Would use SEARCH method if supported (correct verb)
-  const {
-    identifier: username,
-    conversationUserId,
-    fromDate,
-    amount,
-  } = req.query;
-  if (req.method !== "POST") {
-    res.status(400).json({ message: "Invalid Request." });
+  const { identifier, conversationUserId, fromDate, amount } = req.query;
+  const invalidQueries = !identifier.trim() || isNaN(fromDate) || isNaN(amount);
+  if (req.method !== "POST" || invalidQueries) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
   const { usedIds } = req.body;
-
-  if (!username.trim()) {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
 
   await dbConnect();
   // See if users exists
   let existingUser, conversationUser;
   try {
     [existingUser, conversationUser] = await Promise.all([
-      User.findOne({ username: username }),
+      User.findOne({ username: identifier }),
       User.findById(conversationUserId),
     ]);
     if (!existingUser || !conversationUser) {
@@ -50,8 +46,8 @@ const handler = async (req, res) => {
       _id: { $nin: usedIds },
       date: { $lt: fromDate },
       $or: [
-        { recieverId: conversationUserId },
-        { senderId: conversationUserId },
+        { recieverId: conversationUserId, senderId: existingUser._id },
+        { recieverId: existingUser._id, senderId: conversationUserId },
       ],
     })
       .sort({ date: "-1" })
