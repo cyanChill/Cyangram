@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import FollowButton from "../followbtn/followbtn";
-import LoadImage from "../../ui/loadimage/loadimage";
-import classes from "./userlist.module.css";
+import FollowButton from "../followBtn/followBtn";
+import LoadImage from "../../ui/loadImage/loadImage";
+import classes from "./user.module.css";
 
 const User = ({ user, showActions, updateFollowCount, path }) => {
   return (

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-import classes from "./loadimage.module.css";
+import classes from "./loadImage.module.css";
 
 const LoadImage = ({ src, width, height, alt, className, ...rest }) => {
   const [imgSrc, setImgSrc] = useState(src);

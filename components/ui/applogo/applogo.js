@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import global from "../../../global";
-import classes from "./applogo.module.css";
+import classes from "./appLogo.module.css";
 
 const AppLogo = ({ className, overrideClass, ...rest }) => {
   const appClassName = overrideClass

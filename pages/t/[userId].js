@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { getSession } from "next-auth/react";
 
-import ConversationPage from "../../components/raw_pages/messaging/conversation";
-import ErrorPage from "../../components/raw_pages/error/errorpage";
+import Error from "../../components/pageLayouts/errorPage/error";
+import Conversation from "../../components/pageLayouts/messagingPages/conversation";
 
 const Inbox = ({ errorCode, ...rest }) => {
   if (errorCode) {
-    return <ErrorPage />;
+    return <Error />;
   }
 
   return (
@@ -18,7 +18,7 @@ const Inbox = ({ errorCode, ...rest }) => {
           content="Page where we have a conversation with a specific user."
         />
       </Head>
-      <ConversationPage {...rest} />
+      <Conversation {...rest} />
     </>
   );
 };

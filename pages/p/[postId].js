@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { getSession } from "next-auth/react";
 
-import PostPage from "../../components/posts/post";
-import ErrorPage from "../../components/raw_pages/error/errorpage";
+import Error from "../../components/pageLayouts/errorPage/error";
+import Post from "../../components/pageLayouts/postPage/post";
 
 const UserPostPage = ({ errorCode, postData, ownPost, hasLiked, viewerId }) => {
   if (errorCode) {
-    return <ErrorPage />;
+    return <Error />;
   }
 
   return (
@@ -17,7 +17,7 @@ const UserPostPage = ({ errorCode, postData, ownPost, hasLiked, viewerId }) => {
         </title>
         <meta name="description" content="Create a new instagram post here!" />
       </Head>
-      <PostPage
+      <Post
         postData={postData}
         ownPost={ownPost}
         hasLiked={hasLiked}

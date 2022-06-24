@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { getSession } from "next-auth/react";
 
-import UserSettingsPage from "../../components/raw_pages/settings/settingspage";
-import ErrorPage from "../../components/raw_pages/error/errorpage";
+import Error from "../../components/pageLayouts/errorPage/error";
+import Settings from "../../components/pageLayouts/settingPages/settings";
 
 const SettingsPage = ({ errorCode, userData }) => {
   if (errorCode) {
-    return <ErrorPage />;
+    return <Error />;
   }
 
   return (
@@ -15,7 +15,7 @@ const SettingsPage = ({ errorCode, userData }) => {
         <title>Settings</title>
         <meta name="description" content="Settings page." />
       </Head>
-      <UserSettingsPage userData={userData} />
+      <Settings userData={userData} />
     </>
   );
 };

@@ -1,7 +1,7 @@
-import Username from "../../misc/links/usernameLink";
-import TextBreaker from "../../ui/textbreaker/textbreaker";
-import LoadImage from "../../ui/loadimage/loadimage";
-import classes from "./commentbody.module.css";
+import UsernameLink from "../../misc/links/usernameLink";
+import TextBreaker from "../../ui/textBreaker/textBreaker";
+import LoadImage from "../../ui/loadImage/loadImage";
+import classes from "./commentBody.module.css";
 
 const CommentBody = ({
   picUrl,
@@ -25,7 +25,7 @@ const CommentBody = ({
       </div>
 
       <TextBreaker className={classes.content}>
-        <Username className={classes.bold} username={username} />{" "}
+        <UsernameLink className={classes.bold} username={username} />{" "}
         {!noContent && (
           <span className={classes.textContent}>{textContent}</span>
         )}

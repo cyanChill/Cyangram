@@ -1,9 +1,9 @@
 import { getSession } from "next-auth/react";
 
-import HomeFeedPage from "../components/raw_pages/home_page/homepage";
+import Home from "../components/pageLayouts/homePage/home";
 
 const HomePage = ({ username }) => {
-  return <HomeFeedPage username={username} />;
+  return <Home username={username} />;
 };
 
 export default HomePage;

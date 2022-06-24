@@ -1,7 +1,7 @@
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 
-import NewPostPage from "../../components/raw_pages/new_post/newpostpage";
+import CreatePost from "../../components/pageLayouts/createPostPage/createPost";
 
 const CreatePostPage = ({ userId }) => {
   return (
@@ -10,7 +10,7 @@ const CreatePostPage = ({ userId }) => {
         <title>Create new post</title>
         <meta name="description" content="Create a new instagram post here!" />
       </Head>
-      <NewPostPage userId={userId} />
+      <CreatePost userId={userId} />
     </>
   );
 };

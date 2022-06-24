@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { getSession } from "next-auth/react";
 
-import InboxPage from "../../components/raw_pages/messaging/inbox";
-import ErrorPage from "../../components/raw_pages/error/errorpage";
+import Error from "../../components/pageLayouts/errorPage/error";
+import Inbox from "../../components/pageLayouts/messagingPages/inbox";
 
-const Inbox = ({ errorCode, conversationUsers }) => {
+const InboxPage = ({ errorCode, conversationUsers }) => {
   if (errorCode) {
-    return <ErrorPage />;
+    return <Error />;
   }
 
   return (
@@ -15,12 +15,12 @@ const Inbox = ({ errorCode, conversationUsers }) => {
         <title>Inbox • Direct</title>
         <meta name="description" content="Inbox for all your messages." />
       </Head>
-      <InboxPage conversationUsers={conversationUsers} />
+      <Inbox conversationUsers={conversationUsers} />
     </>
   );
 };
 
-export default Inbox;
+export default InboxPage;
 
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });

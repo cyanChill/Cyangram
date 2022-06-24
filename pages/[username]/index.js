@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { getSession } from "next-auth/react";
 
-import ErrorPage from "../../components/raw_pages/error/errorpage";
-import UserProfilePage from "../../components/raw_pages/profile/profilepage";
+import Error from "../../components/pageLayouts/errorPage/error";
+import Profile from "../../components/pageLayouts/profilePage/profile";
 
 const ProfilePage = ({ errorCode, ...rest }) => {
   if (errorCode) {
-    return <ErrorPage />;
+    return <Error />;
   }
 
   return (
@@ -17,7 +17,7 @@ const ProfilePage = ({ errorCode, ...rest }) => {
         </title>
         <meta name="description" content="Create a new instagram post here!" />
       </Head>
-      <UserProfilePage {...rest} />
+      <Profile {...rest} />
     </>
   );
 };
@@ -35,7 +35,7 @@ export const getServerSideProps = async (context) => {
   const userDataRes = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${username}`
   );
-  
+
   const errorCode = userDataRes.ok ? false : userDataRes.status;
   if (errorCode) {
     return { props: { errorCode } };

@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 
-import SignUp from "../../components/authentication/signup";
+import SignUp from "../../components/pageLayouts/authenticationPages/signup";
 
 const SignUpPage = () => {
   return (

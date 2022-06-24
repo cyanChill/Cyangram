@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
-import classes from "./backheader.module.css";
+import classes from "./backHeader.module.css";
 
 const BackHeader = ({ text, linkPath }) => {
   const router = useRouter();

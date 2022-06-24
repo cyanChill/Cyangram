@@ -1,21 +1,21 @@
 import Head from "next/head";
 import { getSession } from "next-auth/react";
 
-import SearchBar from "../../components/raw_pages/search/search";
+import Search from "../../components/pageLayouts/searchPage/search";
 
-const Search = () => {
+const SearchPage = () => {
   return (
     <>
       <Head>
         <title>Search</title>
         <meta name="description" content="Search for users here!" />
       </Head>
-      <SearchBar />
+      <Search />
     </>
   );
 };
 
-export default Search;
+export default SearchPage;
 
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });

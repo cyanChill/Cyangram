@@ -1,0 +1,166 @@
+/* 
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                     Post Component Styles
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*/
+.wrapper {
+  margin: 0 -0.5rem;
+}
+
+.wrapper header {
+  padding: 0.25rem 0;
+}
+
+/* Classes for card component */
+.cardClasses {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 -0.25rem;
+  margin-top: 1rem;
+  padding: 0;
+
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 0 1rem var(--shadow-clr);
+}
+
+/* Sizing Post Image to Screen */
+.postImg {
+  object-fit: contain;
+}
+
+/* Container of everything but img */
+.generalContent {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+/* Post Description */
+.descriptionWrapper {
+  margin: 0;
+  padding: 0.5rem 0.25rem;
+  border-bottom: var(--border);
+}
+
+/* 
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                Comments Container Component Styles
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*/
+.commentContainer {
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.25rem 0;
+}
+
+/* 
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                  Post Actions Component Styles
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*/
+.statistics {
+  padding: 0.25rem;
+}
+
+.likeCount {
+  font-weight: 500;
+}
+
+.postedSince {
+  color: var(--grey-600);
+}
+
+.likeCount,
+.postedSince {
+  margin: 0;
+  padding: 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+/* Comments Field */
+.commentField {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.35rem;
+  padding-bottom: 0;
+
+  border-top: var(--border);
+}
+
+.commentField input {
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  color: var(--on-surface-accent);
+}
+
+.commentField input::placeholder {
+  color: var(--on-surface-accent);
+}
+
+.commentField .postBtn {
+  font-weight: 550;
+  text-align: center;
+  color: var(--blue-400);
+}
+
+.commentField .postBtn:hover {
+  cursor: pointer;
+}
+
+.commentField .postBtn:disabled,
+.commentField .postBtn[disabled] {
+  cursor: not-allowed;
+  background-color: transparent;
+  opacity: 0.5;
+}
+
+@media (min-width: 568px) {
+  .wrapper {
+    margin: 0 auto;
+    padding: 0.5rem;
+    max-width: calc(var(--reasonable-max-app-width) - 10rem);
+  }
+
+  .cardClasses {
+    max-width: calc(var(--reasonable-max-app-width) - 10rem);
+  }
+}
+
+@media (min-width: 950px) {
+  .wrapper {
+    max-width: calc(var(--reasonable-max-app-width) + 18.5rem);
+  }
+
+  .imgContainer {
+    height: calc(var(--reasonable-max-app-width) - 7rem);
+    width: calc(var(--reasonable-max-app-width) - 7rem);
+    margin: auto 0;
+  }
+
+  .generalContent {
+    width: calc(100% - var(--reasonable-max-app-width) + 7rem);
+  }
+
+  .commentContainer {
+    flex: 1;
+  }
+
+  .cardClasses {
+    max-height: 37.5rem;
+    max-width: calc(var(--reasonable-max-app-width) + 18.5rem);
+
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.25rem;
+  }
+}

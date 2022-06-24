@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import classes from "./navlink.module.css";
+import classes from "./navLink.module.css";
 
 const NavLink = (props) => {
   const router = useRouter();

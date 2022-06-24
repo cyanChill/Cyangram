@@ -3,7 +3,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
 import global from "../../../global";
-import CommentBody from "./commentbody";
+import CommentBody from "./commentBody";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import classes from "./comment.module.css";
@@ -59,6 +59,11 @@ const Comment = ({ postId, comment, viewerId, handleRemove }) => {
 
 export default Comment;
 
+/* 
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                Comment Settings Button Component
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*/
 const CommentSettings = ({ handleCommentDelete }) => {
   const [ddDisplayStatus, setddDisplayStatus] = useState(false);
 

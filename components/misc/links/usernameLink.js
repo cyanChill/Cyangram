@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import classes from "./usernameLink.module.css";
 
-const Username = ({ username, className }) => {
+const UsernameLink = ({ username, className }) => {
   return (
     <span className={className}>
       <Link href={`/${username}`}>
@@ -12,4 +12,4 @@ const Username = ({ username, className }) => {
   );
 };
 
-export default Username;
+export default UsernameLink;

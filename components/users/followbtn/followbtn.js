@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import global from "../../../global";
-import Button from "../../form_elements/button";
+import Button from "../../formElements/button";
 import classes from "./followbtn.module.css";
 
 const FollowButton = ({

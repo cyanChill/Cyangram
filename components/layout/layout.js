@@ -1,4 +1,4 @@
-import MainNavigation from "./main-navigation";
+import MainNavigation from "./mainNavigation";
 import Alerts from "./alerts";
 import classes from "./layout.module.css";
 

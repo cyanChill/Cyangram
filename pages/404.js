@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import ErrorPage from "../components/raw_pages/error/errorpage";
+import Error from "../components/pageLayouts/errorPage/error";
 
 export default function Custom404() {
   return (
@@ -12,7 +12,7 @@ export default function Custom404() {
           content="The page you were looking for was not found."
         />
       </Head>
-      <ErrorPage />
+      <Error />
     </>
   );
 }
