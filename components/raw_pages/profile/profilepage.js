@@ -6,6 +6,7 @@ import { followConversion } from "../../../lib/conversions";
 import useLazyFetch from "../../../hooks/useLazyFetch";
 import Modal from "../../ui/modal/modal";
 import UserList from "../../users/userlist/userlist";
+import Button from "../../form_elements/button";
 import FollowButton from "../../users/followbtn/followbtn";
 import PostGrid from "../../posts/post_grid/post_grid";
 import TextBreaker from "../../ui/textbreaker/textbreaker";
@@ -177,11 +178,22 @@ const UserProfilePage = ({
 
         {/* Action Buttons */}
         {!ownProfile && (
-          <FollowButton
-            username={user.username}
-            viewerIsFollowing={viewerIsFollowing}
-            updateFollowCount={updateFollowerCnt}
-          />
+          <div className={classes.profileActions}>
+            <FollowButton
+              username={user.username}
+              viewerIsFollowing={viewerIsFollowing}
+              updateFollowCount={updateFollowerCnt}
+            />
+            <div>
+              <Button
+                outline
+                onClick={() => router.push(`/t/${user._id}`)}
+                className={classes.additBtnClass}
+              >
+                Message
+              </Button>
+            </div>
+          </div>
         )}
 
         {/* Posts */}

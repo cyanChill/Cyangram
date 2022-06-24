@@ -86,7 +86,7 @@
 }
 
 /* Actions Section */
-.actions {
+.profileActions {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -96,19 +96,23 @@
   padding: 0.25rem;
 }
 
-.actions button {
+.profileActions > div {
+  flex: 1;
+}
+
+.additBtnClass {
   width: 100%;
 }
 
-.actions .onHover {
+.profileActions .onHover {
   display: none;
 }
 
-.actions:hover .noHover {
+.profileActions:hover .noHover {
   display: none;
 }
 
-.actions:hover .onHover {
+.profileActions:hover .onHover {
   display: inline-block;
 }
 
