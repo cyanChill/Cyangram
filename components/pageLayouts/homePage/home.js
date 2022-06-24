@@ -66,6 +66,12 @@ const Home = ({ username }) => {
       <div className={classes.content}>
         {feedType === "ourFeed" ? (
           <>
+            {ourFeed.length === 0 && (
+              <p className="center">
+                Your follow feed is empty! Discover people in the discover feed!
+              </p>
+            )}
+
             {ourFeed.map((post) => (
               <PostExcerpt key={post._id} post={post} />
             ))}
@@ -77,6 +83,13 @@ const Home = ({ username }) => {
           </>
         ) : (
           <>
+            {discoverFeed.length === 0 && (
+              <p className="center">
+                Your discover feed is empty and thus followed everyone! Look in
+                your follow feed to see all posts!
+              </p>
+            )}
+
             {discoverFeed.map((post) => (
               <PostExcerpt key={post._id} post={post} />
             ))}
