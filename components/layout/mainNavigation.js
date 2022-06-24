@@ -19,7 +19,7 @@ import global from "../../global";
 import NavLink from "../misc/links/navLink";
 import DropDownMenu from "../ui/dropdown/dropdown";
 import DropDownItem from "../ui/dropdown/dropdownitem";
-import AppLogo from "../ui/applogo/appLogo";
+import AppLogo from "../ui/appLogo/appLogo";
 import classes from "./mainNavigation.module.css";
 
 const MainNavigation = () => {

@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
-import global from "../../global";
-import { loginInFirebase } from "../../lib/firebaseHelpers";
-import { usernameFriendly } from "../../lib/validate";
-import Button from "../formElements/button";
-import FormInput from "../formElements/formInput";
-import Card from "../ui/card/card";
-import AppLogo from "../ui/applogo/appLogo";
+import global from "../../../global";
+import { loginInFirebase } from "../../../lib/firebaseHelpers";
+import { usernameFriendly } from "../../../lib/validate";
+import Button from "../../formElements/button";
+import FormInput from "../../formElements/formInput";
+import Card from "../../ui/card/card";
+import AppLogo from "../../ui/appLogo/appLogo";
 import classes from "./authStyles.module.css";
 
 const SignUp = () => {
