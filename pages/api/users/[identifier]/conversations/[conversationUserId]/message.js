@@ -4,6 +4,7 @@ import dbConnect from "../../../../../../lib/dbConnect";
 import User from "../../../../../../models/User";
 import Message from "../../../../../../models/Message";
 
+/* Where we create/delete messages to other users */
 const handler = async (req, res) => {
   const { identifier: username, conversationUserId } = req.query;
   const method = req.method;
@@ -28,7 +29,7 @@ const handler = async (req, res) => {
     if (!existingUser || !conversationUser) {
       res.status(404).json({ message: "User does not exist." });
       return;
-    } else if (existingUser._id === conversationUser._id) {
+    } else if (existingUser._id.equals(conversationUser._id)) {
       res.status(400).json({ message: "Cannot message yourself." });
       return;
     }

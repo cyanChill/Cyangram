@@ -36,14 +36,14 @@ export const getServerSideProps = async (context) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${session.user.dbId}/minimal/${userId}`
   );
+  // Process the data fetched
+  const data = await res.json();
 
-  const errorCode = res.ok ? false : res.status;
+  const errorCode =
+    res.ok && data.user._id !== session.user.dbId ? false : res.status;
   if (errorCode) {
     return { props: { errorCode } };
   }
-
-  // Process the data fetched
-  const data = await res.json();
 
   return {
     props: {

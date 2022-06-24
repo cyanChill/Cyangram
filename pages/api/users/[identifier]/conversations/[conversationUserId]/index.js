@@ -2,9 +2,7 @@ import dbConnect from "../../../../../../lib/dbConnect";
 import User from "../../../../../../models/User";
 import Message from "../../../../../../models/Message";
 
-/* TODO: Throw error if we try to have a conversation with ourselves */
-
-/* We fetch the converstaion with a specific user */
+/* We fetch the conversation with a specific user */
 const handler = async (req, res) => {
   // Would use SEARCH method if supported (correct verb)
   const {
@@ -34,6 +32,9 @@ const handler = async (req, res) => {
     ]);
     if (!existingUser || !conversationUser) {
       res.status(404).json({ message: "User does not exist." });
+      return;
+    } else if (existingUser._id.equals(conversationUser._id)) {
+      res.status(400).json({ message: "Cannot message yourself." });
       return;
     }
   } catch (err) {
