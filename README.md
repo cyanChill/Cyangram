@@ -20,4 +20,5 @@ More about the project can be found at: https://www.theodinproject.com/paths/ful
 | Account  | Password    | 6          | -          | Can't start & end with whitespace               |
 | Post     | Description | -          | 200        | Can't start & end with whitespace               |
 |          | Comment     | -          | 200        | Can't start & end with whitespace               |
+| Messages | Message     | -          | 200        | Can't start & end with whitespace               |
 | Images   | Image       | -          | 5MB        | -                                               |

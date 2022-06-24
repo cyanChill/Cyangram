@@ -84,9 +84,9 @@ const GeneralGroup = ({ userData }) => {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        newName: name,
-        newUsername: username,
-        newBio: bio,
+        newName: name.trim(),
+        newUsername: username.trim(),
+        newBio: bio.trim(),
       }),
     });
     const data = await res.json();

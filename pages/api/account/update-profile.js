@@ -23,8 +23,8 @@ const handler = async (req, res) => {
 
   const userId = session.user.dbId;
   const username = session.user.username;
-  const newName = req.body.newName;
-  const newUsername = req.body.newUsername;
+  const newName = req.body.newName.trim();
+  const newUsername = req.body.newUsername.trim();
   const newBio = req.body.newBio.trim();
 
   const validNameStruc = Validator(newName, [required, nameFriendly]);
