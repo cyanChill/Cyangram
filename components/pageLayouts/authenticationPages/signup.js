@@ -118,7 +118,7 @@ const SignUp = () => {
             <FormInput
               type="text"
               placeholder="Username"
-              minLength="3"
+              minLength="8"
               maxLength="30"
               required
               value={username}

@@ -14,8 +14,8 @@ More about the project can be found at: https://www.theodinproject.com/paths/ful
 
 | Category | Input Type  | Min Length | Max Length | Others Constraints                              |
 | -------- | ----------- | ---------- | ---------- | ----------------------------------------------- |
-| Profile  | Name        | 3          | 30         | Only letters, numbers, underscores, and periods |
-|          | Username    | 3          | 30         | Only letters, numbers, underscores, and periods |
+| Profile  | Name        | 8          | 30         | Only letters, numbers, underscores, and periods |
+|          | Username    | 8          | 30         | Only letters, numbers, underscores, and periods |
 |          | Bio         | -          | 200        | Can't start & end with whitespace               |
 | Account  | Password    | 6          | -          | Can't start & end with whitespace               |
 | Post     | Description | -          | 200        | Can't start & end with whitespace               |

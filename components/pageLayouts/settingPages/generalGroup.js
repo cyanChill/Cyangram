@@ -44,7 +44,7 @@ const GeneralGroup = ({ userData }) => {
   // Helper Functions
   const checkValidField = (e) => {
     let status = false;
-    if (e.target.value.length < 3 || e.target.value.length > 30) {
+    if (e.target.value.length < 8 || e.target.value.length > 30) {
       status = true;
     }
 
@@ -110,7 +110,7 @@ const GeneralGroup = ({ userData }) => {
           <FormInput
             name="name"
             type="text"
-            minLength="3"
+            minLength="8"
             maxLength="30"
             required
             value={name}
@@ -119,7 +119,7 @@ const GeneralGroup = ({ userData }) => {
               setName((prev) => prev.trimEnd());
               checkValidField(e);
             }}
-            errMsg="Name must be between 3 & 30 characters long."
+            errMsg="Name must be between 8 & 30 characters long."
             hasErr={error.name}
           />
         </InputGroup>
@@ -128,13 +128,13 @@ const GeneralGroup = ({ userData }) => {
           <FormInput
             name="username"
             type="text"
-            minLength="3"
+            minLength="8"
             maxLength="30"
             required
             value={username}
             onChange={(e) => setUsername(e.target.value.trim())}
             onBlur={checkValidField}
-            errMsg="Username must be between 3 & 30 characters long."
+            errMsg="Username must be between 8 & 30 characters long."
             hasErr={error.username}
           />
         </InputGroup>

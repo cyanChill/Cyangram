@@ -38,7 +38,7 @@ const Search = () => {
         <FormInput
           type="text"
           placeholder="🔍Search"
-          minLength="3"
+          minLength="8"
           required
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -47,12 +47,12 @@ const Search = () => {
 
       {/* Search Results */}
       <div>
-        {(searchResults.length === 0 || query.trim().length < 4) &&
+        {(searchResults.length === 0 || query.trim().length < 9) &&
           !initialRender && (
             <p className={classes.noResult}>No Results Found</p>
           )}
         {searchResults.length > 0 &&
-          query.trim().length > 3 &&
+          query.trim().length > 7 &&
           searchResults.map((user) => <User key={user._id} user={user} />)}
       </div>
     </div>
