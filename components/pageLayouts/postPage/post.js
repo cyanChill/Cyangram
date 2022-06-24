@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import global from "../../../global";
 import { timeSince } from "../../../lib/conversions";
@@ -110,11 +110,13 @@ const CommentsContainer = ({ id, comments, viewerId, removeComment }) => {
   -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 */
 const ActionSection = ({ id, date, likes, ownPost, hasLiked, addComment }) => {
+  const commentRef = useRef(null);
   const [numLikes, setNumLikes] = useState(likes);
   const [commentField, setCommentField] = useState("");
+  const [disableComment, setDisableComment] = useState(false);
 
   const focusCommentField = () => {
-    document.getElementById("commentField").focus();
+    commentRef.current.focus();
   };
 
   const handleLikes = (action) => {
@@ -136,6 +138,7 @@ const ActionSection = ({ id, date, likes, ownPost, hasLiked, addComment }) => {
       return;
     }
 
+    setDisableComment(true);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${id}/comment`,
       {
@@ -156,6 +159,7 @@ const ActionSection = ({ id, date, likes, ownPost, hasLiked, addComment }) => {
       addComment(data.comment);
       setCommentField("");
     }
+    setDisableComment(false);
   };
 
   return (
@@ -178,7 +182,6 @@ const ActionSection = ({ id, date, likes, ownPost, hasLiked, addComment }) => {
       {/* Comment field */}
       <form onSubmit={handleCommentSubmit} className={classes.commentField}>
         <FormInput
-          id="commentField"
           type="text"
           placeholder="Add a comment..."
           maxLength="200"
@@ -187,17 +190,19 @@ const ActionSection = ({ id, date, likes, ownPost, hasLiked, addComment }) => {
           onChange={(e) => setCommentField(e.target.value.trimStart())}
           onBlur={() => setCommentField((prev) => prev.trimEnd())}
           noExternalPadding
+          ref={commentRef}
         />
 
         {/* Disable the following if the textfield is empty */}
-        <span
-          variant="clear"
+        <button
           className={classes.postBtn}
-          disabled={!commentField && commentField.length <= 200}
+          disabled={
+            (!commentField && commentField.length <= 200) || disableComment
+          }
           onClick={handleCommentSubmit}
         >
           Post
-        </span>
+        </button>
       </form>
     </div>
   );

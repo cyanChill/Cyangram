@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import global from "../../../global";
 import { isImage, validImageSize } from "../../../lib/validate";
@@ -8,6 +8,7 @@ import LoadImage from "../../ui/loadImage/loadImage";
 import classes from "./profilepicGroup.module.css";
 
 const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
+  const imgInputRef = useRef(null);
   const [imageUpload, setImageUpload] = useState(null);
   const [currImg, setCurrImg] = useState(profilePic);
 
@@ -107,14 +108,11 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
         </div>
 
         <div className={classes.profileActions}>
-          <Button
-            onClick={() => document.getElementById("profileImgInput").click()}
-          >
+          <Button onClick={() => imgInputRef.current.click()}>
             Set New Profile Picture
           </Button>
           <input
             type="file"
-            id="profileImgInput"
             accept="image/jpeg, image/png, image/jpg"
             style={{ display: "none" }}
             onChange={(e) => {
@@ -123,6 +121,7 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
                 setImageUpload(e.target.files[0]);
               }
             }}
+            ref={imgInputRef}
           />
           <Button
             variant="error"

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import global from "../../../global";
@@ -12,12 +12,15 @@ import classes from "./createPost.module.css";
 const CreatePost = () => {
   const router = useRouter();
 
+  const postImgRef = useRef(null);
+  const imgInputRef = useRef(null);
+  const iconRef = useRef(null);
   const [imageUpload, setImageUpload] = useState(null);
   const [description, setDescription] = useState("");
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
   useEffect(() => {
-    const imgInput = document.getElementById("imgInput");
-    imgInput.addEventListener("change", function () {
+    imgInputRef.current.addEventListener("change", function () {
       if (this.files.length === 0 || !isImage(this.files[0])) {
         global.alerts.actions.addAlert({
           type: global.alerts.types.error,
@@ -39,11 +42,9 @@ const CreatePost = () => {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
         const uploadedImg = reader.result;
-        document.getElementById(
-          "postImg"
-        ).style.backgroundImage = `url(${uploadedImg})`;
+        postImgRef.current.style.backgroundImage = `url(${uploadedImg})`;
 
-        document.getElementById("add-icon").style.display = "none";
+        iconRef.current.style.display = "none";
       });
       reader.readAsDataURL(this.files[0]);
     });
@@ -58,6 +59,8 @@ const CreatePost = () => {
       return;
     }
 
+    setDisableSubmit(true);
+
     // Data we'll pass to backend
     const formData = new FormData();
     formData.append("description", description.trim());
@@ -71,6 +74,7 @@ const CreatePost = () => {
         type: global.alerts.types.error,
         content: `Failed to create post [${data.message}]`,
       });
+      setDisableSubmit(false);
     } else {
       global.alerts.actions.addAlert({
         type: global.alerts.types.success,
@@ -85,15 +89,16 @@ const CreatePost = () => {
       <h2 className={classes.header}>Create new post</h2>
       <div className={classes.content}>
         <button
-          id="postImg"
           className={classes.selectImg}
-          onClick={() => document.getElementById("imgInput").click()}
+          onClick={() => imgInputRef.current.click()}
+          ref={postImgRef}
         >
-          <AiOutlinePlus id="add-icon" className={classes.iconSize} />
+          <p className={classes.iconSize} ref={iconRef}>
+            <AiOutlinePlus />
+          </p>
         </button>
         <input
           type="file"
-          id="imgInput"
           accept="image/jpeg, image/png, image/jpg"
           className={classes.selectImgInput}
           onChange={(e) => {
@@ -102,6 +107,7 @@ const CreatePost = () => {
               setImageUpload(e.target.files[0]);
             }
           }}
+          ref={imgInputRef}
         />
 
         <div className={classes.actions}>
@@ -119,7 +125,10 @@ const CreatePost = () => {
           </section>
 
           <div className={classes.alignRight}>
-            <Button onClick={handlePostCreation} disabled={!imageUpload}>
+            <Button
+              onClick={handlePostCreation}
+              disabled={!imageUpload || disableSubmit}
+            >
               Create New Post
             </Button>
           </div>
