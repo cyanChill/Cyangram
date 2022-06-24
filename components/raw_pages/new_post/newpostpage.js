@@ -110,7 +110,7 @@ const NewPostPage = () => {
             <FormInput
               type="textarea"
               maxLength="200"
-              rows={3}
+              rows={5}
               noResize
               value={description}
               onChange={(e) => setDescription(e.target.value.trimStart())}

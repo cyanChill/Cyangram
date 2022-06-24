@@ -1,9 +1,8 @@
 .wrapper {
-  height: calc(90vh - var(--nav-height));
-  max-height: calc(90vh - var(--nav-height));
+  height: calc(100vh - 2 * var(--nav-height));
+  max-height: calc(100vh - 2 * var(--nav-height));
   max-width: var(--reasonable-max-app-width);
-  margin: 0 auto;
-  padding-top: 1rem;
+  margin: 0 -1rem;
 }
 
 .cardStyles {
@@ -70,5 +69,8 @@
   .wrapper {
     height: 90vh;
     max-height: 90vh;
+
+    padding-top: 1rem;
+    margin: 0 auto;
   }
 }
