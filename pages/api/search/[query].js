@@ -3,18 +3,13 @@ import User from "../../../models/User";
 
 const handler = async (req, res) => {
   const { query } = req.query;
-  if (req.method !== "GET") {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
-  if (query.trim().length <= 3) {
-    res.status(406).json({ message: "Invalid input." });
+  if (req.method !== "GET" || query.trim().length <= 3) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
   const decodedQueryRegex = new RegExp(`.*${decodeURIComponent(query)}.*`);
 
   await dbConnect();
-
   try {
     const users = await User.find({
       $or: [

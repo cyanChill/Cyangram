@@ -2,20 +2,14 @@ import dbConnect from "../../../../lib/dbConnect";
 import User from "../../../../models/User";
 
 const handler = async (req, res) => {
-  if (req.method !== "GET") {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
-
   const { identifier } = req.query;
   const username = decodeURIComponent(identifier);
-  if (username.trim().length === 0) {
-    res.status(400).json({ message: "Invalid input." });
+  if (req.method !== "GET" || !username.trim()) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
 
   await dbConnect();
-
   try {
     // See if username exists
     const existingUser = await User.findOne({ username: username }, "_id");

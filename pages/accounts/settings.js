@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 import UserSettingsPage from "../../components/raw_pages/settings/settingspage";
 import ErrorPage from "../../components/raw_pages/error/errorpage";
 
-const SettingsPage = ({ userData }) => {
+const SettingsPage = ({ errorCode, userData }) => {
   if (errorCode) {
     return <ErrorPage />;
   }

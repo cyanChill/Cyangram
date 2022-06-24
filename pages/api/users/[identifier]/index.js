@@ -4,19 +4,13 @@ import Post from "../../../../models/Post";
 import Follower from "../../../../models/Follower";
 
 const handler = async (req, res) => {
-  if (req.method !== "GET") {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
-
   const { identifier } = req.query;
-  if (!identifier.trim()) {
-    res.status(400).json({ message: "Invalid Request." });
+  if (req.method !== "GET" || !identifier.trim()) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
 
   await dbConnect();
-
   // See if username exists
   const existingUser = await User.findOne({ username: identifier });
   if (!existingUser) {

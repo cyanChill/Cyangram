@@ -6,15 +6,11 @@ import Message from "../../../../../../models/Message";
 
 /* Where we create/delete messages to other users */
 const handler = async (req, res) => {
-  const { identifier: username, conversationUserId } = req.query;
   const method = req.method;
-  if (method !== "POST" && method !== "DELETE") {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
-
-  if (!username.trim() || !conversationUserId.trim()) {
-    res.status(400).json({ message: "Invalid Request." });
+  const { identifier, conversationUserId } = req.query;
+  const invalidQueries = !identifier.trim() || !conversationUserId.trim();
+  if ((method !== "POST" && method !== "DELETE") || invalidQueries) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
 
@@ -23,7 +19,7 @@ const handler = async (req, res) => {
   let existingUser, conversationUser;
   try {
     [existingUser, conversationUser] = await Promise.all([
-      User.findOne({ username: username }),
+      User.findOne({ username: identifier }),
       User.findById(conversationUserId),
     ]);
     if (!existingUser || !conversationUser) {
@@ -43,12 +39,18 @@ const handler = async (req, res) => {
 
   switch (method) {
     case "POST":
+      const messageContent = req.body.messageContent.trim();
+      if (!messageContent) {
+        res.status(406).json({ message: "Invalid inputs." });
+        return;
+      }
+
       try {
         const filter = new Filter();
         await Message.create({
           recieverId: conversationUser._id,
           senderId: existingUser._id,
-          messageContent: filter.clean(req.body.messageContent),
+          messageContent: filter.clean(messageContent),
           date: Date.now(),
         });
         res.status(200).json({ message: "Successfully sent message." });
@@ -58,7 +60,7 @@ const handler = async (req, res) => {
           err: err,
         });
       }
-      break;
+      return;
 
     case "DELETE":
       /* Verify deleter of message made the message */
@@ -81,7 +83,7 @@ const handler = async (req, res) => {
           });
         }
       }
-      break;
+      return;
   }
 };
 

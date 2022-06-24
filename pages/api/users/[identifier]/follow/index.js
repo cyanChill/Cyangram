@@ -5,18 +5,14 @@ import Follower from "../../../../../models/Follower";
 import User from "../../../../../models/User";
 
 const handler = async (req, res) => {
-  if (req.method !== "POST") {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
-
-  if (!req.query.identifier.trim()) {
-    res.status(400).json({ message: "Invalid Request." });
+  const { identifier } = req.query;
+  if (req.method !== "POST" || !identifier.trim()) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
 
   await dbConnect();
-  const followingInfo = await User.findOne({ username: req.query.identifier });
+  const followingInfo = await User.findOne({ username: identifier });
   if (!followingInfo) {
     res.status(404).json({ message: "User does not exist." });
     return;

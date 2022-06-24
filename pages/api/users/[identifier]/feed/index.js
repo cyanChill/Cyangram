@@ -3,22 +3,25 @@ import dbConnect from "../../../../../lib/dbConnect";
 import User from "../../../../../models/User";
 import Follower from "../../../../../models/Follower";
 
+/* 
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+          This route is made for our lazy-loading hook
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*/
 const handler = async (req, res) => {
   // Would use SEARCH method if supported (correct verb)
-  const { identifier: username, type, fromDate, amount } = req.query;
-  if (
-    req.method !== "POST" ||
-    (type !== "discover" && type !== "follow") ||
-    !username.trim()
-  ) {
-    res.status(400).json({ message: "Invalid Request." });
+  const { identifier, type, fromDate, amount } = req.query;
+  const invalidQueries = !identifier.trim() || isNaN(fromDate) || isNaN(amount);
+  const invalidQueries2 = type !== "discover" && type !== "follow";
+  if (req.method !== "POST" || invalidQueries || invalidQueries2) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
   const { usedIds } = req.body;
 
   await dbConnect();
   /* See if the "username" identifier is an actual user */
-  const user = await User.findOne({ username: username });
+  const user = await User.findOne({ username: identifier });
   if (!user) {
     res.status(404).json({ message: "User does not exist." });
     return;

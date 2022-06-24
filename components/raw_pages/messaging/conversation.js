@@ -169,7 +169,7 @@ const MessageInput = ({
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
 
-    if (messageField.trim().length === 0 && messageField.trim().length <= 200) {
+    if (!messageField.trim() && messageField.trim().length <= 200) {
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
         content: "Invalid message length (>0 & <=200).",

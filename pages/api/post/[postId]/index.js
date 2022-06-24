@@ -98,6 +98,7 @@ const handler = async (req, res) => {
           err: err,
         });
       }
+      return;
   }
 };
 

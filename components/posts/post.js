@@ -45,7 +45,7 @@ const PostPage = ({ postData, ownPost, hasLiked, viewerId }) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
-    if (commentField.trim().length === 0 && commentField.trim().length <= 200) {
+    if (!commentField.trim() && commentField.trim().length <= 200) {
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
         content: "Invalid comment length (>0 & <=200).",

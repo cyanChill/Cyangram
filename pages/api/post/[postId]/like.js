@@ -42,6 +42,7 @@ const handler = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error.", err: err });
       }
       return;
+
     case "DELETE":
       try {
         await Like.deleteMany({ likerId: likerId, postId: postId });

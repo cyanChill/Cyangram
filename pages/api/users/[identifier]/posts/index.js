@@ -4,23 +4,24 @@ import Post from "../../../../../models/Post";
 import Like from "../../../../../models/Like";
 import Comment from "../../../../../models/Comment";
 
+/* 
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+          This route is made for our lazy-loading hook
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*/
 const handler = async (req, res) => {
   // Would use SEARCH method if supported (correct verb)
-  if (req.method !== "POST") {
-    res.status(400).json({ message: "Invalid Request." });
+  const { identifier, fromDate, amount } = req.query;
+  const invalidQueries = !identifier.trim() || isNaN(fromDate) || isNaN(amount);
+  if (req.method !== "POST" || invalidQueries) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
-  const { identifier: username, fromDate, amount } = req.query;
   const { usedIds } = req.body;
-
-  if (!username.trim()) {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
 
   await dbConnect();
   /* See if the "username" identifier is an actual user */
-  const currUser = await User.findOne({ username: username });
+  const currUser = await User.findOne({ username: identifier });
   if (!currUser) {
     res.status(404).json({ message: "User does not exist." });
     return;
