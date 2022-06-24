@@ -180,6 +180,7 @@ const MessageInput = ({
   scrollToBottom,
 }) => {
   const [messageField, setMessageField] = useState("");
+  const [disableMessage, setDisableMessage] = useState(false);
 
   const handleMessageSubmit = async (e) => {
     e.preventDefault();
@@ -192,6 +193,7 @@ const MessageInput = ({
       return;
     }
 
+    setDisableMessage(true);
     const res = await fetch(
       `/api/users/${currUser.username}/conversations/${conversationUserId}/message`,
       {
@@ -212,6 +214,7 @@ const MessageInput = ({
       setMessageField("");
       scrollToBottom();
     }
+    setDisableMessage(false);
   };
 
   return (
@@ -228,14 +231,15 @@ const MessageInput = ({
       />
 
       {/* Disable the following if the textfield is empty */}
-      <span
-        variant="clear"
+      <button
         className={classes.sendBtn}
-        disabled={!messageField && messageField.length <= 200}
+        disabled={
+          (!messageField && messageField.length <= 200) || disableMessage
+        }
         onClick={handleMessageSubmit}
       >
         Send
-      </span>
+      </button>
     </form>
   );
 };

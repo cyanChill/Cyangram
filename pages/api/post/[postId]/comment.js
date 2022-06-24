@@ -71,7 +71,7 @@ const handler = async (req, res) => {
       if (!commentInfo) {
         res.status(404).json({ message: "Comment not found" });
         return;
-      } else if (commentInfo.commenterId != commenterId) {
+      } else if (!commentInfo.commenterId.equals(commenterId)) {
         res
           .status(401)
           .json({ message: "You cannot delete a comment you have not made." });

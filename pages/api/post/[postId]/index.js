@@ -75,7 +75,7 @@ const handler = async (req, res) => {
         return;
       }
 
-      if (session.user.dbId != postInfo.posterId) {
+      if (!postInfo.posterId.equals(session.user.dbId)) {
         res.status(401).json({ message: "User does not own post." });
         return;
       }
