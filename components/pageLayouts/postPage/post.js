@@ -139,14 +139,11 @@ const ActionSection = ({ id, date, likes, ownPost, hasLiked, addComment }) => {
     }
 
     setDisableComment(true);
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${id}/comment`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ comment: commentField.trim() }),
-      }
-    );
+    const res = await fetch(`/api/post/${id}/comment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ comment: commentField.trim() }),
+    });
     const data = await res.json();
 
     global.alerts.actions.addAlert({
