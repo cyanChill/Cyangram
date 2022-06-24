@@ -1,4 +1,4 @@
-import classes from "./textbreaker.module.css";
+import classes from "./textBreaker.module.css";
 
 const TextBreaker = ({ children, className, ...rest }) => {
   return (

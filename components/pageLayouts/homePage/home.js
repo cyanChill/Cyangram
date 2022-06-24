@@ -5,7 +5,7 @@ import useLazyFetch from "../../../hooks/useLazyFetch";
 import DropDownMenu from "../../ui/dropdown/dropdown";
 import DropDownItem from "../../ui/dropdown/dropdownitem";
 import PostExcerpt from "../../posts/postExcerpt/postExcerpt";
-import AppLogo from "../../ui/applogo/appLogo";
+import AppLogo from "../../ui/appLogo/appLogo";
 import LoadingSpinner from "../../ui/spinners/loadingSpinner";
 import classes from "./home.module.css";
 
