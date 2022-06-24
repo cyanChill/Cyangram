@@ -3,14 +3,9 @@ import User from "../../../../../models/User";
 import Message from "../../../../../models/Message";
 
 const handler = async (req, res) => {
-  if (req.method !== "GET") {
-    res.status(400).json({ message: "Invalid Request." });
-    return;
-  }
-
   const { identifier } = req.query;
-  if (!identifier.trim()) {
-    res.status(400).json({ message: "Invalid Request." });
+  if (req.method !== "GET" || !identifier.trim()) {
+    res.status(400).json({ message: "Invalid Request/Input." });
     return;
   }
 
@@ -23,21 +18,54 @@ const handler = async (req, res) => {
   }
 
   try {
-    {
-      /* TODO: Put on top of list the ones who messaged the latest */
-    }
-    // Get the ids of users we had a conversation with
-    const [startedConv, recieveConv] = await Promise.all([
-      Message.find({ senderId: existingUser._id }, "recieverId -_id"),
-      Message.find({ recieverId: existingUser._id }, "senderId -_id"),
+    /* Get the latest message per id */
+    // Order by latest message we received from another user
+    const results1 = await Message.aggregate([
+      { $match: { recieverId: existingUser._id } },
+      { $sort: { recieverId: 1, senderId: 1, date: -1 } },
+      {
+        $group: {
+          _id: "$senderId",
+          recieverId: { $first: "$recieverId" },
+          senderId: { $first: "$senderId" },
+          messageContent: { $first: "$messageContent" },
+          date: { $first: "$date" },
+        },
+      },
     ]);
-    const ids1 = startedConv.map((user) => user.recieverId);
-    const ids2 = recieveConv.map((user) => user.senderId);
-    const convWithIds = [...new Set([...ids1, ...ids2])];
+    // Order by latest message we sent to user
+    const results2 = await Message.aggregate([
+      { $match: { senderId: existingUser._id } },
+      { $sort: { recieverId: 1, senderId: 1, date: -1 } },
+      {
+        $group: {
+          _id: "$recieverId",
+          recieverId: { $first: "$recieverId" },
+          senderId: { $first: "$senderId" },
+          messageContent: { $first: "$messageContent" },
+          date: { $first: "$date" },
+        },
+      },
+    ]);
+    const aggregatedUsersIds = [
+      ...new Set(
+        [...results1, ...results2]
+          .sort((a, b) => b.date - a.date)
+          .map((user) => user._id.toString())
+      ),
+    ];
 
-    const conversationUsers = await User.find({
-      _id: { $in: convWithIds },
-    }).sort({ name: "1" });
+    const getUser = async (userId) => {
+      try {
+        const conversationUser = await User.findById(userId);
+        return Promise.resolve(conversationUser._doc);
+      } catch (err) {
+        return Promise.reject();
+      }
+    };
+
+    const promises = aggregatedUsersIds.map((userId) => getUser(userId));
+    const conversationUsers = await Promise.all(promises);
 
     res.status(200).json({
       message: "Successfully found users we had a conversation with.",
