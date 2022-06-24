@@ -23,6 +23,10 @@ More about the project can be found at: https://www.theodinproject.com/paths/ful
 | Messages | Message     | -          | 200        | Can't start & end with whitespace               |
 | Images   | Image       | -          | 5MB        | -                                               |
 
+### Environment Variables
+
+> Look in the `ENVFileInfo.md` file for more information.
+
 ## Features
 
 This utilizes NextJS which allows us to do both the back and frontend in the same project. The backend is done through the `/api` page routes. I utilized MongoDB for the general storage of everything and Firebase for image storage.
