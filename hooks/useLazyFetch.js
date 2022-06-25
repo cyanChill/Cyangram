@@ -43,6 +43,7 @@ const useLazyFetch = (url, amount, continuousFetchInterval = 0) => {
 
   const forceUpdate = useCallback(() => {
     setAsOfTime(Date.now());
+    console.log("forcing update...");
   }, []);
 
   useEffect(() => {
@@ -77,6 +78,7 @@ const useLazyFetch = (url, amount, continuousFetchInterval = 0) => {
 
   useEffect(() => {
     if (initialized) {
+      console.log("updating results...");
       sendQuery();
     }
   }, [asOfTime]);
