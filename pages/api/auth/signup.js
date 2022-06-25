@@ -32,6 +32,7 @@ const handler = async (req, res) => {
     }
   } catch (e) {
     res.status(400).json({ message: "Failed reCaptcha." });
+    return;
   }
 
   // Validate username & password structures
