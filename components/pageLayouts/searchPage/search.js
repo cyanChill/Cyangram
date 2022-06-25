@@ -47,12 +47,12 @@ const Search = () => {
 
       {/* Search Results */}
       <div>
-        {(searchResults.length === 0 || query.trim().length < 9) &&
+        {(searchResults.length === 0 || query.trim().length < 8) &&
           !initialRender && (
             <p className={classes.noResult}>No Results Found</p>
           )}
         {searchResults.length > 0 &&
-          query.trim().length > 7 &&
+          query.trim().length >= 8 &&
           searchResults.map((user) => <User key={user._id} user={user} />)}
       </div>
     </div>
