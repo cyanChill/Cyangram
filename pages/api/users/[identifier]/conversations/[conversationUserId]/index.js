@@ -52,7 +52,6 @@ const handler = async (req, res) => {
     // Fetch the latest messages first
     const foundMessages = await Message.find({
       _id: { $nin: usedIds },
-      date: { $lt: fromDate },
       $or: [
         { recieverId: conversationUserId, senderId: existingUser._id },
         { recieverId: existingUser._id, senderId: conversationUserId },

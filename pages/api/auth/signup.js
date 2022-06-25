@@ -16,8 +16,9 @@ const handler = async (req, res) => {
   }
 
   const { username, password, recaptchaResponse } = req.body;
-  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaResponse}`;
 
+  /* reCaptcha Verification Logic */
+  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaResponse}`;
   try {
     const recaptchaRes = await fetch(verifyUrl, { method: "POST" });
     const recaptchaJson = await recaptchaRes.json();
