@@ -15,7 +15,26 @@ const handler = async (req, res) => {
     return;
   }
 
-  const { username, password } = req.body;
+  const { username, password, recaptchaResponse } = req.body;
+  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaResponse}`;
+
+  try {
+    const recaptchaRes = await fetch(verifyUrl, { method: "POST" });
+    const recaptchaJson = await recaptchaRes.json();
+
+    console.log(recaptchaJson);
+    if (
+      !recaptchaJson.success ||
+      recaptchaJson.action !== "signUp" ||
+      // recaptchaJson.hostname !== process.env.SITE_HOST_NAME ||
+      recaptchaJson.score < 0.7 /* Score Threshold */
+    ) {
+      throw new Error("Failed reCaptcha.");
+    }
+  } catch (e) {
+    res.status(400).json({ message: "Failed reCaptcha." });
+  }
+
   // Validate username & password structures
   if (
     !Validator(username, [required, usernameFriendly]) ||

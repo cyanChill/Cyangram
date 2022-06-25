@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import { useRouter } from "next/router";
 import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
@@ -11,6 +12,8 @@ import FormInput from "../../formElements/formInput";
 import Card from "../../ui/card/card";
 import AppLogo from "../../ui/appLogo/appLogo";
 import classes from "./authStyles.module.css";
+
+const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 const SignUp = () => {
   const router = useRouter();
@@ -69,98 +72,115 @@ const SignUp = () => {
       return;
     }
 
-    const userInfoObj = { username: username, password: password.trim() };
+    window.grecaptcha.ready(() => {
+      window.grecaptcha
+        .execute(SITE_KEY, { action: "signUp" })
+        .then(async (token) => {
+          const userInfoObj = {
+            username: username,
+            password: password.trim(),
+            recaptchaResponse: token,
+          };
 
-    const res = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userInfoObj),
+          const res = await fetch("/api/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userInfoObj),
+          });
+          const data = await res.json();
+
+          if (res.ok) {
+            const result = await signIn("credentials", {
+              redirect: false,
+              ...userInfoObj,
+            });
+
+            if (!result.error) {
+              try {
+                // Successfully logged in & redirect
+                await loginInFirebase();
+                router.replace("/");
+                return;
+              } catch (err) {
+                // Failed to log into firebase
+                await signOut();
+              }
+            }
+          } else {
+            global.alerts.actions.addAlert({
+              type: global.alerts.types.error,
+              content: data.message,
+            });
+          }
+        });
     });
-    const data = await res.json();
-
-    if (res.ok) {
-      const result = await signIn("credentials", {
-        redirect: false,
-        ...userInfoObj,
-      });
-
-      if (!result.error) {
-        try {
-          // Successfully logged in & redirect
-          await loginInFirebase();
-          router.replace("/");
-          return;
-        } catch (err) {
-          // Failed to log into firebase
-          await signOut();
-        }
-      }
-    } else {
-      global.alerts.actions.addAlert({
-        type: global.alerts.types.error,
-        content: data.message,
-      });
-    }
   };
 
   return (
-    <div className={classes.containerWrap}>
-      <div className={classes.wrapper}>
-        <Card className={classes["main-content-wrapper"]}>
-          <AppLogo />
+    <>
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+      />
 
-          <p className={`center ${classes["catch-phrase"]}`}>
-            Sign up to see photos and videos from your friends.
-          </p>
+      <div className={classes.containerWrap}>
+        <div className={classes.wrapper}>
+          <Card className={classes["main-content-wrapper"]}>
+            <AppLogo />
 
-          {/* Will trim front of inputs onChange & trim end of inputs onBlur/focus out. */}
-          <form onSubmit={signupHandler}>
-            <FormInput
-              type="text"
-              placeholder="Username"
-              minLength="8"
-              maxLength="30"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value.trim())}
-              onBlur={isUsernameUnused}
-              errMsg="This username has already been used."
-              hasErr={errors.username}
-            />
-            <FormInput
-              type="password"
-              placeholder="Password"
-              minLength="6"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value.trimStart())}
-              onBlur={() => {
-                setPassword((prev) => prev.trimEnd());
-                checkPassword();
-              }}
-              errMsg="Please enter a password (min 6 characters)."
-              hasErr={errors.password}
-            />
-            <Button
-              type="submit"
-              disabled={!canSubmit}
-              style={{ margin: "1rem 0" }}
-            >
-              Sign up
-            </Button>
-          </form>
-        </Card>
+            <p className={`center ${classes["catch-phrase"]}`}>
+              Sign up to see photos and videos from your friends.
+            </p>
 
-        <Card className={classes.redirect}>
-          <p className="center">
-            Have an account?{" "}
-            <Link href="/">
-              <a className={classes.link}>Log in</a>
-            </Link>
-          </p>
-        </Card>
+            {/* Will trim front of inputs onChange & trim end of inputs onBlur/focus out. */}
+            <form onSubmit={signupHandler}>
+              <FormInput
+                type="text"
+                placeholder="Username"
+                minLength="8"
+                maxLength="30"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value.trim())}
+                onBlur={isUsernameUnused}
+                errMsg="This username has already been used."
+                hasErr={errors.username}
+              />
+              <FormInput
+                type="password"
+                placeholder="Password"
+                minLength="6"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value.trimStart())}
+                onBlur={() => {
+                  setPassword((prev) => prev.trimEnd());
+                  checkPassword();
+                }}
+                errMsg="Please enter a password (min 6 characters)."
+                hasErr={errors.password}
+              />
+
+              <Button
+                type="submit"
+                disabled={!canSubmit}
+                style={{ margin: "1rem 0" }}
+              >
+                Sign up
+              </Button>
+            </form>
+          </Card>
+
+          <Card className={classes.redirect}>
+            <p className="center">
+              Have an account?{" "}
+              <Link href="/">
+                <a className={classes.link}>Log in</a>
+              </Link>
+            </p>
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
