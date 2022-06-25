@@ -10,8 +10,7 @@
 
 /* Contains Information about User */
 .infoContainer {
-  width: calc(100vw - 8rem);
-
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,6 +20,7 @@
 }
 
 .img {
+  flex-shrink: 0;
   height: 2rem;
   width: 2rem;
 }
@@ -32,7 +32,7 @@
 
 /* User Info (Name & Username) */
 .userInfo {
-  width: 90%;
+  width: 100%;
   font-size: 0.95rem;
 }
 

@@ -6,6 +6,7 @@
 }
 
 .imgContainer {
+  flex-shrink: 0;
   align-self: flex-start;
   height: 100%;
   width: 100%;
