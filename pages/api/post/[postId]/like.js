@@ -5,21 +5,21 @@ import Post from "../../../../models/Post";
 import Like from "../../../../models/Like";
 
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   const method = req.method;
   if (method !== "POST" && method !== "DELETE") {
     res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
-  const session = await getSession({ req: req });
-  if (!session) {
-    res.status(401).json({ message: "User is not authenticated." });
-    return;
-  }
-  const likerId = session.user.dbId;
-
   await dbConnect();
 
+  const likerId = session.user.dbId;
   const { postId } = req.query;
   const postExists = await Post.findById(postId);
   if (!postExists) {

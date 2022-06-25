@@ -5,6 +5,12 @@ import Follower from "../../../../../models/Follower";
 import User from "../../../../../models/User";
 
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   const { identifier } = req.query;
   if (req.method !== "POST" || !identifier.trim()) {
     res.status(400).json({ message: "Invalid Request/Input." });
@@ -12,18 +18,13 @@ const handler = async (req, res) => {
   }
 
   await dbConnect();
+
+  const followerId = session.user.dbId;
   const followingInfo = await User.findOne({ username: identifier });
   if (!followingInfo) {
     res.status(404).json({ message: "User does not exist." });
     return;
   }
-
-  const session = await getSession({ req: req });
-  if (!session) {
-    res.status(401).json({ message: "User is not authenticated" });
-    return;
-  }
-  const followerId = session.user.dbId;
 
   try {
     const followStruc = {

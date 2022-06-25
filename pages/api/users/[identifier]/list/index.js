@@ -1,6 +1,14 @@
+import { getSession } from "next-auth/react";
+
 import { getFollowList } from "../../../../../lib/backendHelpers";
 
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   const { type } = req.query;
   const invalidQueries = type !== "followers" && type !== "following";
   if (req.method !== "GET" || invalidQueries) {

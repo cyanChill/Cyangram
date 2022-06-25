@@ -1,3 +1,5 @@
+import { getSession } from "next-auth/react";
+
 import dbConnect from "../../../../../lib/dbConnect";
 import User from "../../../../../models/User";
 import Post from "../../../../../models/Post";
@@ -10,6 +12,12 @@ import Comment from "../../../../../models/Comment";
   -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 */
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   // Would use SEARCH method if supported (correct verb)
   const { identifier, fromDate, amount } = req.query;
   const invalidQueries = !identifier.trim() || isNaN(fromDate) || isNaN(amount);

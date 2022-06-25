@@ -1,3 +1,5 @@
+import { getSession } from "next-auth/react";
+
 import dbConnect from "../../../../../../lib/dbConnect";
 import User from "../../../../../../models/User";
 import Message from "../../../../../../models/Message";
@@ -9,6 +11,12 @@ import Message from "../../../../../../models/Message";
 */
 /* This fetches the conversation with a specific user */
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   // Would use SEARCH method if supported (correct verb)
   const { identifier, conversationUserId, fromDate, amount } = req.query;
   const invalidQueries = !identifier.trim() || isNaN(fromDate) || isNaN(amount);

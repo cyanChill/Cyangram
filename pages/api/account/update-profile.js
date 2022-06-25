@@ -10,14 +10,14 @@ import Validator, {
 } from "../../../lib/validate";
 
 const handler = async (req, res) => {
-  if (req.method !== "PATCH") {
-    res.status(400).json({ message: "Invalid Request." });
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
     return;
   }
 
-  const session = await getSession({ req: req });
-  if (!session) {
-    res.status(401).json({ message: "User is not authenticated." });
+  if (req.method !== "PATCH") {
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 

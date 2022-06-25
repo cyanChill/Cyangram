@@ -10,14 +10,6 @@ import Like from "../../../models/Like";
 import Message from "../../../models/Message";
 
 const handler = async (req, res) => {
-  const { type } = req.query;
-  const { id } = req.body;
-  const invalidQueries = (type !== "user" && type !== "comment") || !id.trim();
-  if (req.method !== "POST" || invalidQueries) {
-    res.status(400).json({ message: "Invalid Request/Input." });
-    return;
-  }
-
   // Verify User is the admin
   const session = await getSession({ req });
   if (!session) {
@@ -26,6 +18,14 @@ const handler = async (req, res) => {
   }
   if (session.user.dbId !== process.env.ADMIN_ID) {
     res.status(401).json({ message: "User is not an admin." });
+  }
+
+  const { type } = req.query;
+  const { id } = req.body;
+  const invalidQueries = (type !== "user" && type !== "comment") || !id.trim();
+  if (req.method !== "DELETE" || invalidQueries) {
+    res.status(400).json({ message: "Invalid Request/Input." });
+    return;
   }
 
   await dbConnect();

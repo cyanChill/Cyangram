@@ -11,16 +11,17 @@ import { isImage, validImageSize } from "../../../lib/validate";
 import User from "../../../models/User";
 
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   if (req.method !== "PATCH") {
     res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
-  const session = await getSession({ req: req });
-  if (!session) {
-    res.status(401).json({ message: "User is not authenticated." });
-    return;
-  }
   const userId = session.user.dbId;
 
   try {

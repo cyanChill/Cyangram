@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/react";
 import Filter from "bad-words";
 
 import dbConnect from "../../../../../../lib/dbConnect";
@@ -6,6 +7,12 @@ import Message from "../../../../../../models/Message";
 
 /* Where we create/delete messages to other users */
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   const method = req.method;
   const { identifier, conversationUserId } = req.query;
   const invalidQueries = !identifier.trim() || !conversationUserId.trim();

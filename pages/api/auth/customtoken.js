@@ -5,16 +5,14 @@ import { auth } from "../../../firebaseAdmin.config";
 /* Returns customToken for firebase signin */
 
 const handler = async (req, res) => {
-  const method = req.method;
-
-  if (method !== "POST") {
-    res.status(400).json({ message: "Invalid Request." });
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
     return;
   }
 
-  const session = await getSession({ req: req });
-  if (!session) {
-    res.status(401).json({ message: "User is not authenticated." });
+  if (req.method !== "POST") {
+    res.status(400).json({ message: "Invalid Request." });
     return;
   }
 

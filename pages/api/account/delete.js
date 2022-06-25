@@ -10,20 +10,20 @@ import User from "../../../models/User";
 import Message from "../../../models/Message";
 
 const handler = async (req, res) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(401).json({ message: "User is not authenticated." });
+    return;
+  }
+
   if (req.method !== "DELETE") {
     res.status(400).json({ message: "Invalid Request." });
     return;
   }
 
-  const session = await getSession({ req: req });
-  if (!session) {
-    res.status(401).json({ message: "User is not authenticated." });
-    return;
-  }
-  const userId = session.user.dbId;
-
   await dbConnect();
 
+  const userId = session.user.dbId;
   /* Get all of our posts */
   const ourPosts = await Post.find({ posterId: userId });
 
@@ -41,10 +41,7 @@ const handler = async (req, res) => {
     }
   };
 
-  const postDeletionPromises = ourPosts.map((post) => {
-    deletePostData(post._id);
-  });
-
+  const postDeletionPromises = ourPosts.map((post) => deletePostData(post._id));
   try {
     /* 
       - Delete all post data (their comments & likes & post itself)
