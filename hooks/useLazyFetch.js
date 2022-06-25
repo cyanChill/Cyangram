@@ -14,7 +14,6 @@ const useLazyFetch = (url, amount, continuousFetchInterval = 0) => {
 
   const sendQuery = useCallback(async () => {
     try {
-      console.log("Triggered Lazy Fetch");
       setLoading(true);
       setError(false);
 

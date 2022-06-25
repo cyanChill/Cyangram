@@ -66,7 +66,7 @@ const Home = ({ username }) => {
       <div className={classes.content}>
         {feedType === "ourFeed" ? (
           <>
-            {ourFeed.length === 0 && (
+            {!loading && ourFeed.length === 0 && (
               <p className="center">
                 Your follow feed is empty! Discover people in the discover feed!
               </p>
@@ -83,7 +83,7 @@ const Home = ({ username }) => {
           </>
         ) : (
           <>
-            {discoverFeed.length === 0 && (
+            {!loading2 && discoverFeed.length === 0 && (
               <p className="center">
                 Your discover feed is empty and thus followed everyone! Look in
                 your follow feed to see all posts!

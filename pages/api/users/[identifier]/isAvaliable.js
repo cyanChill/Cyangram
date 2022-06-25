@@ -1,15 +1,7 @@
-import { getSession } from "next-auth/react";
-
 import dbConnect from "../../../../lib/dbConnect";
 import User from "../../../../models/User";
 
 const handler = async (req, res) => {
-  const session = await getSession({ req });
-  if (!session) {
-    res.status(401).json({ message: "User is not authenticated." });
-    return;
-  }
-
   const { identifier } = req.query;
   const username = decodeURIComponent(identifier);
   if (req.method !== "GET" || !username.trim()) {

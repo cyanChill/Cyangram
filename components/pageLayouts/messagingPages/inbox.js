@@ -10,7 +10,7 @@ const Inbox = ({ conversationUsers }) => {
   return (
     <div className={classes.wrapper}>
       <Card shadow className={classes.cardStyles}>
-        {!conversationUsers ? (
+        {conversationUsers.length === 0 ? (
           <div className="center">You have no conversations currently.</div>
         ) : (
           <div className={classes.conversationList}>

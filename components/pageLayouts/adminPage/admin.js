@@ -7,7 +7,7 @@ import classes from "./admin.module.css";
 const Admin = () => {
   const deleteItemById = async (id, type) => {
     const res = await fetch(`/api/admin/delete?type=${type}`, {
-      method: "POST",
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: id }),
     });
