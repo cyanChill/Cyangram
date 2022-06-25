@@ -209,12 +209,15 @@ const MessageInput = ({
         type: global.alerts.types.error,
         content: data.message,
       });
+      setDisableMessage(false);
     } else {
-      await updateMessages();
-      setMessageField("");
-      scrollToBottom();
+      setTimeout(async () => {
+        await updateMessages();
+        setMessageField("");
+        scrollToBottom();
+        setDisableMessage(false);
+      }, 100);
     }
-    setDisableMessage(false);
   };
 
   return (
