@@ -27,6 +27,14 @@ More about the project can be found at: https://www.theodinproject.com/paths/ful
 
 > Look in the `ENVFileInfo.md` file for more information.
 
+### Admin Panel
+
+When logged in as **the admin** user, going to `<site url>/admin` url. There, you can delete a user, post, or comment from knowing its id.
+
+> It's important to make sure you set the `ADMIN_ID` environment variable to the user that will have admin privileges.
+
+> The admin account will function like a normal account as well.
+
 ## Features
 
 This utilizes NextJS which allows us to do both the back and frontend in the same project. The backend is done through the `/api` page routes. I utilized MongoDB for the general storage of everything and Firebase for image storage.

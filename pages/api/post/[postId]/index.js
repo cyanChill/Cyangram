@@ -75,7 +75,10 @@ const handler = async (req, res) => {
         return;
       }
 
-      if (!postInfo.posterId.equals(session.user.dbId)) {
+      if (
+        !postInfo.posterId.equals(session.user.dbId) &&
+        session.user.dbId !== process.env.ADMIN_ID
+      ) {
         res.status(401).json({ message: "User does not own post." });
         return;
       }

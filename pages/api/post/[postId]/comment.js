@@ -69,12 +69,12 @@ const handler = async (req, res) => {
       /* Verify Deleter of Comment in Fact Made Comment */
       const commentInfo = await Comment.findById(commentId);
       if (!commentInfo) {
-        res.status(404).json({ message: "Comment not found" });
+        res.status(404).json({ message: "Comment not found." });
         return;
       } else if (!commentInfo.commenterId.equals(commenterId)) {
-        res
-          .status(401)
-          .json({ message: "You cannot delete a comment you have not made." });
+        res.status(401).json({
+          message: "You cannot delete a comment you have not made.",
+        });
         return;
       }
 
@@ -82,9 +82,10 @@ const handler = async (req, res) => {
         await Comment.findByIdAndDelete(commentId);
         res.status(200).json({ message: "Successfully deleted comment." });
       } catch (err) {
-        res
-          .status(500)
-          .json({ message: "Failed to delete comment.", err: err });
+        res.status(500).json({
+          message: "Failed to delete comment.",
+          err: err,
+        });
       }
       return;
   }

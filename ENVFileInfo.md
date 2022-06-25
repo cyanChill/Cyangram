@@ -19,3 +19,4 @@ We use the following environment variables:
 | NEXT_PUBLIC_BASE_URL                      | The URL of the site this will be hosted on (make sure it doesn't end with a `/`).                                                                                                   |
 | NEXT_PUBLIC_DEFAULT_PROFILEPIC_URL        | URL of default profile picture used from Firebase storage.                                                                                                                          |
 | NEXT_PUBLIC_DEFAULT_PROFILEPIC_IDENTIFIER | Name of the default profile picture file.                                                                                                                                           |
+| ADMIN_ID                                  | Set this value to the id of the user we want to assign the admin role.                                                                                                              |

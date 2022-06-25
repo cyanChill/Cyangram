@@ -1,0 +1,51 @@
+.important {
+  color: var(--error);
+  font-weight: 700;
+  text-align: center;
+}
+
+.disclaimer {
+  color: var(--error);
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inputContainer input::placeholder {
+  color: var(--on-surface-accent);
+}
+
+.confirmBtn {
+  padding: 0.25rem 0.5rem;
+  font-weight: 550;
+  text-align: center;
+  color: var(--blue-400);
+  border: 1px solid var(--blue-400);
+  border-radius: 0.5rem;
+  outline: none;
+  background-color: transparent;
+}
+
+.confirmBtn:hover {
+  cursor: pointer;
+}
+
+.confirmBtn:disabled,
+.confirmBtn[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (min-width: 568px) {
+  .wrapper {
+    max-width: var(--reasonable-max-app-width);
+    margin: 0 auto;
+  }
+}
