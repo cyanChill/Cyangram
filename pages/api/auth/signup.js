@@ -22,7 +22,6 @@ const handler = async (req, res) => {
     const recaptchaRes = await fetch(verifyUrl, { method: "POST" });
     const recaptchaJson = await recaptchaRes.json();
 
-    console.log(recaptchaJson);
     if (
       !recaptchaJson.success ||
       recaptchaJson.action !== "signUp" ||
