@@ -24,6 +24,9 @@ const ProfilePage = ({ errorCode, ...rest }) => {
 
 export default ProfilePage;
 
+/* Server-Side Imports */
+import { getUserInfo } from "../../lib/backendHelpers";
+
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
   if (!session) {
@@ -31,30 +34,26 @@ export const getServerSideProps = async (context) => {
   }
 
   const { username } = context.params;
-  // Fetch from server user profile data
-  const userDataRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${username}`
-  );
 
-  const errorCode = userDataRes.ok ? false : userDataRes.status;
-  if (errorCode) {
-    return { props: { errorCode } };
+  /* Get Data From Server On User */
+  try {
+    const { followerCnt, followingCnt, followerList, ...data } =
+      await getUserInfo(username);
+
+    return {
+      props: {
+        userData: data,
+        ownProfile: session.user.username === username,
+        viewerIsFollowing: followerList.some(
+          (follower) => follower.followerId === session.user.dbId
+        ),
+        followerCnt: followerCnt,
+        followingCnt: followingCnt,
+        viewerInfo: session.user,
+      },
+    };
+  } catch (err) {
+    console.log("[Error]", err.message);
+    return { props: { errorCode: 404 } };
   }
-
-  // Process the data fetched
-  const { message, followerCnt, followingCnt, followerList, ...data } =
-    await userDataRes.json();
-
-  return {
-    props: {
-      userData: data,
-      ownProfile: session.user.username === username,
-      viewerIsFollowing: followerList.some(
-        (follower) => follower.followerId === session.user.dbId
-      ),
-      followerCnt: followerCnt,
-      followingCnt: followingCnt,
-      viewerInfo: session.user,
-    },
-  };
 };

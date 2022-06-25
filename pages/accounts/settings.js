@@ -22,6 +22,9 @@ const SettingsPage = ({ errorCode, userData }) => {
 
 export default SettingsPage;
 
+/* Server-Side Imports */
+import { getMinimalUserInfo } from "../../lib/backendHelpers";
+
 // Fetches username, name, and bio of user for settings page
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
@@ -29,27 +32,13 @@ export const getServerSideProps = async (context) => {
     return { redirect: { destination: "/accounts/login" } };
   }
 
-  // Fetch from server user profile data
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${session.user.username}`
-  );
+  /* Get Data From Server On User */
+  try {
+    const { user } = await getMinimalUserInfo(session.user.dbId);
 
-  const errorCode = res.ok ? false : res.status;
-  if (errorCode) {
-    return { props: { errorCode } };
+    return { props: { userData: { userId: user._id, ...user } } };
+  } catch (err) {
+    console.log("[Error]", err.message);
+    return { props: { errorCode: 404 } };
   }
-
-  const data = await res.json();
-
-  return {
-    props: {
-      userData: {
-        userId: data.user._id,
-        username: data.user.username,
-        name: data.user.name,
-        bio: data.user.bio,
-        profilePic: data.user.profilePic,
-      },
-    },
-  };
 };

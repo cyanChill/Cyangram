@@ -22,24 +22,22 @@ const InboxPage = ({ errorCode, conversationUsers }) => {
 
 export default InboxPage;
 
+/* Server-Side Imports */
+import { getConversationList } from "../../lib/backendHelpers";
+
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
   if (!session) {
     return { redirect: { destination: "/accounts/login" } };
   }
 
-  // Fetch from server lists of conversations user is involved in
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${session.user.username}/conversations`
-  );
+  /* Get Data From Server On User */
+  try {
+    const data = await getConversationList(session.user.dbId);
 
-  const errorCode = res.ok ? false : res.status;
-  if (errorCode) {
-    return { props: { errorCode } };
+    return { props: { conversationUsers: data.users } };
+  } catch (err) {
+    console.log("[Error]", err.message);
+    return { props: { errorCode: 404 } };
   }
-
-  // Process the data fetched
-  const data = await res.json();
-
-  return { props: { conversationUsers: data.users } };
 };

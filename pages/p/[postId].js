@@ -29,6 +29,9 @@ const UserPostPage = ({ errorCode, postData, ownPost, hasLiked, viewerId }) => {
 
 export default UserPostPage;
 
+/* Server-Side Imports */
+import { getPostInfo } from "../../lib/backendHelpers";
+
 export const getServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
   if (!session) {
@@ -36,27 +39,23 @@ export const getServerSideProps = async (context) => {
   }
 
   const { postId } = context.params;
-  // Fetch from server user profile data
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}`
-  );
 
-  const errorCode = res.ok ? false : res.status;
-  if (errorCode) {
-    return { props: { errorCode } };
+  /* Get Data From Server On User */
+  try {
+    const data = await getPostInfo(postId);
+
+    return {
+      props: {
+        postData: data.post,
+        ownPost: session.user.dbId === data.post.posterId,
+        hasLiked: !!data.post.likes.find(
+          (likeInfo) => likeInfo.likerId === session.user.dbId
+        ),
+        viewerId: session.user.dbId,
+      },
+    };
+  } catch (err) {
+    console.log("[Error]", err.message);
+    return { props: { errorCode: 404 } };
   }
-
-  // Process the data fetched
-  const data = await res.json();
-
-  return {
-    props: {
-      postData: data.post,
-      ownPost: session.user.dbId === data.post.posterId,
-      hasLiked: !!data.post.likes.find(
-        (likeInfo) => likeInfo.likerId === session.user.dbId
-      ),
-      viewerId: session.user.dbId,
-    },
-  };
 };
