@@ -79,7 +79,9 @@ const useLazyFetch = (url, amount, continuousFetchInterval = 0) => {
   useEffect(() => {
     if (initialized) {
       console.log("updating results...");
-      sendQuery();
+      setTimeout(() => {
+        sendQuery();
+      }, 100);
     }
   }, [asOfTime]);
 
