@@ -29,9 +29,9 @@ More about the project can be found at: https://www.theodinproject.com/paths/ful
 
 ### Admin Panel
 
-When logged in as **the admin** user, going to `<site url>/admin` url. There, you can delete a user, post, or comment from knowing its id.
+When logged in as **the admin** user, going to `<site url>/admin` url will bring up the admin panel page. There, you can delete a user, post, or comment from knowing its id.
 
-> It's important to make sure you set the `ADMIN_ID` environment variable to the user that will have admin privileges.
+> **It's important to make sure you set the `ADMIN_ID` environment variable to the user that will have admin privileges.**
 
 > The admin account will function like a normal account as well.
 
