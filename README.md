@@ -41,6 +41,8 @@ This utilizes NextJS which allows us to do both the back and frontend in the sam
 
 > **Currently, we limit the use of the app to authenticated users (ie: users with an account).**
 
+> We also utilize **reCaptcha V3** to verify signup requests.
+
 ### Messaging
 
 - "Realtime" Messaging — to prevent pinging our backend too much, we have it update every 30 seconds (this can be changed in `components/pageLayouts/messagingPages/conversation.js` file by changing the `REFRESH_TIME_MS` varaible).
