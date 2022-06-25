@@ -26,7 +26,7 @@ const handler = async (req, res) => {
     if (
       !recaptchaJson.success ||
       recaptchaJson.action !== "signUp" ||
-      // recaptchaJson.hostname !== process.env.SITE_HOST_NAME ||
+      recaptchaJson.hostname !== process.env.SITE_HOST_NAME ||
       recaptchaJson.score < 0.7 /* Score Threshold */
     ) {
       throw new Error("Failed reCaptcha.");
