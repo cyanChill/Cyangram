@@ -5,6 +5,7 @@
     Helvetica, Arial, sans-serif;
   --mobile-break-point: 568px;
   --reasonable-max-app-width: 45rem;
+  --reasonable-max-nav-width: 60rem;
   --nav-height: 3rem;
   --top-z: 100;
 

@@ -33,32 +33,34 @@ const Home = ({ username }) => {
   return (
     <>
       <header className={classes.header}>
-        <div
-          className={classes.selection}
-          onClick={() => setddDisplayStatus((prev) => !prev)}
-        >
-          <AppLogo />
-          <AiOutlineDown />
-          <div>
-            <DropDownMenu
-              arrowPosition="right"
-              openFromDirection="bottom"
-              display={ddDisplayStatus}
-              className={classes.dropDown}
-            >
-              <DropDownItem
-                onClick={() => handleChangeFeed("ourFeed")}
-                active={feedType === "ourFeed"}
+        <div className={classes.headerContent}>
+          <div
+            className={classes.selection}
+            onClick={() => setddDisplayStatus((prev) => !prev)}
+          >
+            <AppLogo />
+            <AiOutlineDown />
+            <div>
+              <DropDownMenu
+                arrowPosition="right"
+                openFromDirection="bottom"
+                display={ddDisplayStatus}
+                className={classes.dropDown}
               >
-                <span>Our Feed</span>
-              </DropDownItem>
-              <DropDownItem
-                onClick={() => handleChangeFeed("discoverFeed")}
-                active={feedType === "discoverFeed"}
-              >
-                <span>Discover</span>
-              </DropDownItem>
-            </DropDownMenu>
+                <DropDownItem
+                  onClick={() => handleChangeFeed("ourFeed")}
+                  active={feedType === "ourFeed"}
+                >
+                  <span>Our Feed</span>
+                </DropDownItem>
+                <DropDownItem
+                  onClick={() => handleChangeFeed("discoverFeed")}
+                  active={feedType === "discoverFeed"}
+                >
+                  <span>Discover</span>
+                </DropDownItem>
+              </DropDownMenu>
+            </div>
           </div>
         </div>
       </header>

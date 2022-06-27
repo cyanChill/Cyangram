@@ -17,18 +17,25 @@
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
 
 /* Navbar */
 .navbar {
   width: 100%;
+  display: flex;
+  justify-content: center;
   position: fixed;
   bottom: 0;
 
   border-top: var(--border);
   background-color: var(--background);
   z-index: calc(var(--top-z) + 50);
+}
+
+.navWrapper {
+  width: 100%;
+  max-width: var(--reasonable-max-nav-width);
 }
 
 .navItems {
@@ -78,6 +85,8 @@
 @media (min-width: 568px) {
   .logo {
     width: max-content;
+    display: block;
+    position: static;
     padding-left: 1rem;
     border: none;
   }
@@ -90,16 +99,21 @@
     border-bottom: var(--border);
   }
 
+  .navWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .navItems {
     justify-content: flex-end;
     gap: 1.5rem;
 
-    padding: 0.5rem 3rem;
+    padding: 0.5rem 1.5rem;
   }
 }
 
 @media (min-width: 768px) {
   .logo {
-    padding-left: 3rem;
+    padding-left: 1.5rem;
   }
 }

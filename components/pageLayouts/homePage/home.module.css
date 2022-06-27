@@ -1,20 +1,27 @@
 .header {
   height: var(--nav-height);
   width: 100%;
+  display: flex;
+  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
 
   padding-left: 0.25rem;
-  border-bottom: var(--border);
-  background-color: var(--background);
-  z-index: calc(var(--top-z) + 51);
+  z-index: calc(var(--top-z) + 50);
+  pointer-events: none;
+}
+
+.headerContent {
+  width: 100%;
+  max-width: var(--reasonable-max-nav-width);
 }
 
 .selection {
   width: max-content;
   display: flex;
   align-items: center;
+  pointer-events: all !important;
 }
 
 .selection:hover {
@@ -41,10 +48,14 @@
 
 @media (min-width: 568px) {
   .header {
-    width: max-content;
-    padding-left: 1rem;
+    padding-left: 0rem;
     border: none;
   }
+
+  .headerContent {
+    display: flex;
+  }
+
   .content {
     margin: 0 auto;
     max-width: calc(var(--reasonable-max-app-width) - 7.5rem);

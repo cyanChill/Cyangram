@@ -59,13 +59,16 @@ const MainNavigation = () => {
   };
 
   return (
-    <>
-      <AppLogo
-        className={`${classes.logo} ${router.asPath === "/" && classes.hidden}`}
-        onClick={() => router.push("/")}
-        overrideClass
-      />
-      <nav className={classes.navbar}>
+    <nav className={classes.navbar}>
+      <div className={classes.navWrapper}>
+        <AppLogo
+          className={`${classes.logo} ${
+            router.asPath === "/" && classes.hidden
+          }`}
+          onClick={() => router.push("/")}
+          overrideClass
+        />
+
         <ul className={classes.navItems}>
           <li>
             <NavLink to="/" activeEl={<AiFillHome />}>
@@ -151,8 +154,8 @@ const MainNavigation = () => {
             </DropDownMenu>
           </li>
         </ul>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 
