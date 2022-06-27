@@ -79,7 +79,7 @@ const useLazyFetch = (url, amount, continuousFetchInterval = 0) => {
     if (initialized) {
       sendQuery();
     }
-  }, [sendQuery]);
+  }, [asOfTime]);
 
   useEffect(() => {
     if (!initialized) {
