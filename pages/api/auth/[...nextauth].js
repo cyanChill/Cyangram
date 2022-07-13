@@ -16,7 +16,7 @@ export default NextAuth({
         await dbConnect();
 
         const user = await User.findOne(
-          { username: credentials.username },
+          { username_lower: credentials.username.toLowerCase() },
           "name username password"
         );
         if (!user) throw new Error("No user found!");

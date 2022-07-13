@@ -20,7 +20,9 @@ const handler = async (req, res) => {
   await dbConnect();
 
   const followerId = session.user.dbId;
-  const followingInfo = await User.findOne({ username: identifier });
+  const followingInfo = await User.findOne({
+    username_lower: identifier.toLowerCase(),
+  });
   if (!followingInfo) {
     res.status(404).json({ message: "User does not exist." });
     return;

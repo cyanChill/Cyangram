@@ -26,7 +26,7 @@ const handler = async (req, res) => {
   let existingUser, conversationUser;
   try {
     [existingUser, conversationUser] = await Promise.all([
-      User.findOne({ username: identifier }),
+      User.findOne({ username_lower: identifier.toLowerCase() }),
       User.findById(conversationUserId),
     ]);
     if (!existingUser || !conversationUser) {

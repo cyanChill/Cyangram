@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
     minlength: [8, "Usernames can't be less than 3 character."],
     maxlength: [30, "Usernames can't be more than 30 characters."],
   },
+  username_lower: { type: String, lowercase: true, trim: true },
   name: {
     type: String,
     required: [true, "Please provide a name."],
@@ -37,6 +38,11 @@ const UserSchema = new mongoose.Schema({
       default: `${process.env.NEXT_PUBLIC_DEFAULT_PROFILEPIC_IDENTIFIER}`,
     },
   },
+});
+
+UserSchema.pre("save", function (next) {
+  this["username_lower"] = this.username.toLowerCase();
+  next();
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

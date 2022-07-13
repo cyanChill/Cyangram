@@ -52,8 +52,10 @@ const handler = async (req, res) => {
     If we're changing the username, we validate the username to see if it's
     already used (will never throw an error)
   */
-  if (username !== newUsername) {
-    const existingUser = await User.findOne({ username: newUsername });
+  if (username.toLowerCase() !== newUsername.toLowerCase()) {
+    const existingUser = await User.findOne({
+      username_lower: newUsername.toLowerCase(),
+    });
     if (existingUser) {
       res.status(409).json({ message: "Username already exists." });
       return;
@@ -65,6 +67,7 @@ const handler = async (req, res) => {
       $set: {
         name: newName,
         username: newUsername,
+        username_lower: newUsername.toLowerCase(),
         bio: newBio ? filter.clean(newBio) : "",
       },
     });
