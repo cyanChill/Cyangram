@@ -43,7 +43,8 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         userData: data,
-        ownProfile: session.user.username === username,
+        ownProfile:
+          session.user.username.toLowerCase() === username.toLowerCase(),
         viewerIsFollowing: followerList.some(
           (follower) => follower.followerId === session.user.dbId
         ),

@@ -12,7 +12,10 @@ const handler = async (req, res) => {
   await dbConnect();
   try {
     // See if username exists
-    const existingUser = await User.findOne({ username: username }, "_id");
+    const existingUser = await User.findOne(
+      { username_lower: username.toLowerCase() },
+      "_id"
+    );
     if (!existingUser) {
       res
         .status(200)

@@ -29,7 +29,9 @@ const handler = async (req, res) => {
 
   await dbConnect();
   /* See if the "username" identifier is an actual user */
-  const currUser = await User.findOne({ username: identifier });
+  const currUser = await User.findOne({
+    username_lower: identifier.toLowerCase(),
+  });
   if (!currUser) {
     res.status(404).json({ message: "User does not exist." });
     return;

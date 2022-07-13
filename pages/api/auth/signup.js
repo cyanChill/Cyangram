@@ -53,7 +53,9 @@ const handler = async (req, res) => {
 
   await dbConnect();
   // Validate username to see if they already exist
-  const existingUser = await User.findOne({ username: username });
+  const existingUser = await User.findOne({
+    username_lower: username.toLowerCase(),
+  });
   if (existingUser) {
     res.status(409).json({ message: "Username already exists." });
     return;
