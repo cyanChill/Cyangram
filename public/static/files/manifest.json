@@ -3,12 +3,12 @@
   "short_name": "Next-Instagram",
   "icons": [
     {
-      "src": "/images/icons/icon192x192.png",
+      "src": "/static/images/icons/icon192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/images/icons/icon512x512.png",
+      "src": "/static/images/icons/icon512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

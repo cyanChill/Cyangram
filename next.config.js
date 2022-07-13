@@ -10,5 +10,8 @@ module.exports = withPWA({
     dest: "public",
     sw: "/service-worker.js",
     swSrc: "service-worker.js",
+    fallbacks: {
+      image: "/static/images/error-image.png",
+    },
   },
 });

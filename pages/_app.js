@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="Mock Instagram App using NextJS." />
         <link
           rel="shortcut icon"
-          href="/images/icons/favicon.ico"
+          href="/static/images/icons/favicon.ico"
           type="image/x-icon"
         />
         <link rel="manifest" href="/files/manifest.json" />
