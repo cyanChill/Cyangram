@@ -17,3 +17,18 @@ const Error = () => {
 };
 
 export default Error;
+
+export const ErrorOffline = () => {
+  return (
+    <div className={classes.pgwrap}>
+      <h1>Sorry, this page isn&apos;t available.</h1>
+      <p>
+        Sorry, it seems like you are offline and the page was not found in the
+        cache.{" "}
+        <span className={classes.link}>
+          <Link href="/">Go back to the home page which is cached.</Link>
+        </span>
+      </p>
+    </div>
+  );
+};

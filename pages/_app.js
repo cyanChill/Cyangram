@@ -16,20 +16,6 @@ function MyApp({ Component, pageProps }) {
   global.alerts = useAlert();
   global.theme = useTheme();
 
-  /* Service Worker Registration */
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/files/sw.js")
-        .then(() => {
-          console.log("[Service Worker] Registration successful.");
-        })
-        .catch((err) => {
-          console.log("[Service Worker] Registration failed: ", err);
-        });
-    }
-  }, []);
-
   return (
     <SessionProvider session={pageProps.session}>
       <Head>
