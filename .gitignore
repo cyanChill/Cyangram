@@ -1,9 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# PWA
-**/public/fallback-*.js
-**/public/service-worker.js
-
 # dependencies
 /node_modules
 /.pnp

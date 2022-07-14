@@ -1,14 +1,6 @@
-const withPWA = require("next-pwa");
-
-module.exports = withPWA({
+module.exports = {
   reactStrictMode: true,
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
-  // PWA Settings
-  pwa: {
-    dest: "public",
-    sw: "/service-worker.js",
-    swSrc: "service-worker.js",
-  },
-});
+};
