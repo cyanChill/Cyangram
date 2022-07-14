@@ -11,7 +11,7 @@ const AppLogo = ({ className, overrideClass, ...rest }) => {
   return (
     <div className={appClassName} {...rest}>
       <Image
-        src={`/static/images/assets/instagram-logo${
+        src={`/images/assets/instagram-logo${
           global.theme.state === global.theme.types.DARK ? "-dark" : ""
         }.png`}
         alt="Instagram logo"

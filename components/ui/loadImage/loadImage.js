@@ -27,7 +27,7 @@ const LoadImage = ({ src, width, height, alt, className, ...rest }) => {
       alt={alt}
       {...rest}
       onLoadingComplete={() => setLoading(false)}
-      onError={() => setImgSrc("/static/images/assets/error-image.png")}
+      onError={() => setImgSrc("/images/assets/error-image.png")}
     />
   );
 };

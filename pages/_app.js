@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 
@@ -23,7 +22,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="Mock Instagram App using NextJS." />
         <link
           rel="shortcut icon"
-          href="/static/images/icons/favicon.ico"
+          href="/images/icons/favicon.ico"
           type="image/x-icon"
         />
         <link rel="manifest" href="/files/manifest.json" />
