@@ -23,10 +23,6 @@ More about the project can be found at: https://www.theodinproject.com/paths/ful
 | Messages | Message     | -          | 200        | Can't start & end with whitespace               |
 | Images   | Image       | -          | 5MB        | -                                               |
 
-### Environment Variables
-
-> Look in the `ENVFileInfo.md` file for more information.
-
 ### Admin Panel
 
 When logged in as **the admin** user, going to `<site url>/admin` url will bring up the admin panel page. There, you can delete a user, post, or comment from knowing its id.
@@ -67,3 +63,13 @@ This utilizes NextJS which allows us to do both the back and frontend in the sam
 
 - Supports Light/Dark Modes
 - Mobile-friendly
+
+# Installation & Setup
+
+## Environment Variables
+
+> Look in the `ENVFileInfo.md` file for more information.
+
+# Running the App Locally
+
+To run the app locally, run `npm run dev`;
