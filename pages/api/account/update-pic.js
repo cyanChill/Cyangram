@@ -1,11 +1,7 @@
 import { getSession } from "next-auth/react";
 import formidable from "formidable";
 
-import {
-  appCheckVerification,
-  deleteImage,
-  uploadImage,
-} from "../../../lib/firebaseAdminHelper";
+import { deleteImage, uploadImage } from "../../../lib/firebaseAdminHelper";
 import dbConnect from "../../../lib/dbConnect";
 import { isImage, validImageSize } from "../../../lib/validate";
 import User from "../../../models/User";
@@ -23,13 +19,6 @@ const handler = async (req, res) => {
   }
 
   const userId = session.user.dbId;
-
-  try {
-    await appCheckVerification(req);
-  } catch (err) {
-    res.status(401).json({ message: "User is unauthorized." });
-    return;
-  }
 
   await dbConnect();
   /* Get data from formData */

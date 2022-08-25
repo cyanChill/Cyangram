@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 
 import global from "../../../global";
 import { isImage, validImageSize } from "../../../lib/validate";
-import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
 import Button from "../../formElements/button";
 import LoadImage from "../../ui/loadImage/loadImage";
 import classes from "./profilepicGroup.module.css";
@@ -43,7 +42,7 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
 
       const route = "/api/account/update-pic";
 
-      const res = await callApiWithAppCheck(route, "PATCH", {}, formData);
+      const res = await fetch(route, { method: "PATCH", body: formData });
       const data = await res.json();
 
       if (!res.ok) {
@@ -73,7 +72,7 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
 
     const route = "/api/account/update-pic";
 
-    const res = await callApiWithAppCheck(route, "PATCH", {}, formData);
+    const res = await fetch(route, { method: "PATCH", body: formData });
     const data = await res.json();
 
     if (!res.ok) {

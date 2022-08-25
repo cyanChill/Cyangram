@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import global from "../../../global";
-import { callApiWithAppCheck } from "../../../lib/firebaseHelpers";
 import { isImage, validImageSize } from "../../../lib/validate";
 import FormInput from "../../formElements/formInput";
 import Button from "../../formElements/button";
@@ -66,7 +65,7 @@ const CreatePost = () => {
     formData.append("description", description.trim());
     formData.append("uploadedImg", imageUpload);
 
-    const res = await callApiWithAppCheck("/api/post", "POST", {}, formData);
+    const res = await fetch("/api/post", { method: "POST", body: formData });
     const data = await res.json();
 
     if (!res.ok) {

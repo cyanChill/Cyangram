@@ -14,7 +14,6 @@ import {
 import { HiUserCircle, HiOutlineUserCircle } from "react-icons/hi";
 import { RiSendPlaneFill, RiSendPlaneLine } from "react-icons/ri";
 
-import { logoutFirebase } from "../../lib/firebaseHelpers";
 import global from "../../global";
 import NavLink from "../misc/links/navLink";
 import DropDownMenu from "../ui/dropdown/dropdown";
@@ -54,7 +53,6 @@ const MainNavigation = () => {
   }
 
   const handleLogout = async () => {
-    await logoutFirebase();
     signOut();
   };
 
