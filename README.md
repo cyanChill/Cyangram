@@ -2,7 +2,7 @@
 
 An implementation of Instagram utilizing NextJS - a React framework.
 
-Live Demonstration: https://cyangram.vercel.app/
+Live Demonstration: https://cyangram.vercel.app/ 
 
 ## Project Info
 
