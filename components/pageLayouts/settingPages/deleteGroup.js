@@ -1,7 +1,6 @@
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
-import { logoutFirebase } from "../../../lib/firebaseHelpers";
 import Button from "../../formElements/button";
 import Label from "../../formElements/label";
 import InputGroup from "../../formElements/inputGroup";
@@ -18,7 +17,6 @@ const DeleteGroup = () => {
 
     if (res.ok) {
       alert("Account Successfully Deleted.");
-      await logoutFirebase();
       await signOut();
     }
   };

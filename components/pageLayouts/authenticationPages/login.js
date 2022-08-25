@@ -4,7 +4,6 @@ import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 import global from "../../../global";
-import { loginInFirebase } from "../../../lib/firebaseHelpers";
 import { usernameFriendly } from "../../../lib/validate";
 import Button from "../../formElements/button";
 import FormInput from "../../formElements/formInput";
@@ -47,15 +46,8 @@ const Login = () => {
     });
 
     if (!result.error) {
-      try {
-        // Successfully logged in & redirect
-        await loginInFirebase();
-        router.replace("/");
-        return;
-      } catch (err) {
-        // Failed to log into firebase
-        await signOut();
-      }
+      router.replace("/");
+      return;
     }
 
     global.alerts.actions.addAlert({

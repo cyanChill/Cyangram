@@ -21,8 +21,6 @@ try {
   }
 }
 
-export default admin;
-
 /* Used for getting custom token to sign-in to firebase */
 export const auth = getAuth(admin.apps[0]);
 /* Used to access & modify data in cloud storage in firebase */
