@@ -21,7 +21,7 @@ More about the project can be found at: https://www.theodinproject.com/paths/ful
 | Post     | Description | -          | 200        | Can't start & end with whitespace               |
 |          | Comment     | -          | 200        | Can't start & end with whitespace               |
 | Messages | Message     | -          | 200        | Can't start & end with whitespace               |
-| Images   | Image       | -          | 5MB        | -                                               |
+| Images   | Image       | -          | 5MB        | Configurable in the environment variables.      |
 
 ### Admin Panel
 

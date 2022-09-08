@@ -5,13 +5,13 @@ import { getStorage } from "firebase-admin/storage";
 try {
   admin.initializeApp({
     credential: admin.credential.cert({
-      project_id: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+      project_id: process.env.FIREBASE_ADMIN_PROJECTID,
       private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY
         ? process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/gm, "\n")
         : undefined,
       client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
     }),
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    storageBucket: process.env.FIREBASE_ADMIN_STORAGE_BUCKET,
   });
   console.log("Initialized firebase-admin.");
 } catch (error) {

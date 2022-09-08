@@ -7,6 +7,8 @@ import dbConnect from "../../../lib/dbConnect";
 import { isImage, validImageSize } from "../../../lib/validate";
 import Post from "../../../models/Post";
 
+const maxSizeMB = +process.env.NEXT_PUBLIC_MAX_IMG_MB;
+
 const handler = async (req, res) => {
   const session = await getSession({ req });
   if (!session) {
@@ -38,8 +40,10 @@ const handler = async (req, res) => {
     return;
   }
 
-  if (!validImageSize(imageInfo.size, 5)) {
-    res.status(406).json({ message: "File size is too large (Must be <5MB)." });
+  if (!validImageSize(imageInfo.size, maxSizeMB)) {
+    res.status(406).json({
+      message: `File size is too large (Must be <${maxSizeMB}MB).`,
+    });
     return;
   }
 
