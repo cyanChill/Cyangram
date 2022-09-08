@@ -40,9 +40,9 @@ const handler = async (req, res) => {
 
   const filter = new Filter();
   if (filter.isProfane(newName) || filter.isProfane(newUsername)) {
-    res
-      .status(406)
-      .json({ message: "Name or username contains profane words." });
+    res.status(406).json({
+      message: "Name or username contains profane words.",
+    });
     return;
   }
 
@@ -71,9 +71,9 @@ const handler = async (req, res) => {
         bio: newBio ? filter.clean(newBio) : "",
       },
     });
-    res
-      .status(200)
-      .json({ message: "Successfully updated general profile settings." });
+    res.status(200).json({
+      message: "Successfully updated general profile settings.",
+    });
   } catch (err) {
     res.status(500).json({
       message: "Failed to update general profile settings.",

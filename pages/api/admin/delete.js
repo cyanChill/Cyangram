@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 
-import { auth, bucket } from "../../../firebaseAdmin.config";
+import { bucket } from "../../../firebaseAdmin.config";
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/User";
 import Post from "../../../models/Post";
@@ -66,7 +66,6 @@ const handler = async (req, res) => {
           Like.deleteMany({ likerId: user._id }),
           Comment.deleteMany({ commenterId: user._id }),
           bucket.deleteFiles({ prefix: `${user._id}/` }),
-          auth.deleteUser(user._id.toString()),
           User.findByIdAndDelete(user._id),
         ]);
 

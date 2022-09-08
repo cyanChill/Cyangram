@@ -81,9 +81,10 @@ const handler = async (req, res) => {
     if (action === "SET") {
       await deleteImage(userId, img.identifier);
     }
-    res
-      .status(500)
-      .json({ message: "Failed to update profile picture.", err: err });
+    res.status(500).json({
+      message: "Failed to update profile picture.",
+      err: err,
+    });
   }
 };
 

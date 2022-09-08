@@ -60,9 +60,10 @@ const handler = async (req, res) => {
     };
 
     const createdPost = await Post.create(postEntry);
-    res
-      .status(200)
-      .json({ message: "Successfully created post.", postId: createdPost._id });
+    res.status(200).json({
+      message: "Successfully created post.",
+      postId: createdPost._id,
+    });
   } catch (err) {
     // Also delete image we've just uploaded
     await deleteImage(userId, img.identifier);

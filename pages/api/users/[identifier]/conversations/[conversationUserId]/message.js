@@ -75,9 +75,9 @@ const handler = async (req, res) => {
       if (!message) {
         res.status(404).json({ message: "Message does not exist." });
       } else if (!message.senderId.equals(existingUser._id)) {
-        res
-          .status(401)
-          .json({ message: "You cannot delete a message you have not made." });
+        res.status(401).json({
+          message: "You cannot delete a message you have not made.",
+        });
       } else {
         /* Now deleting message */
         try {

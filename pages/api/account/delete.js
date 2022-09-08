@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 
-import { auth, bucket } from "../../../firebaseAdmin.config";
+import { bucket } from "../../../firebaseAdmin.config";
 import dbConnect from "../../../lib/dbConnect";
 import Comment from "../../../models/Comment";
 import Follower from "../../../models/Follower";
@@ -29,7 +29,7 @@ const handler = async (req, res) => {
 
   const deletePostData = async (postId) => {
     try {
-      /* Delete all likes & comments for the post and the post itself*/
+      /* Delete all likes & comments for the post and the post itself */
       await Promise.all([
         Like.deleteMany({ postId: postId }),
         Comment.deleteMany({ postId: postId }),
@@ -63,7 +63,6 @@ const handler = async (req, res) => {
       Like.deleteMany({ likerId: userId }),
       Comment.deleteMany({ commenterId: userId }),
       bucket.deleteFiles({ prefix: `${userId}/` }),
-      auth.deleteUser(userId),
       User.findByIdAndDelete(userId),
     ]);
 
