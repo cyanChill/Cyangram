@@ -6,6 +6,8 @@ import Button from "../../formElements/button";
 import LoadImage from "../../ui/loadImage/loadImage";
 import classes from "./profilepicGroup.module.css";
 
+const maxSizeMB = +process.env.NEXT_PUBLIC_MAX_IMG_MB;
+
 const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
   const imgInputRef = useRef(null);
   const [imageUpload, setImageUpload] = useState(null);
@@ -15,12 +17,12 @@ const ProfilePicGroup = ({ userData: { profilePic, name } }) => {
   useEffect(() => {
     if (imageUpload == null || !isImage(imageUpload)) return;
 
-    /* Validate Upload Image is <5MB in size */
-    if (!validImageSize(imageUpload.size, 5)) {
+    /* Validate Upload Image is <{maxSizeMB}MB in size */
+    if (!validImageSize(imageUpload.size, maxSizeMB)) {
       setImageUpload(null);
       global.alerts.actions.addAlert({
         type: global.alerts.types.error,
-        content: "Image must be <5MB in size.",
+        content: `Image must be <${maxSizeMB}MB in size.`,
       });
       return;
     }

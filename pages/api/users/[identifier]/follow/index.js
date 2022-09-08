@@ -38,15 +38,17 @@ const handler = async (req, res) => {
     if (!isFollowing) {
       // Follow the user
       await Follower.create(followStruc);
-      res
-        .status(200)
-        .json({ message: "Successfully followed user.", follow: true });
+      res.status(200).json({
+        message: "Successfully followed user.",
+        follow: true,
+      });
     } else {
       // Unfollow the user
       await Follower.deleteOne(followStruc);
-      res
-        .status(200)
-        .json({ message: "Successfully unfollowed user.", follow: false });
+      res.status(200).json({
+        message: "Successfully unfollowed user.",
+        follow: false,
+      });
     }
   } catch (err) {
     res.status(500).json({

@@ -6,6 +6,8 @@ import dbConnect from "../../../lib/dbConnect";
 import { isImage, validImageSize } from "../../../lib/validate";
 import User from "../../../models/User";
 
+const maxSizeMB = +process.env.NEXT_PUBLIC_MAX_IMG_MB;
+
 const handler = async (req, res) => {
   const session = await getSession({ req });
   if (!session) {
@@ -43,9 +45,9 @@ const handler = async (req, res) => {
       res.status(406).json({ message: "Input must be an image" });
       return;
     }
-    if (!validImageSize(imageInfo.size, 5)) {
+    if (!validImageSize(imageInfo.size, maxSizeMB)) {
       res.status(406).json({
-        message: "File size is too large (Must be <5MB).",
+        message: `File size is too large (Must be <${maxSizeMB}MB).`,
       });
       return;
     }
@@ -79,9 +81,10 @@ const handler = async (req, res) => {
     if (action === "SET") {
       await deleteImage(userId, img.identifier);
     }
-    res
-      .status(500)
-      .json({ message: "Failed to update profile picture.", err: err });
+    res.status(500).json({
+      message: "Failed to update profile picture.",
+      err: err,
+    });
   }
 };
 

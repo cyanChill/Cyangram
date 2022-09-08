@@ -17,9 +17,10 @@ const handler = async (req, res) => {
       "_id"
     );
     if (!existingUser) {
-      res
-        .status(200)
-        .json({ message: "This usename is avaliable.", used: false });
+      res.status(200).json({
+        message: "This usename is avaliable.",
+        used: false,
+      });
     } else {
       res.status(200).json({
         message: "This username has already been used.",

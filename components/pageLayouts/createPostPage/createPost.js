@@ -8,6 +8,8 @@ import FormInput from "../../formElements/formInput";
 import Button from "../../formElements/button";
 import classes from "./createPost.module.css";
 
+const maxSizeMB = +process.env.NEXT_PUBLIC_MAX_IMG_MB;
+
 const CreatePost = () => {
   const router = useRouter();
 
@@ -28,12 +30,12 @@ const CreatePost = () => {
         return;
       }
 
-      /* Validate Upload Image is <5MB in size */
-      if (!validImageSize(this.files[0].size, 5)) {
+      /* Validate Upload Image is <{maxSizeMB}MB in size */
+      if (!validImageSize(this.files[0].size, maxSizeMB)) {
         setImageUpload(null);
         global.alerts.actions.addAlert({
           type: global.alerts.types.error,
-          content: "Image must be <5MB in size.",
+          content: `Image must be <${maxSizeMB}MB in size.`,
         });
         return;
       }

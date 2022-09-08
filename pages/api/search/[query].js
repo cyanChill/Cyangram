@@ -26,18 +26,21 @@ const handler = async (req, res) => {
       ],
     });
     if (users.length === 0) {
-      res
-        .status(200)
-        .json({ message: "No users matching query found.", users: [] });
+      res.status(200).json({
+        message: "No users matching query found.",
+        users: [],
+      });
     } else {
-      res
-        .status(200)
-        .json({ message: "Found users matching query found.", users: users });
+      res.status(200).json({
+        message: "Found users matching query found.",
+        users: users,
+      });
     }
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch users from query.", err: err });
+    res.status(500).json({
+      message: "Failed to fetch users from query.",
+      err: err,
+    });
   }
 };
 
