@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
       <Head>
-        <title>Next-Instagram</title>
+        <title>Cyangram</title>
         <meta name="description" content="Mock Instagram App using NextJS." />
         <link
           rel="shortcut icon"

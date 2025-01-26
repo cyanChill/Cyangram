@@ -1,5 +1,5 @@
 {
-  "name": "next-instagram",
+  "name": "cyangram",
   "private": true,
   "scripts": {
     "dev": "next dev",
