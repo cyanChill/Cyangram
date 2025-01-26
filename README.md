@@ -2,7 +2,8 @@
 
 An implementation of Instagram utilizing NextJS - a React framework.
 
-[![Demonstration of using the app.](./demo.mp4)]
+
+https://github.com/user-attachments/assets/c72034fb-8125-4433-84f0-4a975290b0c2
 
 ## Project Info
 
